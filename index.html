@@ -160,7 +160,7 @@ async function renderMatches(){
         const card = document.createElement("div");
         card.className = "match";
 
-        const teams = m.teams || [];
+const teams = m.teams || [];
         const teamA = teams[0] || {};
         const teamB = teams[1] || {};
 
@@ -174,8 +174,8 @@ async function renderMatches(){
             <span class="vs">VS</span>
             <span>${teamB.name || "Team B"}</span>
           </div>
-          <p>${m.venue || ""}</p>
-        `;
+<p>${m.venue || ""}</p>
+<p>${m.dateTimeGMT || m.date || ""}</p>`;
 
         list.appendChild(card);
       });
