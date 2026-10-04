@@ -131,18 +131,84 @@ function setSport(s,btn){
  btn.classList.add("active");
  renderMatches();
 }
-function renderMatches(){
- const list=document.getElementById("match-list");
- list.innerHTML="";
- data[currentSport].forEach((m,i)=>{
-  const card=document.createElement("div");
-  card.className="match";
-  card.innerHTML=`<div class="match-top"><span>${m.type}</span><span style="color:#36d399">DEMO DATA</span></div>
-  <div class="teams"><span>${m.a}</span><span class="vs">VS</span><span>${m.b}</span></div>
-  <p>${m.note}</p><button class="secondary" onclick="openAnalysis()">Open analysis →</button>`;
-  list.appendChild(card);
- });
+
+async function renderMatches(){
+  const list = document.getElementById("match-list");
+  list.innerHTML = "Loading matches...";
+
+  if(currentSport === "cricket"){
+    try {
+      const response = await fetch(
+        "https://sports-edge-api.sk-suneeth.workers.dev/matches"
+      );
+
+      if(!response.ok) {
+        throw new Error("API request failed");
+      }
+
+      const result = await response.json();
+      const matches = result.data || [];
+
+      list.innerHTML = "";
+
+      if(matches.length === 0){
+        list.innerHTML = "No matches available";
+        return;
+      }
+
+      matches.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "match";
+
+        const teams = m.teams || [];
+        const teamA = teams[0] || {};
+        const teamB = teams[1] || {};
+
+        card.innerHTML = `
+          <div class="match-top">
+            <span>${m.matchType || "Cricket"}</span>
+            <span>${m.status || ""}</span>
+          </div>
+          <div class="teams">
+            <span>${teamA.name || "Team A"}</span>
+            <span class="vs">VS</span>
+            <span>${teamB.name || "Team B"}</span>
+          </div>
+          <p>${m.venue || ""}</p>
+        `;
+
+        list.appendChild(card);
+      });
+
+    } catch(error) {
+      list.innerHTML = "Unable to load matches. Please try again.";
+      console.error(error);
+    }
+
+    return;
+  }
+
+  list.innerHTML = "";
+
+  data[currentSport].forEach(m => {
+    const card = document.createElement("div");
+    card.className = "match";
+    card.innerHTML = `
+      <div class="match-top"><span>${m.type}</span></div>
+      <div class="teams">
+        <span>${m.a}</span>
+        <span class="vs">VS</span>
+        <span>${m.b}</span>
+      </div>
+      <p>${m.note}</p>
+      <button class="secondary" onclick="openAnalysis()">
+        Open analysis
+      </button>
+    `;
+    list.appendChild(card);
+  });
 }
+
 function openAnalysis(){showSection("analysis")}
 function showSection(id){
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
