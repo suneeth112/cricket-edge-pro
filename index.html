@@ -2,354 +2,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPORTS EDGE PRO</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPORTS EDGE PRO</title>
 
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#07111f;color:#fff;font-family:Arial,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-header{padding:18px 5%;background:#0c1b30;border-bottom:1px solid #263c58;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:23px;font-weight:900}.logo span{color:#ffc629}
-header button,.primary{background:#ffc629;color:#08111e;border:0;border-radius:9px;padding:12px 18px;font-weight:bold}
-.hero{margin:22px auto;width:90%;min-height:230px;border-radius:18px;padding:35px;display:flex;align-items:center;background:linear-gradient(90deg,#07111fee,#07111f55),url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1500&q=85') center/cover}
-.hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}
-.hero p{color:#d8e3f1;line-height:1.6}
-.container{width:90%;max-width:1100px;margin:30px auto}
-.auth-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:25px}
-.auth{width:100%;max-width:420px;background:#10213a;border:1px solid #29415f;border-radius:18px;padding:28px;box-shadow:0 15px 50px #0005}
-.auth h2{text-align:center;margin-top:0}
-.auth p{text-align:center;color:#b5c5d9;line-height:1.5}
-.auth input{width:100%;padding:14px;margin:10px 0;background:#071525;border:1px solid #38516e;color:#fff;border-radius:9px}
-.auth button{width:100%;margin-top:12px}
-.small{font-size:12px;color:#93a7bf!important}
-#message{color:#ffd16a;font-size:14px;min-height:20px;text-align:center}
-nav{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
-nav button{background:#142944;color:#d9e7f8;border:1px solid #304a68;padding:12px 17px;border-radius:9px}
-nav button.active{background:#ffc629;color:#07111f;font-weight:bold}
-.section-title{font-size:24px;margin:28px 0 16px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.card{background:#11213a;border:1px solid #294360;border-radius:15px;overflow:hidden}
-.card-img{height:125px;background-size:cover;background-position:center;position:relative}
-.tag{position:absolute;top:12px;left:12px;background:#07111fcc;padding:7px 10px;border-radius:20px;font-size:12px}
-.teams{display:flex;justify-content:space-around;align-items:center;text-align:center;gap:10px;padding:18px 12px}
-.team{flex:1;font-weight:bold;overflow-wrap:anywhere}
-.badge{margin:0 auto 8px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#244365;color:#ffc629;border:1px solid #54769b}
-.vs{color:#ffc629;font-weight:bold}
-.score{text-align:center;color:#c8d8eb;font-size:13px;line-height:1.7;padding:0 10px 12px}
-.details{padding:10px 18px 18px;color:#a9bdd5;font-size:13px;line-height:1.8}
-.analysis{width:calc(100% - 36px);margin:0 18px 18px;padding:12px;border-radius:9px;border:1px solid #395b80;background:#1a3557;color:white}
-.empty{padding:30px;text-align:center;color:#a9bdd5;grid-column:1/-1}
-footer{text-align:center;padding:25px;color:#8196b0;border-top:1px solid #223650;margin-top:45px}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:24px;min-height:200px}header{gap:12px}.logo{font-size:19px}}
-</style>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1220;
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: #111c30;
+      border-bottom: 1px solid #25334b;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #28e0a0;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      color: #a9b7ca;
+      margin-bottom: 0;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 30px auto;
+    }
+
+    .panel {
+      background: #142139;
+      padding: 24px;
+      border-radius: 14px;
+      border: 1px solid #283a56;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #41516b;
+      background: #0c1729;
+      color: white;
+      margin: 8px 0 14px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #28e0a0;
+      color: #06150f;
+      border: none;
+      padding: 13px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #18c88b;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .secondary {
+      background: #34445e;
+      color: white;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    #status {
+      color: #ffcc66;
+      margin-top: 14px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .match {
+      background: #1a2a44;
+      border: 1px solid #314765;
+      padding: 18px;
+      margin: 12px 0;
+      border-radius: 12px;
+    }
+
+    .match h3 {
+      margin: 0 0 10px;
+      color: #28e0a0;
+    }
+
+    .match p {
+      color: #c3cede;
+      margin: 6px 0;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #a9b7ca;
+      line-height: 1.5;
+    }
+
+    #recaptcha-container {
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: 94%;
+        margin: 18px auto;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <div class="logo">SPORTS <span>EDGE PRO</span></div>
-  <button id="logout" class="hidden">Logout</button>
-</header>
-
-<!-- LOGIN -->
-<section id="loginScreen" class="auth-wrap">
-  <div class="auth">
-    <h2>Welcome to <span style="color:#ffc629">SPORTS EDGE PRO</span></h2>
-    <p>Verify your mobile number to access the sports dashboard.</p>
-
-    <div id="phoneStep">
-      <input id="phone" type="tel" placeholder="+91 9876543210" autocomplete="tel">
-      <div id="recaptcha-container"></div>
-      <button id="sendOtp" class="primary">Send OTP</button>
-    </div>
-
-    <div id="otpStep" class="hidden">
-      <input id="otp" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit OTP">
-      <button id="verifyOtp" class="primary">Verify OTP</button>
-      <button id="back" style="background:transparent;color:#d8e3f1;border:0">Change mobile number</button>
-    </div>
-
-    <p id="message"></p>
-    <p class="small">SMS verification is subject to Firebase configuration, SMS availability and applicable charges.</p>
-  </div>
-</section>
-
-<!-- MEMBER DASHBOARD -->
-<section id="dashboard" class="hidden">
-  <div class="hero">
-    <div>
-      <h1>SPORTS EDGE PRO</h1>
-      <p>Live sports, upcoming fixtures and match insights in one place.</p>
-    </div>
-  </div>
+  <header>
+    <h1>SPORTS EDGE PRO</h1>
+    <p>Live sports updates and match information</p>
+  </header>
 
   <main class="container">
-    <h2>Member Dashboard</h2>
-    <p id="welcome" style="color:#b8c9dd"></p>
 
-    <nav id="filters">
-      <button class="active" data-filter="all">All</button>
-      <button data-filter="live">🔴 Live</button>
-      <button data-filter="upcoming">📅 Upcoming</button>
-      <button data-filter="completed">Completed</button>
-    </nav>
+    <!-- LOGIN / REGISTRATION -->
+    <section id="loginPanel" class="panel">
+      <h2>Mobile Login</h2>
+      <p>Enter your mobile number to receive a verification code.</p>
 
-    <nav id="sports">
-      <button class="active" data-sport="all">🏆 All Sports</button>
-      <button data-sport="cricket">🏏 Cricket</button>
-      <button data-sport="tennis">🎾 Tennis</button>
-      <button data-sport="horse">🏇 Horse Racing</button>
-    </nav>
+      <label for="phone">Mobile number with country code</label>
+      <input
+        id="phone"
+        type="tel"
+        placeholder="+919876543210"
+        autocomplete="tel"
+      >
 
-    <input id="search" placeholder="Search matches..." style="width:100%;padding:14px;background:#10213a;color:white;border:1px solid #294360;border-radius:10px;margin:5px 0 20px">
+      <div id="recaptcha-container"></div>
 
-    <div id="matchesGrid" class="grid">
-      <div class="empty">Loading matches...</div>
-    </div>
+      <button id="sendOtpBtn" type="button">Send OTP</button>
+
+      <div id="otpSection" class="hidden">
+        <label for="otp">Enter OTP</label>
+        <input
+          id="otp"
+          type="text"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          placeholder="Enter verification code"
+        >
+        <button id="verifyOtpBtn" type="button">Verify OTP</button>
+      </div>
+
+      <p id="status" role="status"></p>
+
+      <p class="note">
+        New users are automatically registered after successful phone
+        verification. Returning users can log in using the same number.
+      </p>
+    </section>
+
+    <!-- PROTECTED DASHBOARD -->
+    <section id="dashboard" class="hidden">
+      <div class="panel">
+        <div class="topbar">
+          <div>
+            <h2>Welcome to Sports Edge Pro</h2>
+            <p id="userInfo" class="note"></p>
+          </div>
+          <button id="logoutBtn" class="secondary" type="button">
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="topbar">
+          <h2>Cricket Matches</h2>
+          <button id="refreshBtn" type="button">Refresh</button>
+        </div>
+        <p id="matchStatus" class="note">Loading matches...</p>
+        <div id="matches"></div>
+      </div>
+    </section>
+
   </main>
-</section>
 
-<footer>SPORTS EDGE PRO · Sports analysis platform</footer>
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import {
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import {
+      getAuth,
+      RecaptchaVerifier,
+      signInWithPhoneNumber,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-/* REPLACE WITH YOUR FIREBASE PROJECT CONFIG */
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.firebasestorage.app",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+    // Replace these values with your Firebase project configuration.
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+    const MATCH_API =
+      "https://sports-edge-api.sk-suneeth.workers.dev/matches";
 
-const API = "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-const images = {
-  cricket:"https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=900&q=80",
-  tennis:"https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=900&q=80",
-  horse:"https://images.unsplash.com/photo-1534307670763-6c5b2a1c1b6b?auto=format&fit=crop&w=900&q=80"
-};
+    const loginPanel = document.getElementById("loginPanel");
+    const dashboard = document.getElementById("dashboard");
+    const phoneInput = document.getElementById("phone");
+    const otpInput = document.getElementById("otp");
+    const otpSection = document.getElementById("otpSection");
+    const status = document.getElementById("status");
+    const matchStatus = document.getElementById("matchStatus");
+    const matchesBox = document.getElementById("matches");
 
-const $ = id => document.getElementById(id);
-let confirmation = null;
-let verifier = null;
-let matches = [];
-let selectedStatus = "all";
-let selectedSport = "all";
+    let confirmationResult = null;
+    let recaptchaVerifier = null;
 
-function message(text) {
-  $("message").textContent = text;
-}
-
-function setupCaptcha() {
-  if (verifier) return;
-  verifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-    size: "normal"
-  });
-}
-
-$("sendOtp").addEventListener("click", async () => {
-  const phone = $("phone").value.trim();
-  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-    message("Enter a valid number with country code, e.g. +919876543210");
-    return;
-  }
-
-  try {
-    $("sendOtp").disabled = true;
-    message("Preparing verification...");
-    setupCaptcha();
-    confirmation = await signInWithPhoneNumber(auth, phone, verifier);
-    $("phoneStep").classList.add("hidden");
-    $("otpStep").classList.remove("hidden");
-    message("OTP sent. Check your phone.");
-  } catch (error) {
-    message(error.message || "Could not send OTP.");
-    if (verifier) {
-      verifier.clear();
-      verifier = null;
+    function setStatus(message) {
+      status.textContent = message;
     }
-  } finally {
-    $("sendOtp").disabled = false;
-  }
-});
 
-$("verifyOtp").addEventListener("click", async () => {
-  const code = $("otp").value.trim();
-  if (!confirmation || !/^\d{6}$/.test(code)) {
-    message("Enter the 6-digit OTP.");
-    return;
-  }
-  try {
-    $("verifyOtp").disabled = true;
-    await confirmation.confirm(code);
-    message("Verification successful.");
-  } catch (error) {
-    message(error.message || "Invalid or expired OTP.");
-  } finally {
-    $("verifyOtp").disabled = false;
-  }
-});
+    function setupRecaptcha() {
+      if (recaptchaVerifier) return;
 
-$("back").addEventListener("click", () => {
-  confirmation = null;
-  $("otpStep").classList.add("hidden");
-  $("phoneStep").classList.remove("hidden");
-  $("otp").value = "";
-  message("");
-});
+      recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "normal",
+          callback: () => {
+            setStatus("Verification completed. You can request an OTP.");
+          },
+          "expired-callback": () => {
+            setStatus("Captcha expired. Please try again.");
+          }
+        }
+      );
+    }
 
-$("logout").addEventListener("click", () => signOut(auth));
+    document.getElementById("sendOtpBtn").addEventListener("click", async () => {
+      const phone = phoneInput.value.trim();
 
-onAuthStateChanged(auth, user => {
-  if (user) {
-    $("loginScreen").classList.add("hidden");
-    $("dashboard").classList.remove("hidden");
-    $("logout").classList.remove("hidden");
-    $("welcome").textContent = "Verified mobile: " + user.phoneNumber;
-    loadMatches();
-  } else {
-    $("dashboard").classList.add("hidden");
-    $("loginScreen").classList.remove("hidden");
-    $("logout").classList.add("hidden");
-  }
-});
+      if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+        setStatus("Enter a valid number with country code, such as +919876543210.");
+        return;
+      }
 
-function teamName(t) {
-  if (typeof t === "string") return t;
-  return t?.name || t?.teamName || t?.shortname || "Team";
-}
+      const sendButton = document.getElementById("sendOtpBtn");
+      sendButton.disabled = true;
 
-function teams(m) {
-  const info = m.teamInfo || [];
-  const names = m.teams || [];
-  return [teamName(info[0] || names[0]), teamName(info[1] || names[1])];
-}
+      try {
+        setupRecaptcha();
 
-function sportOf(m) {
-  const s = (m.matchType || m.sport || "").toLowerCase();
-  if (s.includes("tennis")) return "tennis";
-  if (s.includes("horse")) return "horse";
-  return "cricket";
-}
+        const verifier = await recaptchaVerifier;
+        confirmationResult = await signInWithPhoneNumber(
+          auth,
+          phone,
+          verifier
+        );
 
-function statusOf(m) {
-  const s = (m.status || "").toLowerCase();
-  if (m.matchStarted && !m.matchEnded) return "live";
-  if (m.matchEnded || s.includes("won") || s.includes("draw")) return "completed";
-  return "upcoming";
-}
+        otpSection.classList.remove("hidden");
+        setStatus("OTP sent. Check your phone.");
+      } catch (error) {
+        console.error(error);
+        setStatus("Could not send OTP: " + error.message);
 
-function initials(name) {
-  return (name || "T").split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
-}
-
-function render() {
-  const q = $("search").value.toLowerCase();
-  const list = matches.filter(m => {
-    const [a,b] = teams(m);
-    return (selectedSport === "all" || sportOf(m) === selectedSport) &&
-      (selectedStatus === "all" || statusOf(m) === selectedStatus) &&
-      (a + " " + b + " " + (m.name || "")).toLowerCase().includes(q);
-  });
-
-  const grid = $("matchesGrid");
-  if (!list.length) {
-    grid.innerHTML = '<div class="empty">No matches found. Upcoming fixtures may not be included in the connected API.</div>';
-    return;
-  }
-
-  grid.innerHTML = list.map((m,i) => {
-    const [a,b] = teams(m);
-    const sport = sportOf(m);
-    const score = Array.isArray(m.score) ? m.score.map(s =>
-      `${s.inning || ""}: ${s.r ?? ""}/${s.w ?? ""} (${s.o ?? ""} ov)`
-    ) : [];
-    const state = statusOf(m);
-    const date = m.dateTimeGMT ? new Date(m.dateTimeGMT).toLocaleString() :
-      m.date ? new Date(m.date).toLocaleDateString() : "Date unavailable";
-
-    return `
-      <article class="card">
-        <div class="card-img" style="background-image:url('${images[sport]}')">
-          <span class="tag">${sport.toUpperCase()}</span>
-        </div>
-        <div class="teams">
-          <div class="team"><div class="badge">${initials(a)}</div>${a}</div>
-          <div class="vs">VS</div>
-          <div class="team"><div class="badge">${initials(b)}</div>${b}</div>
-        </div>
-        <div class="score">
-          <strong>${state === "live" ? "🔴 LIVE" : state === "completed" ? "COMPLETED" : "UPCOMING"}</strong><br>
-          ${score.join("<br>") || m.status || "Score unavailable"}
-        </div>
-        <div class="details">
-          📅 ${date}<br>
-          📍 ${m.venue || "Venue unavailable"}<br>
-          ${m.name || ""}
-        </div>
-        <button class="analysis" data-index="${i}">View Match Details</button>
-      </article>`;
-  }).join("");
-
-  grid.querySelectorAll(".analysis").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const m = list[Number(btn.dataset.index)];
-      const [a,b] = teams(m);
-      alert(`${a} vs ${b}\n\n${m.status || "Status unavailable"}\n\nDetailed analysis is not yet connected.`);
+        if (recaptchaVerifier) {
+          try {
+            await recaptchaVerifier.clear();
+          } catch {}
+          recaptchaVerifier = null;
+          document.getElementById("recaptcha-container").innerHTML = "";
+        }
+      } finally {
+        sendButton.disabled = false;
+      }
     });
-  });
-}
 
-async function loadMatches() {
-  $("matchesGrid").innerHTML = '<div class="empty">Loading matches...</div>';
-  try {
-    const response = await fetch(API);
-    if (!response.ok) throw new Error("API request failed");
-    const data = await response.json();
-    matches = Array.isArray(data) ? data : data.data || data.matches || [];
-    if (!Array.isArray(matches)) matches = [];
-    render();
-  } catch (error) {
-    $("matchesGrid").innerHTML =
-      '<div class="empty">Unable to load match data. Check the API connection.</div>';
-  }
-}
+    document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
+      const code = otpInput.value.trim();
 
-document.querySelectorAll("#filters button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("#filters button").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    selectedStatus = btn.dataset.filter;
-    render();
-  });
-});
+      if (!confirmationResult) {
+        setStatus("Please request an OTP first.");
+        return;
+      }
 
-document.querySelectorAll("#sports button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("#sports button").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    selectedSport = btn.dataset.sport;
-    render();
-  });
-});
+      if (!code) {
+        setStatus("Enter the OTP you received.");
+        return;
+      }
 
-$("search").addEventListener("input", render);
-</script>
+      const verifyButton = document.getElementById("verifyOtpBtn");
+      verifyButton.disabled = true;
+
+      try {
+        await confirmationResult.confirm(code);
+        setStatus("Phone verified successfully.");
+      } catch (error) {
+        console.error(error);
+        setStatus("OTP verification failed: " + error.message);
+      } finally {
+        verifyButton.disabled = false;
+      }
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        loginPanel.classList.add("hidden");
+        dashboard.classList.remove("hidden");
+        document.getElementById("userInfo").textContent =
+          "Verified mobile: " + (user.phoneNumber || "Verified user");
+
+        await loadMatches();
+      } else {
+        dashboard.classList.add("hidden");
+        loginPanel.classList.remove("hidden");
+        matchesBox.innerHTML = "";
+        matchStatus.textContent = "";
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        setStatus("You have logged out.");
+      } catch (error) {
+        alert("Logout failed: " + error.message);
+      }
+    });
+
+    document.getElementById("refreshBtn").addEventListener("click", loadMatches);
+
+    function showMatches(data) {
+      matchesBox.innerHTML = "";
+
+      // Accept common API response shapes.
+      const list = Array.isArray(data)
+        ? data
+        : data.matches || data.data || data.events || [];
+
+      if (!Array.isArray(list) || list.length === 0) {
+        matchStatus.textContent = "No matches were returned by the API.";
+        return;
+      }
+
+      matchStatus.textContent = list.length + " match(es)";
+
+      list.forEach((match) => {
+        const card = document.createElement("article");
+        card.className = "match";
+
+        const title = document.createElement("h3");
+        title.textContent =
+          match.name ||
+          match.title ||
+          [match.team1, match.team2].filter(Boolean).join(" vs ") ||
+          [match.homeTeam, match.awayTeam].filter(Boolean).join(" vs ") ||
+          "Cricket match";
+
+        const details = document.createElement("p");
+        details.textContent =
+          match.status ||
+          match.matchStatus ||
+          match.venue ||
+          "Match information";
+
+        const score = document.createElement("p");
+        score.textContent =
+          match.score ||
+          match.scorecard ||
+          "";
+
+        card.appendChild(title);
+        card.appendChild(details);
+
+        if (score.textContent) {
+          card.appendChild(score);
+        }
+
+        matchesBox.appendChild(card);
+      });
+    }
+
+    async function loadMatches() {
+      matchStatus.textContent = "Loading matches...";
+      matchesBox.innerHTML = "";
+
+      try {
+        const response = await fetch(MATCH_API);
+
+        if (!response.ok) {
+          throw new Error("API returned HTTP " + response.status);
+        }
+
+        const data = await response.json();
+        showMatches(data);
+      } catch (error) {
+        console.error(error);
+        matchStatus.textContent =
+          "Could not load matches. Check your Worker API and its response format.";
+      }
+    }
+  </script>
 </body>
 </html>
