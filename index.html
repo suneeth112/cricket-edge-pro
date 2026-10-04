@@ -1,456 +1,240 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPORTS EDGE PRO</title>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1220;
-      color: white;
-    }
+// Replace these with the actual values from Firebase Console.
+// Project settings → Your apps → SDK setup and configuration → Config
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_REAL_API_KEY_HERE",
+  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
+  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
 
-    header {
-      padding: 20px;
-      text-align: center;
-      background: #111c30;
-      border-bottom: 1px solid #25334b;
-    }
+const MATCH_API =
+  "https://sports-edge-api.sk-suneeth.workers.dev/matches";
 
-    header h1 {
-      margin: 0;
-      color: #28e0a0;
-      letter-spacing: 1px;
-    }
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    header p {
-      color: #a9b7ca;
-      margin-bottom: 0;
-    }
+// HTML elements
+const loginPanel = document.getElementById("loginPanel");
+const dashboard = document.getElementById("dashboard");
+const phoneInput = document.getElementById("phone");
+const otpInput = document.getElementById("otp");
+const otpSection = document.getElementById("otpSection");
+const status = document.getElementById("status");
+const matchStatus = document.getElementById("matchStatus");
+const matchesBox = document.getElementById("matches");
 
-    .container {
-      width: 92%;
-      max-width: 900px;
-      margin: 30px auto;
-    }
+const sendOtpBtn = document.getElementById("sendOtpBtn");
+const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const refreshBtn = document.getElementById("refreshBtn");
 
-    .panel {
-      background: #142139;
-      padding: 24px;
-      border-radius: 14px;
-      border: 1px solid #283a56;
-      margin-bottom: 20px;
-    }
+let confirmationResult = null;
+let recaptchaVerifier = null;
 
-    h2 {
-      margin-top: 0;
-    }
+function setStatus(message) {
+  status.textContent = message;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid #41516b;
-      background: #0c1729;
-      color: white;
-      margin: 8px 0 14px;
-      font-size: 16px;
-    }
-
-    button {
-      background: #28e0a0;
-      color: #06150f;
-      border: none;
-      padding: 13px 18px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    button:hover {
-      background: #18c88b;
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .secondary {
-      background: #34445e;
-      color: white;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    #status {
-      color: #ffcc66;
-      margin-top: 14px;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
-
-    .match {
-      background: #1a2a44;
-      border: 1px solid #314765;
-      padding: 18px;
-      margin: 12px 0;
-      border-radius: 12px;
-    }
-
-    .match h3 {
-      margin: 0 0 10px;
-      color: #28e0a0;
-    }
-
-    .match p {
-      color: #c3cede;
-      margin: 6px 0;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .note {
-      font-size: 13px;
-      color: #a9b7ca;
-      line-height: 1.5;
-    }
-
-    #recaptcha-container {
-      margin: 10px 0;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        width: 94%;
-        margin: 18px auto;
-      }
-
-      .panel {
-        padding: 18px;
-      }
-
-      .topbar {
-        align-items: flex-start;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <h1>SPORTS EDGE PRO</h1>
-    <p>Live sports updates and match information</p>
-  </header>
-
-  <main class="container">
-
-    <!-- LOGIN / REGISTRATION -->
-    <section id="loginPanel" class="panel">
-      <h2>Mobile Login</h2>
-      <p>Enter your mobile number to receive a verification code.</p>
-
-      <label for="phone">Mobile number with country code</label>
-      <input
-        id="phone"
-        type="tel"
-        placeholder="+919876543210"
-        autocomplete="tel"
-      >
-
-      <div id="recaptcha-container"></div>
-
-      <button id="sendOtpBtn" type="button">Send OTP</button>
-
-      <div id="otpSection" class="hidden">
-        <label for="otp">Enter OTP</label>
-        <input
-          id="otp"
-          type="text"
-          inputmode="numeric"
-          autocomplete="one-time-code"
-          placeholder="Enter verification code"
-        >
-        <button id="verifyOtpBtn" type="button">Verify OTP</button>
-      </div>
-
-      <p id="status" role="status"></p>
-
-      <p class="note">
-        New users are automatically registered after successful phone
-        verification. Returning users can log in using the same number.
-      </p>
-    </section>
-
-    <!-- PROTECTED DASHBOARD -->
-    <section id="dashboard" class="hidden">
-      <div class="panel">
-        <div class="topbar">
-          <div>
-            <h2>Welcome to Sports Edge Pro</h2>
-            <p id="userInfo" class="note"></p>
-          </div>
-          <button id="logoutBtn" class="secondary" type="button">
-            Logout
-          </button>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="topbar">
-          <h2>Cricket Matches</h2>
-          <button id="refreshBtn" type="button">Refresh</button>
-        </div>
-        <p id="matchStatus" class="note">Loading matches...</p>
-        <div id="matches"></div>
-      </div>
-    </section>
-
-  </main>
-
-  <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-    import {
-      getAuth,
-      RecaptchaVerifier,
-      signInWithPhoneNumber,
-      onAuthStateChanged,
-      signOut
-    } from
-      "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    // Replace these values with your Firebase project configuration.
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    const MATCH_API =
-      "https://sports-edge-api.sk-suneeth.workers.dev/matches";
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const loginPanel = document.getElementById("loginPanel");
-    const dashboard = document.getElementById("dashboard");
-    const phoneInput = document.getElementById("phone");
-    const otpInput = document.getElementById("otp");
-    const otpSection = document.getElementById("otpSection");
-    const status = document.getElementById("status");
-    const matchStatus = document.getElementById("matchStatus");
-    const matchesBox = document.getElementById("matches");
-
-    let confirmationResult = null;
-    let recaptchaVerifier = null;
-
-    function setStatus(message) {
-      status.textContent = message;
-    }
-
-    function setupRecaptcha() {
-      if (recaptchaVerifier) return;
-
-      recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "normal",
-          callback: () => {
-            setStatus("Verification completed. You can request an OTP.");
-          },
-          "expired-callback": () => {
-            setStatus("Captcha expired. Please try again.");
-          }
+// Initialize reCAPTCHA
+async function setupRecaptcha() {
+  if (!recaptchaVerifier) {
+    recaptchaVerifier = new RecaptchaVerifier(
+      auth,
+      "recaptcha-container",
+      {
+        size: "normal",
+        callback: () => {
+          setStatus("Verification completed. You can request OTP.");
+        },
+        "expired-callback": () => {
+          setStatus("Verification expired. Please try again.");
         }
-      );
+      }
+    );
+  }
+
+  await recaptchaVerifier.render();
+  return recaptchaVerifier;
+}
+
+// Send OTP
+sendOtpBtn.addEventListener("click", async () => {
+  const phone = phoneInput.value.trim();
+
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+    setStatus("Enter a valid number, including country code. Example: +919876543210");
+    return;
+  }
+
+  sendOtpBtn.disabled = true;
+  setStatus("Preparing phone verification...");
+
+  try {
+    const verifier = await setupRecaptcha();
+
+    confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phone,
+      verifier
+    );
+
+    otpSection.classList.remove("hidden");
+    setStatus("OTP sent successfully. Check your phone.");
+  } catch (error) {
+    console.error("OTP error:", error);
+    setStatus("Firebase error: " + error.code + " — " + error.message);
+
+    if (recaptchaVerifier) {
+      try {
+        await recaptchaVerifier.clear();
+      } catch (clearError) {
+        console.error(clearError);
+      }
+      recaptchaVerifier = null;
+      document.getElementById("recaptcha-container").innerHTML = "";
+    }
+  } finally {
+    sendOtpBtn.disabled = false;
+  }
+});
+
+// Verify OTP
+verifyOtpBtn.addEventListener("click", async () => {
+  const code = otpInput.value.trim();
+
+  if (!confirmationResult) {
+    setStatus("Please click Send OTP first.");
+    return;
+  }
+
+  if (!code) {
+    setStatus("Enter the OTP received on your phone.");
+    return;
+  }
+
+  verifyOtpBtn.disabled = true;
+
+  try {
+    await confirmationResult.confirm(code);
+    setStatus("Phone verified successfully.");
+  } catch (error) {
+    console.error("OTP verification error:", error);
+    setStatus("Verification error: " + error.code + " — " + error.message);
+  } finally {
+    verifyOtpBtn.disabled = false;
+  }
+});
+
+// Monitor login state
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    loginPanel.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+
+    document.getElementById("userInfo").textContent =
+      "Verified mobile: " + (user.phoneNumber || "Verified user");
+
+    await loadMatches();
+  } else {
+    dashboard.classList.add("hidden");
+    loginPanel.classList.remove("hidden");
+    matchesBox.innerHTML = "";
+    matchStatus.textContent = "";
+  }
+});
+
+// Logout
+logoutBtn.addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    setStatus("You have logged out.");
+  } catch (error) {
+    console.error(error);
+    alert("Logout failed: " + error.message);
+  }
+});
+
+// Refresh matches
+refreshBtn.addEventListener("click", loadMatches);
+
+// Display match information safely
+function showMatches(data) {
+  matchesBox.innerHTML = "";
+
+  const list = Array.isArray(data)
+    ? data
+    : data.matches || data.data || data.events || [];
+
+  if (!Array.isArray(list) || list.length === 0) {
+    matchStatus.textContent = "No matches found.";
+    return;
+  }
+
+  matchStatus.textContent = list.length + " match(es)";
+
+  list.forEach((match) => {
+    const card = document.createElement("article");
+    card.className = "match";
+
+    const title = document.createElement("h3");
+    title.textContent =
+      match.name ||
+      match.title ||
+      [match.team1, match.team2].filter(Boolean).join(" vs ") ||
+      [match.homeTeam, match.awayTeam].filter(Boolean).join(" vs ") ||
+      "Cricket match";
+
+    const details = document.createElement("p");
+    details.textContent =
+      match.status ||
+      match.matchStatus ||
+      match.venue ||
+      "Match information";
+
+    const score = document.createElement("p");
+    score.textContent = match.score || match.scorecard || "";
+
+    card.appendChild(title);
+    card.appendChild(details);
+
+    if (score.textContent) {
+      card.appendChild(score);
     }
 
-    document.getElementById("sendOtpBtn").addEventListener("click", async () => {
-      const phone = phoneInput.value.trim();
+    matchesBox.appendChild(card);
+  });
+}
 
-      if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-        setStatus("Enter a valid number with country code, such as +919876543210.");
-        return;
-      }
+// Load match data from Cloudflare Worker
+async function loadMatches() {
+  matchStatus.textContent = "Loading matches...";
+  matchesBox.innerHTML = "";
 
-      const sendButton = document.getElementById("sendOtpBtn");
-      sendButton.disabled = true;
+  try {
+    const response = await fetch(MATCH_API);
 
-      try {
-        setupRecaptcha();
-
-        const verifier = await recaptchaVerifier;
-        confirmationResult = await signInWithPhoneNumber(
-          auth,
-          phone,
-          verifier
-        );
-
-        otpSection.classList.remove("hidden");
-        setStatus("OTP sent. Check your phone.");
-      } catch (error) {
-        console.error(error);
-        setStatus("Could not send OTP: " + error.message);
-
-        if (recaptchaVerifier) {
-          try {
-            await recaptchaVerifier.clear();
-          } catch {}
-          recaptchaVerifier = null;
-          document.getElementById("recaptcha-container").innerHTML = "";
-        }
-      } finally {
-        sendButton.disabled = false;
-      }
-    });
-
-    document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
-      const code = otpInput.value.trim();
-
-      if (!confirmationResult) {
-        setStatus("Please request an OTP first.");
-        return;
-      }
-
-      if (!code) {
-        setStatus("Enter the OTP you received.");
-        return;
-      }
-
-      const verifyButton = document.getElementById("verifyOtpBtn");
-      verifyButton.disabled = true;
-
-      try {
-        await confirmationResult.confirm(code);
-        setStatus("Phone verified successfully.");
-      } catch (error) {
-        console.error(error);
-        setStatus("OTP verification failed: " + error.message);
-      } finally {
-        verifyButton.disabled = false;
-      }
-    });
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        loginPanel.classList.add("hidden");
-        dashboard.classList.remove("hidden");
-        document.getElementById("userInfo").textContent =
-          "Verified mobile: " + (user.phoneNumber || "Verified user");
-
-        await loadMatches();
-      } else {
-        dashboard.classList.add("hidden");
-        loginPanel.classList.remove("hidden");
-        matchesBox.innerHTML = "";
-        matchStatus.textContent = "";
-      }
-    });
-
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-        setStatus("You have logged out.");
-      } catch (error) {
-        alert("Logout failed: " + error.message);
-      }
-    });
-
-    document.getElementById("refreshBtn").addEventListener("click", loadMatches);
-
-    function showMatches(data) {
-      matchesBox.innerHTML = "";
-
-      // Accept common API response shapes.
-      const list = Array.isArray(data)
-        ? data
-        : data.matches || data.data || data.events || [];
-
-      if (!Array.isArray(list) || list.length === 0) {
-        matchStatus.textContent = "No matches were returned by the API.";
-        return;
-      }
-
-      matchStatus.textContent = list.length + " match(es)";
-
-      list.forEach((match) => {
-        const card = document.createElement("article");
-        card.className = "match";
-
-        const title = document.createElement("h3");
-        title.textContent =
-          match.name ||
-          match.title ||
-          [match.team1, match.team2].filter(Boolean).join(" vs ") ||
-          [match.homeTeam, match.awayTeam].filter(Boolean).join(" vs ") ||
-          "Cricket match";
-
-        const details = document.createElement("p");
-        details.textContent =
-          match.status ||
-          match.matchStatus ||
-          match.venue ||
-          "Match information";
-
-        const score = document.createElement("p");
-        score.textContent =
-          match.score ||
-          match.scorecard ||
-          "";
-
-        card.appendChild(title);
-        card.appendChild(details);
-
-        if (score.textContent) {
-          card.appendChild(score);
-        }
-
-        matchesBox.appendChild(card);
-      });
+    if (!response.ok) {
+      throw new Error("API returned HTTP " + response.status);
     }
 
-    async function loadMatches() {
-      matchStatus.textContent = "Loading matches...";
-      matchesBox.innerHTML = "";
-
-      try {
-        const response = await fetch(MATCH_API);
-
-        if (!response.ok) {
-          throw new Error("API returned HTTP " + response.status);
-        }
-
-        const data = await response.json();
-        showMatches(data);
-      } catch (error) {
-        console.error(error);
-        matchStatus.textContent =
-          "Could not load matches. Check your Worker API and its response format.";
-      }
-    }
-  </script>
-</body>
-</html>
+    const data = await response.json();
+    showMatches(data);
+  } catch (error) {
+    console.error("Match loading error:", error);
+    matchStatus.textContent =
+      "Could not load matches. Please check your API.";
+  }
+}
