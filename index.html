@@ -1,240 +1,230 @@
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-import {
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getAuth,
+    RecaptchaVerifier,
+    signInWithPhoneNumber,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-// Replace these with the actual values from Firebase Console.
-// Project settings → Your apps → SDK setup and configuration → Config
-const firebaseConfig = {
-  apiKey: "PASTE_YOUR_REAL_API_KEY_HERE",
-  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyDoudYXuwRqGxpOUl7BfQmmrloYoyKiPK0",
+    authDomain: "ports-edge-pro.firebaseapp.com",
+    projectId: "ports-edge-pro",
+    storageBucket: "ports-edge-pro.firebasestorage.app",
+    messagingSenderId: "811569206008",
+    appId: "1:811569206008:web:bd2acd5ec511f0c9d4e10d",
+    measurementId: "G-2S8PCFC271"
+  };
 
-const MATCH_API =
-  "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+  const MATCH_API =
+    "https://sports-edge-api.sk-suneeth.workers.dev/matches";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-// HTML elements
-const loginPanel = document.getElementById("loginPanel");
-const dashboard = document.getElementById("dashboard");
-const phoneInput = document.getElementById("phone");
-const otpInput = document.getElementById("otp");
-const otpSection = document.getElementById("otpSection");
-const status = document.getElementById("status");
-const matchStatus = document.getElementById("matchStatus");
-const matchesBox = document.getElementById("matches");
+  const loginPanel = document.getElementById("loginPanel");
+  const dashboard = document.getElementById("dashboard");
+  const phoneInput = document.getElementById("phone");
+  const otpInput = document.getElementById("otp");
+  const otpSection = document.getElementById("otpSection");
+  const status = document.getElementById("status");
+  const matchStatus = document.getElementById("matchStatus");
+  const matchesBox = document.getElementById("matches");
 
-const sendOtpBtn = document.getElementById("sendOtpBtn");
-const verifyOtpBtn = document.getElementById("verifyOtpBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const refreshBtn = document.getElementById("refreshBtn");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
 
-let confirmationResult = null;
-let recaptchaVerifier = null;
+  let confirmationResult = null;
+  let recaptchaVerifier = null;
 
-function setStatus(message) {
-  status.textContent = message;
-}
+  function setStatus(message) {
+    status.textContent = message;
+  }
 
-// Initialize reCAPTCHA
-async function setupRecaptcha() {
-  if (!recaptchaVerifier) {
-    recaptchaVerifier = new RecaptchaVerifier(
-      auth,
-      "recaptcha-container",
-      {
-        size: "normal",
-        callback: () => {
-          setStatus("Verification completed. You can request OTP.");
-        },
-        "expired-callback": () => {
-          setStatus("Verification expired. Please try again.");
+  async function setupRecaptcha() {
+    if (!recaptchaVerifier) {
+      recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "normal",
+          callback: () => {
+            setStatus("Captcha verified. Sending OTP...");
+          },
+          "expired-callback": () => {
+            setStatus("Captcha expired. Please try again.");
+          }
         }
-      }
-    );
-  }
-
-  await recaptchaVerifier.render();
-  return recaptchaVerifier;
-}
-
-// Send OTP
-sendOtpBtn.addEventListener("click", async () => {
-  const phone = phoneInput.value.trim();
-
-  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-    setStatus("Enter a valid number, including country code. Example: +919876543210");
-    return;
-  }
-
-  sendOtpBtn.disabled = true;
-  setStatus("Preparing phone verification...");
-
-  try {
-    const verifier = await setupRecaptcha();
-
-    confirmationResult = await signInWithPhoneNumber(
-      auth,
-      phone,
-      verifier
-    );
-
-    otpSection.classList.remove("hidden");
-    setStatus("OTP sent successfully. Check your phone.");
-  } catch (error) {
-    console.error("OTP error:", error);
-    setStatus("Firebase error: " + error.code + " — " + error.message);
-
-    if (recaptchaVerifier) {
-      try {
-        await recaptchaVerifier.clear();
-      } catch (clearError) {
-        console.error(clearError);
-      }
-      recaptchaVerifier = null;
-      document.getElementById("recaptcha-container").innerHTML = "";
-    }
-  } finally {
-    sendOtpBtn.disabled = false;
-  }
-});
-
-// Verify OTP
-verifyOtpBtn.addEventListener("click", async () => {
-  const code = otpInput.value.trim();
-
-  if (!confirmationResult) {
-    setStatus("Please click Send OTP first.");
-    return;
-  }
-
-  if (!code) {
-    setStatus("Enter the OTP received on your phone.");
-    return;
-  }
-
-  verifyOtpBtn.disabled = true;
-
-  try {
-    await confirmationResult.confirm(code);
-    setStatus("Phone verified successfully.");
-  } catch (error) {
-    console.error("OTP verification error:", error);
-    setStatus("Verification error: " + error.code + " — " + error.message);
-  } finally {
-    verifyOtpBtn.disabled = false;
-  }
-});
-
-// Monitor login state
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    loginPanel.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-
-    document.getElementById("userInfo").textContent =
-      "Verified mobile: " + (user.phoneNumber || "Verified user");
-
-    await loadMatches();
-  } else {
-    dashboard.classList.add("hidden");
-    loginPanel.classList.remove("hidden");
-    matchesBox.innerHTML = "";
-    matchStatus.textContent = "";
-  }
-});
-
-// Logout
-logoutBtn.addEventListener("click", async () => {
-  try {
-    await signOut(auth);
-    setStatus("You have logged out.");
-  } catch (error) {
-    console.error(error);
-    alert("Logout failed: " + error.message);
-  }
-});
-
-// Refresh matches
-refreshBtn.addEventListener("click", loadMatches);
-
-// Display match information safely
-function showMatches(data) {
-  matchesBox.innerHTML = "";
-
-  const list = Array.isArray(data)
-    ? data
-    : data.matches || data.data || data.events || [];
-
-  if (!Array.isArray(list) || list.length === 0) {
-    matchStatus.textContent = "No matches found.";
-    return;
-  }
-
-  matchStatus.textContent = list.length + " match(es)";
-
-  list.forEach((match) => {
-    const card = document.createElement("article");
-    card.className = "match";
-
-    const title = document.createElement("h3");
-    title.textContent =
-      match.name ||
-      match.title ||
-      [match.team1, match.team2].filter(Boolean).join(" vs ") ||
-      [match.homeTeam, match.awayTeam].filter(Boolean).join(" vs ") ||
-      "Cricket match";
-
-    const details = document.createElement("p");
-    details.textContent =
-      match.status ||
-      match.matchStatus ||
-      match.venue ||
-      "Match information";
-
-    const score = document.createElement("p");
-    score.textContent = match.score || match.scorecard || "";
-
-    card.appendChild(title);
-    card.appendChild(details);
-
-    if (score.textContent) {
-      card.appendChild(score);
+      );
     }
 
-    matchesBox.appendChild(card);
+    await recaptchaVerifier.render();
+    return recaptchaVerifier;
+  }
+
+  // Send OTP
+  sendOtpBtn.addEventListener("click", async () => {
+    const phone = phoneInput.value.trim();
+
+    if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+      setStatus("Enter your phone number with country code, e.g. +919876543210");
+      return;
+    }
+
+    sendOtpBtn.disabled = true;
+    setStatus("Preparing verification...");
+
+    try {
+      const verifier = await setupRecaptcha();
+
+      confirmationResult = await signInWithPhoneNumber(
+        auth,
+        phone,
+        verifier
+      );
+
+      otpSection.classList.remove("hidden");
+      setStatus("OTP sent successfully. Check your mobile.");
+    } catch (error) {
+      console.error(error);
+      setStatus("Firebase error: " + error.code + " — " + error.message);
+
+      if (recaptchaVerifier) {
+        try {
+          await recaptchaVerifier.clear();
+        } catch (e) {
+          console.error(e);
+        }
+        recaptchaVerifier = null;
+        document.getElementById("recaptcha-container").innerHTML = "";
+      }
+    } finally {
+      sendOtpBtn.disabled = false;
+    }
   });
-}
 
-// Load match data from Cloudflare Worker
-async function loadMatches() {
-  matchStatus.textContent = "Loading matches...";
-  matchesBox.innerHTML = "";
+  // Verify OTP
+  verifyOtpBtn.addEventListener("click", async () => {
+    const code = otpInput.value.trim();
 
-  try {
-    const response = await fetch(MATCH_API);
-
-    if (!response.ok) {
-      throw new Error("API returned HTTP " + response.status);
+    if (!confirmationResult) {
+      setStatus("Please request OTP first.");
+      return;
     }
 
-    const data = await response.json();
-    showMatches(data);
-  } catch (error) {
-    console.error("Match loading error:", error);
-    matchStatus.textContent =
-      "Could not load matches. Please check your API.";
+    if (!code) {
+      setStatus("Enter the OTP.");
+      return;
+    }
+
+    verifyOtpBtn.disabled = true;
+
+    try {
+      await confirmationResult.confirm(code);
+      setStatus("Phone verified successfully.");
+    } catch (error) {
+      console.error(error);
+      setStatus("Verification error: " + error.code + " — " + error.message);
+    } finally {
+      verifyOtpBtn.disabled = false;
+    }
+  });
+
+  // Check login state
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      loginPanel.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+
+      document.getElementById("userInfo").textContent =
+        "Verified mobile: " + (user.phoneNumber || "Verified user");
+
+      await loadMatches();
+    } else {
+      dashboard.classList.add("hidden");
+      loginPanel.classList.remove("hidden");
+      matchesBox.innerHTML = "";
+      matchStatus.textContent = "";
+    }
+  });
+
+  // Logout
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      alert("Logout failed: " + error.message);
+    }
+  });
+
+  // Refresh match data
+  document.getElementById("refreshBtn").addEventListener("click", loadMatches);
+
+  function showMatches(data) {
+    matchesBox.innerHTML = "";
+
+    const list = Array.isArray(data)
+      ? data
+      : data.matches || data.data || data.events || [];
+
+    if (!Array.isArray(list) || list.length === 0) {
+      matchStatus.textContent = "No matches found.";
+      return;
+    }
+
+    matchStatus.textContent = list.length + " match(es)";
+
+    list.forEach((match) => {
+      const card = document.createElement("article");
+      card.className = "match";
+
+      const title = document.createElement("h3");
+      title.textContent =
+        match.name ||
+        match.title ||
+        [match.team1, match.team2].filter(Boolean).join(" vs ") ||
+        [match.homeTeam, match.awayTeam].filter(Boolean).join(" vs ") ||
+        "Cricket match";
+
+      const details = document.createElement("p");
+      details.textContent =
+        match.status || match.matchStatus || match.venue || "Match information";
+
+      card.appendChild(title);
+      card.appendChild(details);
+
+      const scoreText = match.score || match.scorecard || "";
+      if (scoreText) {
+        const score = document.createElement("p");
+        score.textContent = scoreText;
+        card.appendChild(score);
+      }
+
+      matchesBox.appendChild(card);
+    });
   }
-}
+
+  async function loadMatches() {
+    matchStatus.textContent = "Loading matches...";
+    matchesBox.innerHTML = "";
+
+    try {
+      const response = await fetch(MATCH_API);
+
+      if (!response.ok) {
+        throw new Error("API returned HTTP " + response.status);
+      }
+
+      const data = await response.json();
+      showMatches(data);
+    } catch (error) {
+      console.error(error);
+      matchStatus.textContent =
+        "Could not load matches. Please check your API.";
+    }
+  }
+</script>
