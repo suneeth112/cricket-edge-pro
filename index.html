@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports Edge Pro | Sports Analytics</title>
+<style>
+:root {
+  --bg:#090e19;
+  --panel:#111a2b;
+  --panel2:#172238;
+  --border:#26334b;
+  --text:#f2f5fc;
+  --muted:#91a0b9;
+  --gold:#e6bd63;
+  --blue:#4e9eff;
+  --green:#4cce91;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+header{
+  height:72px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 5%;
+  border-bottom:1px solid var(--border);
+  background:#0c1423;position:sticky;top:0;z-index:5;
+}
+.logo{font-size:21px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--gold)}
+nav{display:flex;gap:24px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--gold)}
+.container{width:90%;max-width:1250px;margin:32px auto}
+.hero{
+  padding:34px;border:1px solid var(--border);
+  border-radius:18px;
+  background:linear-gradient(120deg,#17243b,#111a2b 65%,#222039);
+  margin-bottom:28px;
+}
+.eyebrow{color:var(--gold);font-size:12px;letter-spacing:2px;font-weight:bold}
+h1{font-size:clamp(27px,4vw,42px);margin:12px 0}
+.hero p{color:var(--muted);line-height:1.7;max-width:600px}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;margin:24px 0;
+}
+.stat,.card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;padding:20px;
+}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:25px;margin-top:12px}
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin:32px 0 18px;
+}
+h2{font-size:21px;margin:0}
+.sport-tabs{display:flex;gap:10px;flex-wrap:wrap}
+.tab{
+  padding:11px 17px;border-radius:9px;
+  border:1px solid var(--border);background:var(--panel);
+  color:var(--muted);cursor:pointer;font-weight:bold;
+}
+.tab.active{background:#493c23;color:var(--gold);border-color:var(--gold)}
+.cards{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.card{min-width:0}
+.card-top{display:flex;justify-content:space-between;gap:10px}
+.tag{font-size:11px;color:var(--green);font-weight:bold}
+.league{font-size:12px;color:var(--muted)}
+.match{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;margin:22px 0;
+}
+.team{text-align:center;flex:1;font-weight:bold}
+.team .emoji{font-size:30px;display:block;margin-bottom:9px}
+.vs{color:var(--muted);font-size:12px}
+.details{
+  border-top:1px solid var(--border);padding-top:15px;
+  display:flex;justify-content:space-between;gap:10px;
+  color:var(--muted);font-size:12px;
+}
+.prediction{
+  margin-top:15px;padding:13px;border-radius:9px;
+  background:var(--panel2);font-size:13px;
+}
+.prediction b{color:var(--gold)}
+.action{
+  margin-top:16px;background:transparent;
+  border:1px solid var(--border);border-radius:8px;
+  color:var(--text);padding:10px 14px;cursor:pointer;
+}
+.action:hover{border-color:var(--gold);color:var(--gold)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:500px}
+th,td{text-align:left;padding:15px;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-size:12px}
+td{font-size:13px}
+footer{
+  text-align:center;color:var(--muted);
+  padding:30px;border-top:1px solid var(--border);
+  margin-top:50px;font-size:12px;
+}
+.notice{color:var(--muted);font-size:12px;line-height:1.6;margin-top:20px}
+@media(max-width:700px){
+  header{padding:0 4%;height:65px}
+  nav{gap:10px}
+  nav a{font-size:12px}
+  .logo{font-size:16px}
+  .container{width:92%;margin:22px auto}
+  .hero{padding:23px}
+  .cards{grid-template-columns:1fr}
+  .stats{gap:9px}
+  .stat{padding:13px}
+  .stat strong{font-size:19px}
+  .stat small{font-size:11px}
+  .section-head{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">SPORTS <span>EDGE</span> PRO</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#matches">Matches</a>
+    <a href="#analysis">Analysis</a>
+  </nav>
+</header>
+
+<main class="container" id="home">
+  <section class="hero">
+    <div class="eyebrow">THE ANALYTICS ARENA</div>
+    <h1>Numbers Behind<br>Every Game.</h1>
+    <p>Explore sports statistics, match insights and data-driven projections across cricket, tennis and horse racing.</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <small>Sports Covered</small>
+      <strong>03</strong>
+    </div>
+    <div class="stat">
+      <small>Analysis Engine</small>
+      <strong>Active</strong>
+    </div>
+    <div class="stat">
+      <small>Data Mode</small>
+      <strong style="color:var(--gold)">Demo</strong>
+    </div>
+  </section>
+
+  <section id="matches">
+    <div class="section-head">
+      <h2>Explore Sports</h2>
+      <div class="sport-tabs">
+        <button class="tab active" data-sport="cricket">🏏 Cricket</button>
+        <button class="tab" data-sport="tennis">🎾 Tennis</button>
+        <button class="tab" data-sport="racing">🏇 Horse Racing</button>
+      </div>
+    </div>
+    <div class="cards" id="matchCards"></div>
+  </section>
+
+  <section id="analysis">
+    <div class="section-head">
+      <h2>Performance Centre</h2>
+    </div>
+    <div class="card">
+      <h3>Prediction tracker</h3>
+      <p style="color:var(--muted);font-size:13px;line-height:1.7">
+        Once real matches and published predictions are recorded, this section will track historical performance and prediction accuracy.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sport</th><th>Predictions</th><th>Correct</th><th>Accuracy</th></tr></thead>
+          <tbody id="tracker">
+            <tr><td>Cricket</td><td>0</td><td>0</td><td>—</td></tr>
+            <tr><td>Tennis</td><td>0</td><td>0</td><td>—</td></tr>
+            <tr><td>Horse Racing</td><td>0</td><td>0</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <p class="notice">Demo environment: all displayed matches and projections are illustrative examples, not live data or verified predictions. Horse-racing projections are for statistical analysis only.</p>
+</main>
+
+<footer>© 2026 SPORTS EDGE PRO · Sports statistics and analytics</footer>
+
+<script>
+const sports = {
+  cricket: [
+    {league:"T20 CRICKET · DEMO",status:"SAMPLE MATCH",a:"India",ae:"🇮🇳",b:"Australia",be:"🇦🇺",time:"Demo fixture",venue:"Sample venue",prediction:"Illustrative analysis only",score:"Projected score: 175–190"},
+    {league:"ODI CRICKET · DEMO",status:"SAMPLE MATCH",a:"England",ae:"🏴",b:"South Africa",be:"🇿🇦",time:"Demo fixture",venue:"Sample venue",prediction:"Illustrative analysis only",score:"Projected score: 260–285"}
+  ],
+  tennis: [
+    {league:"ATP TENNIS · DEMO",status:"SAMPLE MATCH",a:"Player A",ae:"🎾",b:"Player B",be:"🎾",time:"Demo fixture",venue:"Hard court",prediction:"Illustrative analysis only",score:"Surface: Hard"},
+    {league:"WTA TENNIS · DEMO",status:"SAMPLE MATCH",a:"Player C",ae:"🎾",b:"Player D",be:"🎾",time:"Demo fixture",venue:"Clay court",prediction:"Illustrative analysis only",score:"Surface: Clay"}
+  ],
+  racing: [
+    {league:"HORSE RACING · DEMO",status:"SAMPLE RACE",a:"Thunder Bolt",ae:"🏇",b:"Silver Arrow",be:"🏇",time:"Demo race",venue:"Sample racecourse",prediction:"Illustrative analysis only",score:"Distance: 1600 m"},
+    {league:"HORSE RACING · DEMO",status:"SAMPLE RACE",a:"Golden Star",ae:"🏇",b:"Rapid Wind",be:"🏇",time:"Demo race",venue:"Sample racecourse",prediction:"Illustrative analysis only",score:"Distance: 1200 m"}
+  ]
+};
+
+function renderSport(sport){
+  const container=document.getElementById("matchCards");
+  container.innerHTML="";
+  sports[sport].forEach(match=>{
+    const card=document.createElement("article");
+    card.className="card";
+    card.innerHTML=`
+      <div class="card-top">
+        <span class="league">${match.league}</span>
+        <span class="tag">${match.status}</span>
+      </div>
+      <div class="match">
+        <div class="team"><span class="emoji">${match.ae}</span>${match.a}</div>
+        <span class="vs">VS</span>
+        <div class="team"><span class="emoji">${match.be}</span>${match.b}</div>
+      </div>
+      <div class="details"><span>${match.time}</span><span>${match.venue}</span></div>
+      <div class="prediction"><b>${match.prediction}</b><br>${match.score}</div>
+      <button class="action">View analysis</button>`;
+    card.querySelector("button").addEventListener("click",()=>{
+      alert("Detailed analysis will be added in the next development phase. This is sample data.");
+    });
+    container.appendChild(card);
+  });
+}
+
+document.querySelectorAll(".tab").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(tab=>tab.classList.remove("active"));
+    button.classList.add("active");
+    renderSport(button.dataset.sport);
+  });
+});
+
+renderSport("cricket");
+</script>
+</body>
+</html>
