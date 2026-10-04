@@ -11,7 +11,7 @@ body{margin:0;background:#07111f;color:#f4f7ff;font-family:Arial,sans-serif}
 header{background:#0b192c;padding:20px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #233954}
 .logo{font-size:23px;font-weight:800}.logo span{color:#ffc629}
 nav a{color:#c5d0e1;text-decoration:none;margin-left:24px}
-.hero{margin:22px auto 28px;width:90%;min-height:230px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(90deg,rgba(5,15,30,.96),rgba(5,15,30,.25)),url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1600&q=85') center/cover;display:flex;align-items:center;padding:35px}
+.hero{margin:22px auto 28px;width:90%;min-height:250px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(90deg,rgba(5,15,30,.96),rgba(5,15,30,.25)),url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1600&q=85') center/cover;display:flex;align-items:center;padding:35px}
 .hero h1{font-size:clamp(28px,5vw,48px);margin:0 0 12px}.hero p{color:#d4deed;max-width:500px;line-height:1.6}
 main{width:90%;margin:auto}
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
@@ -22,13 +22,13 @@ main{width:90%;margin:auto}
 .searchrow select{padding:12px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:40px}
 .card{background:#11213a;border:1px solid #294360;border-radius:16px;overflow:hidden}
-.card-image{height:125px;background-size:cover;background-position:center;position:relative}
+.card-image{height:140px;background-size:cover;background-position:center;position:relative}
 .card-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,17,31,.65),transparent)}
 .sport-label{position:absolute;z-index:1;top:12px;left:14px;background:#07111fbd;padding:7px 10px;border-radius:20px;font-size:12px}
-.status{position:absolute;z-index:1;right:14px;top:14px;font-size:12px;color:#d9e2f2}
+.status{position:absolute;z-index:1;right:14px;top:14px;font-size:12px;color:#fff}
 .teams{display:flex;align-items:center;justify-content:space-around;gap:10px;padding:18px 14px 10px;text-align:center}
 .team{flex:1;font-weight:bold;font-size:17px;overflow-wrap:anywhere}
-.badge{width:42px;height:42px;border-radius:50%;margin:0 auto 8px;background:#203c61;border:1px solid #456589;display:flex;align-items:center;justify-content:center;color:#ffc629;font-weight:bold}
+.badge{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;background:#203c61;border:1px solid #456589;display:flex;align-items:center;justify-content:center;color:#ffc629;font-weight:bold}
 .vs{color:#ffc629;font-weight:bold}
 .scores{display:flex;justify-content:space-around;gap:10px;text-align:center;padding:10px 14px;color:#d8e4f5;font-size:13px;line-height:1.5}
 .details{padding:8px 20px 16px;color:#aab9ce;font-size:13px;line-height:1.8}
@@ -78,144 +78,124 @@ footer{text-align:center;padding:24px;color:#8798b0;border-top:1px solid #20334d
 <footer>SPORTS EDGE PRO · Sports information and analysis</footer>
 
 <script>
-const API = "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+const API="https://sports-edge-api.sk-suneeth.workers.dev/matches";
 
-const sportImages = {
-  cricket: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1000&q=80",
-  tennis: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=1000&q=80",
-  horse: "https://images.unsplash.com/photo-1534307670763-6c5b2a1c1b6b?auto=format&fit=crop&w=1000&q=80"
+const images={
+ cricket:"https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1000&q=80",
+ tennis:"https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=1000&q=80",
+ horse:"https://images.unsplash.com/photo-1534307670763-6c5b2a1c1b6b?auto=format&fit=crop&w=1000&q=80"
 };
 
-let matches = [];
-let selectedSport = "all";
+let matches=[];
+let selectedSport="all";
 
-function getTeamName(team) {
-  if (typeof team === "string") return team;
-  return team?.name || team?.teamName || team?.shortname || "Team";
+function teamName(t){
+ if(typeof t==="string")return t;
+ return t?.name||t?.teamName||t?.shortname||"Team";
 }
-
-function getTeams(match) {
-  const info = match.teamInfo || [];
-  const names = match.teams || [];
-  return [
-    getTeamName(info[0] || names[0]),
-    getTeamName(info[1] || names[1])
-  ];
+function getTeams(m){
+ const info=m.teamInfo||[];
+ const names=m.teams||[];
+ return [teamName(info[0]||names[0]),teamName(info[1]||names[1])];
 }
-
-function getStatus(match) {
-  const s = (match.status || "").toLowerCase();
-  if (match.matchStarted && !match.matchEnded) return "live";
-  if (match.matchEnded || s.includes("won") || s.includes("draw")) return "completed";
-  return "upcoming";
+function sportOf(m){
+ const s=(m.matchType||m.sport||"").toLowerCase();
+ if(s.includes("tennis"))return "tennis";
+ if(s.includes("horse"))return "horse";
+ return "cricket";
 }
-
-function getSport(match) {
-  const type = (match.matchType || match.sport || "").toLowerCase();
-  return type.includes("tennis") ? "tennis" :
-         type.includes("horse") ? "horse" : "cricket";
+function statusOf(m){
+ const s=(m.status||"").toLowerCase();
+ if(m.matchStarted&&!m.matchEnded)return "live";
+ if(m.matchEnded||s.includes("won")||s.includes("draw"))return "completed";
+ return "upcoming";
 }
-
-function initials(name) {
-  return (name || "T").split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+function initials(n){
+ return (n||"T").split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
 }
-
-function render() {
-  const grid = document.getElementById("matchesGrid");
-  const search = document.getElementById("search").value.toLowerCase();
-  const status = document.getElementById("status").value;
-
-  const filtered = matches.filter(m => {
-    const [a,b] = getTeams(m);
-    const sport = getSport(m);
-    return (selectedSport === "all" || sport === selectedSport) &&
-      (status === "all" || getStatus(m) === status) &&
-      (a + " " + b + " " + (m.name || "")).toLowerCase().includes(search);
+function filteredMatches(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const status=document.getElementById("status").value;
+ return matches.filter(m=>{
+  const [a,b]=getTeams(m);
+  return (selectedSport==="all"||sportOf(m)===selectedSport)&&
+   (status==="all"||statusOf(m)===status)&&
+   (a+" "+b+" "+(m.name||"")).toLowerCase().includes(q);
+ });
+}
+function render(){
+ const grid=document.getElementById("matchesGrid");
+ const list=filteredMatches();
+ if(!list.length){
+  grid.innerHTML='<div class="empty">No matches found.</div>';
+  return;
+ }
+ grid.innerHTML=list.map((m,i)=>{
+  const [a,b]=getTeams(m);
+  const sport=sportOf(m);
+  const scores=Array.isArray(m.score)?m.score.map(s=>
+   `${s.inning||""}: ${s.r??""}/${s.w??""} (${s.o??""} ov)`
+  ):[];
+  const state=statusOf(m);
+  const date=m.dateTimeGMT?new Date(m.dateTimeGMT).toLocaleString():
+   m.date?new Date(m.date).toLocaleDateString():"Date unavailable";
+  const statusText=state==="live"?"🔴 Live":
+   state==="completed"?"Completed":"Upcoming";
+  return `
+   <article class="card">
+    <div class="card-image" style="background-image:url('${images[sport]}')">
+     <span class="sport-label">${sport==="cricket"?"🏏 Cricket":sport==="tennis"?"🎾 Tennis":"🏇 Horse Racing"}</span>
+     <span class="status">${statusText}</span>
+    </div>
+    <div class="teams">
+     <div class="team"><div class="badge">${initials(a)}</div>${a}</div>
+     <div class="vs">VS</div>
+     <div class="team"><div class="badge">${initials(b)}</div>${b}</div>
+    </div>
+    <div class="scores">
+     <div>${scores[0]||m.status||"Score unavailable"}</div>
+     <div>${scores[1]||""}</div>
+    </div>
+    <div class="details">
+     📍 ${m.venue||"Venue unavailable"}<br>
+     📅 ${date}<br>
+     ${m.name||""}
+    </div>
+    <button class="analysis" data-index="${i}">View Match Analysis</button>
+   </article>`;
+ }).join("");
+ grid.querySelectorAll(".analysis").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+   const m=list[Number(btn.dataset.index)];
+   const [a,b]=getTeams(m);
+   alert(`${a} vs ${b}\n\n${m.status||"Status unavailable"}\n\nBasic match information. Detailed predictions are not yet connected.`);
   });
-
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="empty">No matches found for this selection.</div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map((m,i) => {
-    const [a,b] = getTeams(m);
-    const sport = getSport(m);
-    const scores = Array.isArray(m.score) ? m.score.map(s =>
-      `${s.inning || ""}: ${s.r ?? ""}/${s.w ?? ""} (${s.o ?? ""} ov)`
-    ) : [];
-    const state = getStatus(m);
-    const date = m.dateTimeGMT ? new Date(m.dateTimeGMT).toLocaleString() :
-                 m.date ? new Date(m.date).toLocaleDateString() : "Date unavailable";
-    const venue = m.venue || "Venue unavailable";
-    const statusText = state === "live" ? "🔴 Live" :
-                       state === "completed" ? "Completed" : "Upcoming";
-    return `
-      <article class="card">
-        <div class="card-image" style="background-image:url('${sportImages[sport]}')">
-          <span class="sport-label">${sport === "cricket" ? "🏏 Cricket" : sport === "tennis" ? "🎾 Tennis" : "🏇 Horse Racing"}</span>
-          <span class="status">${statusText}</span>
-        </div>
-        <div class="teams">
-          <div class="team"><div class="badge">${initials(a)}</div>${a}</div>
-          <div class="vs">VS</div>
-          <div class="team"><div class="badge">${initials(b)}</div>${b}</div>
-        </div>
-        <div class="scores">
-          <div>${scores[0] || m.status || "Score unavailable"}</div>
-          <div>${scores[1] || ""}</div>
-        </div>
-        <div class="details">
-          📍 ${venue}<br>
-          📅 ${date}<br>
-          ${m.name || ""}
-        </div>
-        <button class="analysis" onclick="showAnalysis(${i})">View Match Analysis</button>
-      </article>`;
-  }).join("");
+ });
 }
-
-function showAnalysis(index) {
-  const m = matches.filter(m => {
-    const [a,b] = getTeams(m);
-    const search = document.getElementById("search").value.toLowerCase();
-    const status = document.getElementById("status").value;
-    return (selectedSport === "all" || getSport(m) === selectedSport) &&
-      (status === "all" || getStatus(m) === status) &&
-      (a + " " + b + " " + (m.name || "")).toLowerCase().includes(search);
-  })[index];
-  if (!m) return;
-  const [a,b] = getTeams(m);
-  alert(`${a} vs ${b}\n\nStatus: ${m.status || "Unavailable"}\n\nThis is a basic match summary. Detailed predictions require additional analysis data.`);
+async function loadMatches(){
+ const grid=document.getElementById("matchesGrid");
+ try{
+  const res=await fetch(API);
+  if(!res.ok)throw new Error("API error");
+  const data=await res.json();
+  matches=Array.isArray(data)?data:
+   data.data||data.matches||data.response||[];
+  if(!Array.isArray(matches))matches=[];
+  render();
+ }catch(e){
+  grid.innerHTML='<div class="empty">Unable to load matches. Please check your API connection.</div>';
+ }
 }
-
-async function loadMatches() {
-  const grid = document.getElementById("matchesGrid");
-  try {
-    const response = await fetch(API);
-    if (!response.ok) throw new Error("API request failed");
-    const data = await response.json();
-    matches = Array.isArray(data) ? data :
-      data.data || data.matches || data.response || [];
-    if (!Array.isArray(matches)) matches = [];
-    render();
-  } catch (error) {
-    grid.innerHTML = `<div class="empty">Unable to load match data. Please check your API connection.</div>`;
-  }
-}
-
-document.querySelectorAll(".filters button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-    button.classList.add("active");
-    selectedSport = button.dataset.sport;
-    render();
-  });
+document.querySelectorAll(".filters button").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  selectedSport=btn.dataset.sport;
+  render();
+ });
 });
-
-document.getElementById("search").addEventListener("input", render);
-document.getElementById("status").addEventListener("change", render);
-
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("status").addEventListener("change",render);
 loadMatches();
 </script>
 </body>
