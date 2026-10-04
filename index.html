@@ -6,504 +6,215 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPORTS EDGE PRO</title>
 <style>
-:root {
-  --bg: #07111f;
-  --panel: #101f36;
-  --panel2: #152946;
-  --blue: #2563eb;
-  --yellow: #ffca28;
-  --text: #f5f7fc;
-  --muted: #9eacc2;
-  --green: #22c55e;
-  --border: #233958;
-}
-* {box-sizing:border-box}
-body {
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  color:var(--text);
-  background:var(--bg);
-}
-header {
-  height:70px;
-  padding:0 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid var(--border);
-  background:#091629;
-  position:sticky;
-  top:0;
-  z-index:5;
-}
-.logo {font-size:20px;font-weight:900}
-.logo span {color:var(--yellow)}
-nav {display:flex;gap:24px}
-nav a {
-  color:var(--muted);
-  text-decoration:none;
-  cursor:pointer;
-  font-size:14px;
-}
-nav a:hover {color:var(--yellow)}
-main {max-width:1400px;margin:auto;padding:30px 5%}
-.hero {
-  background:linear-gradient(120deg,#143a7c,#2359b2);
-  border:1px solid #3665ad;
-  border-radius:20px;
-  padding:38px;
-  margin-bottom:25px;
-  min-height:220px;
-}
-.hero small {color:var(--yellow);font-weight:bold;letter-spacing:2px}
-.hero h1 {font-size:38px;margin:15px 0 10px}
-.hero p {color:#d4e2ff;max-width:650px;line-height:1.6}
-.btn {
-  background:var(--yellow);
-  border:0;
-  border-radius:9px;
-  padding:12px 20px;
-  color:#172033;
-  font-weight:bold;
-  cursor:pointer;
-}
-.stats {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin-bottom:35px;
-}
-.stat,.card,.analysis {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:20px;
-}
-.stat small {color:var(--muted)}
-.stat h2 {color:var(--yellow);margin:10px 0 0}
-.section-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin:25px 0 18px;
-}
-.section-head h2 {font-size:23px;margin:0}
-.controls {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-bottom:20px;
-}
-.tab {
-  border:1px solid var(--border);
-  background:var(--panel);
-  color:var(--text);
-  border-radius:9px;
-  padding:11px 18px;
-  cursor:pointer;
-}
-.tab.active {
-  background:var(--yellow);
-  color:#111827;
-  border-color:var(--yellow);
-  font-weight:bold;
-}
-input,select {
-  background:var(--panel);
-  color:var(--text);
-  border:1px solid var(--border);
-  padding:12px;
-  border-radius:9px;
-  outline:none;
-}
-input {flex:1;min-width:180px}
-select {min-width:140px}
-.match-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:18px;
-}
-.card {transition:transform .2s}
-.card:hover {transform:translateY(-3px)}
-.match-top {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:20px;
-}
-.status {color:var(--green);font-weight:bold}
-.teams {
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  gap:10px;
-  text-align:center;
-  font-weight:bold;
-  font-size:17px;
-  min-height:50px;
-}
-.vs {color:var(--yellow);font-size:12px}
-.score {
-  display:flex;
-  justify-content:space-around;
-  margin-top:16px;
-  font-size:14px;
-  color:#d5e4ff;
-}
-.details {
-  color:var(--muted);
-  font-size:12px;
-  margin-top:20px;
-  line-height:1.6;
-  overflow-wrap:anywhere;
-}
-.card button {
-  margin-top:15px;
-  width:100%;
-  border:1px solid #34547f;
-  color:var(--text);
-  background:var(--panel2);
-  padding:11px;
-  border-radius:8px;
-  cursor:pointer;
-}
-.card button:hover {border-color:var(--yellow);color:var(--yellow)}
-.message {
-  padding:30px;
-  text-align:center;
-  color:var(--muted);
-  background:var(--panel);
-  border-radius:14px;
-  grid-column:1/-1;
-}
-.analysis {margin-top:25px;display:none}
-.analysis h3 {color:var(--yellow)}
-footer {
-  text-align:center;
-  border-top:1px solid var(--border);
-  padding:25px;
-  color:var(--muted);
-  font-size:12px;
-  margin-top:45px;
-}
-@media(max-width:750px) {
-  .match-grid {grid-template-columns:1fr}
-  .stats {grid-template-columns:1fr}
-  .hero {padding:25px}
-  .hero h1 {font-size:29px}
-  header {padding:0 4%}
-  nav {gap:12px}
-  nav a {font-size:12px}
-  main {padding:22px 4%}
-}
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#f4f7ff;font-family:Arial,sans-serif}
+header{background:#0b192c;padding:20px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #233954}
+.logo{font-size:23px;font-weight:800}.logo span{color:#ffc629}
+nav a{color:#c5d0e1;text-decoration:none;margin-left:24px}
+.hero{margin:22px auto 28px;width:90%;min-height:230px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(90deg,rgba(5,15,30,.96),rgba(5,15,30,.25)),url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1600&q=85') center/cover;display:flex;align-items:center;padding:35px}
+.hero h1{font-size:clamp(28px,5vw,48px);margin:0 0 12px}.hero p{color:#d4deed;max-width:500px;line-height:1.6}
+main{width:90%;margin:auto}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.filters button,.searchrow select{background:#11233c;border:1px solid #294360;color:#f4f7ff;border-radius:10px;padding:12px 18px;cursor:pointer}
+.filters button.active{background:#ffc629;color:#07111f;font-weight:bold}
+.searchrow{display:flex;gap:10px;margin-bottom:22px}
+.searchrow input{flex:1;min-width:0;background:#11233c;border:1px solid #294360;border-radius:10px;padding:14px;color:white}
+.searchrow select{padding:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:40px}
+.card{background:#11213a;border:1px solid #294360;border-radius:16px;overflow:hidden}
+.card-image{height:125px;background-size:cover;background-position:center;position:relative}
+.card-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,17,31,.65),transparent)}
+.sport-label{position:absolute;z-index:1;top:12px;left:14px;background:#07111fbd;padding:7px 10px;border-radius:20px;font-size:12px}
+.status{position:absolute;z-index:1;right:14px;top:14px;font-size:12px;color:#d9e2f2}
+.teams{display:flex;align-items:center;justify-content:space-around;gap:10px;padding:18px 14px 10px;text-align:center}
+.team{flex:1;font-weight:bold;font-size:17px;overflow-wrap:anywhere}
+.badge{width:42px;height:42px;border-radius:50%;margin:0 auto 8px;background:#203c61;border:1px solid #456589;display:flex;align-items:center;justify-content:center;color:#ffc629;font-weight:bold}
+.vs{color:#ffc629;font-weight:bold}
+.scores{display:flex;justify-content:space-around;gap:10px;text-align:center;padding:10px 14px;color:#d8e4f5;font-size:13px;line-height:1.5}
+.details{padding:8px 20px 16px;color:#aab9ce;font-size:13px;line-height:1.8}
+.analysis{display:block;width:calc(100% - 40px);margin:0 20px 18px;padding:12px;background:#172e4d;border:1px solid #355779;border-radius:9px;color:white;cursor:pointer}
+.analysis:hover{background:#24466f}
+.empty{padding:35px;text-align:center;color:#aab9ce;grid-column:1/-1}
+footer{text-align:center;padding:24px;color:#8798b0;border-top:1px solid #20334d}
+@media(max-width:760px){header{padding:16px 5%;flex-wrap:wrap;gap:12px}nav a{margin-left:12px}.grid{grid-template-columns:1fr}.hero{min-height:200px;padding:24px}.searchrow{flex-wrap:wrap}.searchrow input{width:100%;flex-basis:100%}}
 </style>
 </head>
 <body>
-
 <header>
-  <div class="logo">SPORTS <span>EDGE</span> PRO</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#matches">Matches</a>
-    <a href="#analysis">Analysis</a>
-  </nav>
+  <div class="logo">SPORTS <span>EDGE PRO</span></div>
+  <nav><a href="#home">Home</a><a href="#matches">Matches</a><a href="#matches">Analysis</a></nav>
 </header>
 
-<main id="home">
-  <section class="hero">
-    <small>THE ANALYTICS ARENA</small>
-    <h1>Numbers Behind<br>Every Game.</h1>
-    <p>Explore sports statistics, compare performances and study match data across cricket, tennis and horse racing.</p>
-    <button class="btn" onclick="document.getElementById('matches').scrollIntoView({behavior:'smooth'})">
-      Explore Matches →
-    </button>
-  </section>
+<section class="hero" id="home">
+  <div>
+    <h1>SPORTS EDGE PRO</h1>
+    <p>Live sports, match insights and performance analysis — all in one place.</p>
+  </div>
+</section>
 
-  <section class="stats">
-    <div class="stat">
-      <small>Matches Loaded</small>
-      <h2 id="totalCount">0</h2>
-    </div>
-    <div class="stat">
-      <small>Live Matches</small>
-      <h2 id="liveCount">0</h2>
-    </div>
-    <div class="stat">
-      <small>API Connection</small>
-      <h2 id="apiStatus">Checking</h2>
-    </div>
-  </section>
+<main id="matches">
+  <div class="filters">
+    <button class="active" data-sport="all">🏆 All Sports</button>
+    <button data-sport="cricket">🏏 Cricket</button>
+    <button data-sport="tennis">🎾 Tennis</button>
+    <button data-sport="horse">🏇 Horse Racing</button>
+  </div>
 
-  <section id="matches">
-    <div class="section-head">
-      <h2>Explore Sports</h2>
-      <button class="btn" id="refreshBtn" onclick="loadMatches()">↻ Refresh</button>
-    </div>
+  <div class="searchrow">
+    <input id="search" placeholder="Search teams, players or tournament...">
+    <select id="status">
+      <option value="all">All Matches</option>
+      <option value="live">Live</option>
+      <option value="upcoming">Upcoming</option>
+      <option value="completed">Completed</option>
+    </select>
+  </div>
 
-    <div class="controls">
-      <button class="tab active" data-sport="all">All Sports</button>
-      <button class="tab" data-sport="cricket">🏏 Cricket</button>
-      <button class="tab" data-sport="tennis">🎾 Tennis</button>
-      <button class="tab" data-sport="horse">🏇 Horse Racing</button>
-    </div>
-
-    <div class="controls">
-      <input id="search" type="search" placeholder="Search teams, players or tournament...">
-      <select id="statusFilter">
-        <option value="all">All Matches</option>
-        <option value="live">Live</option>
-        <option value="upcoming">Upcoming</option>
-        <option value="completed">Completed</option>
-      </select>
-    </div>
-
-    <div id="matchList" class="match-grid">
-      <div class="message">Connecting to Sports Edge API...</div>
-    </div>
-  </section>
-
-  <section id="analysis" class="analysis">
-    <h3>Match Analysis</h3>
-    <div id="analysisContent"></div>
-    <button class="tab" onclick="closeAnalysis()">Close Analysis</button>
-  </section>
+  <div class="grid" id="matchesGrid">
+    <div class="empty">Loading matches...</div>
+  </div>
 </main>
 
-<footer>
-  SPORTS EDGE PRO · Sports analytics platform · Data availability depends on API
-</footer>
+<footer>SPORTS EDGE PRO · Sports information and analysis</footer>
 
 <script>
-const API_URL = "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+const API = "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+
+const sportImages = {
+  cricket: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1000&q=80",
+  tennis: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=1000&q=80",
+  horse: "https://images.unsplash.com/photo-1534307670763-6c5b2a1c1b6b?auto=format&fit=crop&w=1000&q=80"
+};
 
 let matches = [];
-let activeSport = "all";
+let selectedSport = "all";
 
-const $ = id => document.getElementById(id);
-
-function getMatchArray(data) {
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data.data)) return data.data;
-  if (Array.isArray(data.matches)) return data.matches;
-  if (Array.isArray(data.results)) return data.results;
-  return [];
+function getTeamName(team) {
+  if (typeof team === "string") return team;
+  return team?.name || team?.teamName || team?.shortname || "Team";
 }
 
-function getSport(m) {
-  const type = String(m.sport || m.matchType || m.type || "").toLowerCase();
-  if (type.includes("tennis")) return "tennis";
-  if (type.includes("horse") || type.includes("race")) return "horse";
-  if (type.includes("cricket") || type.includes("t20") ||
-      type.includes("odi") || type.includes("test")) return "cricket";
-  return "other";
-}
-
-function getTeams(m) {
-  if (Array.isArray(m.teams)) {
-    return [
-      m.teams[0]?.name || m.teams[0] || "Team A",
-      m.teams[1]?.name || m.teams[1] || "Team B"
-    ];
-  }
+function getTeams(match) {
+  const info = match.teamInfo || [];
+  const names = match.teams || [];
   return [
-    m.teamA || m.player1 || m.homeTeam || m.name || "Participant A",
-    m.teamB || m.player2 || m.awayTeam || "Participant B"
+    getTeamName(info[0] || names[0]),
+    getTeamName(info[1] || names[1])
   ];
 }
 
-function getStatus(m) {
-  const s = String(m.status || "").toLowerCase();
-  if (m.matchStarted && !m.matchEnded) return "live";
-  if (m.matchEnded || /won|result|completed|finished|draw/.test(s)) return "completed";
-  if (/live|in progress|innings|playing/.test(s)) return "live";
+function getStatus(match) {
+  const s = (match.status || "").toLowerCase();
+  if (match.matchStarted && !match.matchEnded) return "live";
+  if (match.matchEnded || s.includes("won") || s.includes("draw")) return "completed";
   return "upcoming";
 }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;",
-    '"':"&quot;", "'":"&#39;"
-  })[c]);
+function getSport(match) {
+  const type = (match.matchType || match.sport || "").toLowerCase();
+  return type.includes("tennis") ? "tennis" :
+         type.includes("horse") ? "horse" : "cricket";
 }
 
-function formatDate(value) {
-  if (!value) return "Date unavailable";
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return escapeHTML(value);
-  return d.toLocaleString(undefined, {
-    dateStyle:"medium",
-    timeStyle:"short"
-  });
+function initials(name) {
+  return (name || "T").split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
 }
 
-function getScores(m) {
-  if (Array.isArray(m.score)) {
-    return m.score.map(s => {
-      const innings = s.inning ? ` ${s.inning}` : "";
-      return `${s.r ?? 0}/${s.w ?? 0} (${s.o ?? 0} ov)${innings}`;
-    });
-  }
-  if (m.score && typeof m.score === "object") {
-    return Object.values(m.score).map(s => {
-      if (typeof s === "string" || typeof s === "number") return s;
-      return s ? `${s.r ?? ""}/${s.w ?? ""} (${s.o ?? ""} ov)` : "";
-    }).filter(Boolean);
-  }
-  if (m.score !== undefined && m.score !== null) return [m.score];
-  return [];
-}
-
-function renderMatches() {
-  const query = $("search").value.trim().toLowerCase();
-  const filter = $("statusFilter").value;
+function render() {
+  const grid = document.getElementById("matchesGrid");
+  const search = document.getElementById("search").value.toLowerCase();
+  const status = document.getElementById("status").value;
 
   const filtered = matches.filter(m => {
-    const sport = getSport(m);
-    const status = getStatus(m);
     const [a,b] = getTeams(m);
-    const text = [a,b,m.name,m.series,m.venue,m.matchType]
-      .filter(Boolean).join(" ").toLowerCase();
-
-    return (activeSport === "all" || sport === activeSport) &&
-      (filter === "all" || status === filter) &&
-      text.includes(query);
+    const sport = getSport(m);
+    return (selectedSport === "all" || sport === selectedSport) &&
+      (status === "all" || getStatus(m) === status) &&
+      (a + " " + b + " " + (m.name || "")).toLowerCase().includes(search);
   });
 
-  $("totalCount").textContent = matches.length;
-  $("liveCount").textContent = matches.filter(m => getStatus(m) === "live").length;
-
-  const list = $("matchList");
-  list.innerHTML = "";
-
   if (!filtered.length) {
-    list.innerHTML = '<div class="message">No matching matches available.</div>';
+    grid.innerHTML = `<div class="empty">No matches found for this selection.</div>`;
     return;
   }
 
-  filtered.forEach(m => {
+  grid.innerHTML = filtered.map((m,i) => {
     const [a,b] = getTeams(m);
-    const status = getStatus(m);
-    const scores = getScores(m);
-    const card = document.createElement("article");
-    card.className = "card";
-
     const sport = getSport(m);
-    const icon = sport === "cricket" ? "🏏" :
-                 sport === "tennis" ? "🎾" :
-                 sport === "horse" ? "🏇" : "🏆";
-
-    card.innerHTML = `
-      <div class="match-top">
-        <span>${icon} ${escapeHTML(m.matchType || m.sport || sport)}</span>
-        <span class="${status === "live" ? "status" : ""}">
-          ${status === "live" ? "● LIVE" :
-            status === "completed" ? "Completed" : "Upcoming"}
-        </span>
-      </div>
-      <div class="teams">
-        <span>${escapeHTML(a)}</span>
-        <span class="vs">VS</span>
-        <span>${escapeHTML(b)}</span>
-      </div>
-      ${scores.length ? `
-        <div class="score">
-          ${scores.map(s => `<span>${escapeHTML(s)}</span>`).join("")}
-        </div>` : ""}
-      <div class="details">
-        <div>${escapeHTML(m.series || m.tournament || "")}</div>
-        <div>📍 ${escapeHTML(m.venue || "Venue unavailable")}</div>
-        <div>🗓 ${formatDate(m.dateTimeGMT || m.date || m.startTime)}</div>
-        <div>${escapeHTML(m.status || "")}</div>
-      </div>
-      <button type="button">View Match Analysis</button>
-    `;
-
-    card.querySelector("button").addEventListener("click", () => showAnalysis(m));
-    list.appendChild(card);
-  });
+    const scores = Array.isArray(m.score) ? m.score.map(s =>
+      `${s.inning || ""}: ${s.r ?? ""}/${s.w ?? ""} (${s.o ?? ""} ov)`
+    ) : [];
+    const state = getStatus(m);
+    const date = m.dateTimeGMT ? new Date(m.dateTimeGMT).toLocaleString() :
+                 m.date ? new Date(m.date).toLocaleDateString() : "Date unavailable";
+    const venue = m.venue || "Venue unavailable";
+    const statusText = state === "live" ? "🔴 Live" :
+                       state === "completed" ? "Completed" : "Upcoming";
+    return `
+      <article class="card">
+        <div class="card-image" style="background-image:url('${sportImages[sport]}')">
+          <span class="sport-label">${sport === "cricket" ? "🏏 Cricket" : sport === "tennis" ? "🎾 Tennis" : "🏇 Horse Racing"}</span>
+          <span class="status">${statusText}</span>
+        </div>
+        <div class="teams">
+          <div class="team"><div class="badge">${initials(a)}</div>${a}</div>
+          <div class="vs">VS</div>
+          <div class="team"><div class="badge">${initials(b)}</div>${b}</div>
+        </div>
+        <div class="scores">
+          <div>${scores[0] || m.status || "Score unavailable"}</div>
+          <div>${scores[1] || ""}</div>
+        </div>
+        <div class="details">
+          📍 ${venue}<br>
+          📅 ${date}<br>
+          ${m.name || ""}
+        </div>
+        <button class="analysis" onclick="showAnalysis(${i})">View Match Analysis</button>
+      </article>`;
+  }).join("");
 }
 
-function showAnalysis(m) {
+function showAnalysis(index) {
+  const m = matches.filter(m => {
+    const [a,b] = getTeams(m);
+    const search = document.getElementById("search").value.toLowerCase();
+    const status = document.getElementById("status").value;
+    return (selectedSport === "all" || getSport(m) === selectedSport) &&
+      (status === "all" || getStatus(m) === status) &&
+      (a + " " + b + " " + (m.name || "")).toLowerCase().includes(search);
+  })[index];
+  if (!m) return;
   const [a,b] = getTeams(m);
-  const scores = getScores(m);
-  const section = $("analysis");
-  $("analysisContent").innerHTML = `
-    <p><strong>${escapeHTML(a)} vs ${escapeHTML(b)}</strong></p>
-    <p>Sport: ${escapeHTML(m.matchType || m.sport || getSport(m))}</p>
-    <p>Status: ${escapeHTML(m.status || getStatus(m))}</p>
-    <p>Venue: ${escapeHTML(m.venue || "Not available")}</p>
-    <p>Scores: ${scores.length ? scores.map(escapeHTML).join(" | ") : "Not available"}</p>
-    <p>Tournament: ${escapeHTML(m.series || m.tournament || "Not available")}</p>
-    <p>Only statistics actually supplied by the API are displayed. Detailed predictions require additional statistical data and a validated prediction model.</p>
-  `;
-  section.style.display = "block";
-  section.scrollIntoView({behavior:"smooth"});
-}
-
-function closeAnalysis() {
-  $("analysis").style.display = "none";
+  alert(`${a} vs ${b}\n\nStatus: ${m.status || "Unavailable"}\n\nThis is a basic match summary. Detailed predictions require additional analysis data.`);
 }
 
 async function loadMatches() {
-  const button = $("refreshBtn");
-  const list = $("matchList");
-  button.disabled = true;
-  button.textContent = "Loading...";
-  list.innerHTML = '<div class="message">Loading match data...</div>';
-  $("apiStatus").textContent = "Checking";
-
+  const grid = document.getElementById("matchesGrid");
   try {
-    const response = await fetch(API_URL, {
-      method:"GET",
-      headers:{"Accept":"application/json"},
-      cache:"no-store"
-    });
-
-    if (!response.ok) throw new Error("API error: " + response.status);
-
+    const response = await fetch(API);
+    if (!response.ok) throw new Error("API request failed");
     const data = await response.json();
-    const result = getMatchArray(data);
-
-    if (!result.length) {
-      matches = [];
-      $("apiStatus").textContent = "Connected";
-      renderMatches();
-      return;
-    }
-
-    matches = result;
-    $("apiStatus").textContent = "Online";
-    renderMatches();
+    matches = Array.isArray(data) ? data :
+      data.data || data.matches || data.response || [];
+    if (!Array.isArray(matches)) matches = [];
+    render();
   } catch (error) {
-    console.error("Match API error:", error);
-    $("apiStatus").textContent = "Error";
-    list.innerHTML = `
-      <div class="message">
-        Unable to load match data.<br><br>
-        ${escapeHTML(error.message)}<br><br>
-        Check your internet connection, API response and CORS settings.
-      </div>`;
-  } finally {
-    button.disabled = false;
-    button.textContent = "↻ Refresh";
+    grid.innerHTML = `<div class="empty">Unable to load match data. Please check your API connection.</div>`;
   }
 }
 
-document.querySelectorAll("[data-sport]").forEach(button => {
+document.querySelectorAll(".filters button").forEach(button => {
   button.addEventListener("click", () => {
-    document.querySelectorAll("[data-sport]").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
     button.classList.add("active");
-    activeSport = button.dataset.sport;
-    renderMatches();
+    selectedSport = button.dataset.sport;
+    render();
   });
 });
 
-$("search").addEventListener("input", renderMatches);
-$("statusFilter").addEventListener("change", renderMatches);
+document.getElementById("search").addEventListener("input", render);
+document.getElementById("status").addEventListener("change", render);
 
 loadMatches();
 </script>
