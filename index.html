@@ -1,249 +1,177 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sports Edge Pro | Sports Analytics</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SPORTS EDGE PRO | Analytics</title>
 <style>
-:root {
-  --bg:#090e19;
-  --panel:#111a2b;
-  --panel2:#172238;
-  --border:#26334b;
-  --text:#f2f5fc;
-  --muted:#91a0b9;
-  --gold:#e6bd63;
-  --blue:#4e9eff;
-  --green:#4cce91;
-}
+:root{--bg:#080d19;--panel:#111b30;--line:#263653;--gold:#f5c542;--text:#f4f7ff;--muted:#9ba9c2;--green:#36d399;--blue:#4b8cff}
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Inter,Arial,sans-serif;
-}
-header{
-  height:72px;display:flex;align-items:center;
-  justify-content:space-between;padding:0 5%;
-  border-bottom:1px solid var(--border);
-  background:#0c1423;position:sticky;top:0;z-index:5;
-}
-.logo{font-size:21px;font-weight:900;letter-spacing:1px}
-.logo span{color:var(--gold)}
-nav{display:flex;gap:24px}
-nav a{color:var(--muted);text-decoration:none;font-size:14px}
-nav a:hover{color:var(--gold)}
-.container{width:90%;max-width:1250px;margin:32px auto}
-.hero{
-  padding:34px;border:1px solid var(--border);
-  border-radius:18px;
-  background:linear-gradient(120deg,#17243b,#111a2b 65%,#222039);
-  margin-bottom:28px;
-}
-.eyebrow{color:var(--gold);font-size:12px;letter-spacing:2px;font-weight:bold}
-h1{font-size:clamp(27px,4vw,42px);margin:12px 0}
-.hero p{color:var(--muted);line-height:1.7;max-width:600px}
-.stats{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:16px;margin:24px 0;
-}
-.stat,.card{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:14px;padding:20px;
-}
-.stat small{color:var(--muted)}
-.stat strong{display:block;font-size:25px;margin-top:12px}
-.section-head{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin:32px 0 18px;
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%;border-bottom:1px solid var(--line);background:#0c1425;position:sticky;top:0;z-index:2}
+.logo{font-size:21px;font-weight:900}.logo span{color:var(--gold)}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+button,select{cursor:pointer;font:inherit}
+nav button,.sport-btn{background:transparent;color:var(--muted);border:0;padding:10px}
+nav button:hover,.sport-btn.active{color:var(--gold)}
+main{max-width:1200px;margin:auto;padding:28px 20px}
+.hero{padding:38px;border-radius:18px;background:linear-gradient(120deg,#18386c,#14223f 70%,#18233d);border:1px solid #31517c}
+.eyebrow{color:var(--gold);font-weight:bold;font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(30px,5vw,48px);margin:14px 0}
+p{color:var(--muted);line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.stat-label{color:var(--muted);font-size:13px}.stat-value{font-size:24px;font-weight:bold;margin-top:8px;color:var(--gold)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0 15px}
 h2{font-size:21px;margin:0}
-.sport-tabs{display:flex;gap:10px;flex-wrap:wrap}
-.tab{
-  padding:11px 17px;border-radius:9px;
-  border:1px solid var(--border);background:var(--panel);
-  color:var(--muted);cursor:pointer;font-weight:bold;
-}
-.tab.active{background:#493c23;color:var(--gold);border-color:var(--gold)}
-.cards{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-}
-.card{min-width:0}
-.card-top{display:flex;justify-content:space-between;gap:10px}
-.tag{font-size:11px;color:var(--green);font-weight:bold}
-.league{font-size:12px;color:var(--muted)}
-.match{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:10px;margin:22px 0;
-}
-.team{text-align:center;flex:1;font-weight:bold}
-.team .emoji{font-size:30px;display:block;margin-bottom:9px}
-.vs{color:var(--muted);font-size:12px}
-.details{
-  border-top:1px solid var(--border);padding-top:15px;
-  display:flex;justify-content:space-between;gap:10px;
-  color:var(--muted);font-size:12px;
-}
-.prediction{
-  margin-top:15px;padding:13px;border-radius:9px;
-  background:var(--panel2);font-size:13px;
-}
-.prediction b{color:var(--gold)}
-.action{
-  margin-top:16px;background:transparent;
-  border:1px solid var(--border);border-radius:8px;
-  color:var(--text);padding:10px 14px;cursor:pointer;
-}
-.action:hover{border-color:var(--gold);color:var(--gold)}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:500px}
-th,td{text-align:left;padding:15px;border-bottom:1px solid var(--border)}
-th{color:var(--muted);font-size:12px}
-td{font-size:13px}
-footer{
-  text-align:center;color:var(--muted);
-  padding:30px;border-top:1px solid var(--border);
-  margin-top:50px;font-size:12px;
-}
-.notice{color:var(--muted);font-size:12px;line-height:1.6;margin-top:20px}
-@media(max-width:700px){
-  header{padding:0 4%;height:65px}
-  nav{gap:10px}
-  nav a{font-size:12px}
-  .logo{font-size:16px}
-  .container{width:92%;margin:22px auto}
-  .hero{padding:23px}
-  .cards{grid-template-columns:1fr}
-  .stats{gap:9px}
-  .stat{padding:13px}
-  .stat strong{font-size:19px}
-  .stat small{font-size:11px}
-  .section-head{align-items:flex-start;flex-direction:column}
-}
+.sports{display:flex;gap:8px;flex-wrap:wrap}
+.sport-btn{border:1px solid var(--line);border-radius:10px;padding:11px 16px}
+.sport-btn.active{background:#3b3014;border-color:var(--gold)}
+.matches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.match{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.match-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.teams{display:flex;justify-content:space-around;align-items:center;text-align:center;margin:24px 0;font-size:18px;font-weight:bold}
+.vs{color:var(--muted);font-size:13px}
+.action{background:var(--gold);color:#171717;border:0;border-radius:9px;padding:11px 15px;font-weight:bold}
+.secondary{background:#1b2b47;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}
+select{background:#101b30;color:var(--text);border:1px solid var(--line);padding:12px;border-radius:9px;width:100%}
+.analysis{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{margin:12px 0}
+.result{margin-top:15px;padding:16px;background:#102c2b;border:1px solid #21665a;border-radius:12px}
+.bar{height:10px;background:#263653;border-radius:10px;overflow:hidden;margin:10px 0}
+.bar span{display:block;height:100%;background:var(--gold)}
+footer{text-align:center;padding:30px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:40px}
+.hidden{display:none}
+@media(max-width:700px){header{align-items:flex-start;gap:15px;flex-direction:column}.stats{grid-template-columns:1fr}.matches,.analysis{grid-template-columns:1fr}.hero{padding:25px}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">SPORTS <span>EDGE</span> PRO</div>
   <nav>
-    <a href="#home">Home</a>
-    <a href="#matches">Matches</a>
-    <a href="#analysis">Analysis</a>
+    <button onclick="showSection('home')">Home</button>
+    <button onclick="showSection('matches')">Matches</button>
+    <button onclick="showSection('analysis')">Analysis</button>
   </nav>
 </header>
 
-<main class="container" id="home">
-  <section class="hero">
+<main>
+<section id="home">
+  <div class="hero">
     <div class="eyebrow">THE ANALYTICS ARENA</div>
     <h1>Numbers Behind<br>Every Game.</h1>
-    <p>Explore sports statistics, match insights and data-driven projections across cricket, tennis and horse racing.</p>
-  </section>
+    <p>Explore sports statistics, compare performances and generate data-driven projections across cricket, tennis and horse racing.</p>
+    <button class="action" onclick="showSection('matches')">Explore matches →</button>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="stat-label">Sports covered</div><div class="stat-value">03</div></div>
+    <div class="card"><div class="stat-label">Analysis engine</div><div class="stat-value">Active</div></div>
+    <div class="card"><div class="stat-label">Data mode</div><div class="stat-value">Demo</div></div>
+  </div>
+</section>
 
-  <section class="stats">
-    <div class="stat">
-      <small>Sports Covered</small>
-      <strong>03</strong>
+<section id="matches" class="hidden">
+  <div class="section-head">
+    <h2>Explore Sports</h2>
+    <div class="sports">
+      <button class="sport-btn active" onclick="setSport('cricket',this)">🏏 Cricket</button>
+      <button class="sport-btn" onclick="setSport('tennis',this)">🎾 Tennis</button>
+      <button class="sport-btn" onclick="setSport('racing',this)">🏇 Horse Racing</button>
     </div>
-    <div class="stat">
-      <small>Analysis Engine</small>
-      <strong>Active</strong>
-    </div>
-    <div class="stat">
-      <small>Data Mode</small>
-      <strong style="color:var(--gold)">Demo</strong>
-    </div>
-  </section>
+  </div>
+  <div id="match-list" class="matches"></div>
+</section>
 
-  <section id="matches">
-    <div class="section-head">
-      <h2>Explore Sports</h2>
-      <div class="sport-tabs">
-        <button class="tab active" data-sport="cricket">🏏 Cricket</button>
-        <button class="tab" data-sport="tennis">🎾 Tennis</button>
-        <button class="tab" data-sport="racing">🏇 Horse Racing</button>
-      </div>
-    </div>
-    <div class="cards" id="matchCards"></div>
-  </section>
-
-  <section id="analysis">
-    <div class="section-head">
-      <h2>Performance Centre</h2>
+<section id="analysis" class="hidden">
+  <div class="section-head"><h2>Cricket Score Projection</h2></div>
+  <p>Enter match conditions to estimate a first-innings score. This is a simple illustrative model, not a verified prediction.</p>
+  <div class="analysis">
+    <div class="card">
+      <div class="field"><label for="overs">Overs played</label><input id="overs" type="number" min="1" max="20" value="10" style="width:100%;padding:12px;margin-top:8px;background:#101b30;color:white;border:1px solid #263653;border-radius:9px"></div>
+      <div class="field"><label for="runs">Runs scored</label><input id="runs" type="number" min="0" value="85" style="width:100%;padding:12px;margin-top:8px;background:#101b30;color:white;border:1px solid #263653;border-radius:9px"></div>
+      <div class="field"><label for="wickets">Wickets lost</label><select id="wickets"><option>0</option><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></div>
+      <div class="field"><label for="format">Match format</label><select id="format"><option value="20">T20 (20 overs)</option><option value="50">ODI (50 overs)</option></select></div>
+      <button class="action" onclick="calculate()">Calculate projection</button>
     </div>
     <div class="card">
-      <h3>Prediction tracker</h3>
-      <p style="color:var(--muted);font-size:13px;line-height:1.7">
-        Once real matches and published predictions are recorded, this section will track historical performance and prediction accuracy.
-      </p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Sport</th><th>Predictions</th><th>Correct</th><th>Accuracy</th></tr></thead>
-          <tbody id="tracker">
-            <tr><td>Cricket</td><td>0</td><td>0</td><td>—</td></tr>
-            <tr><td>Tennis</td><td>0</td><td>0</td><td>—</td></tr>
-            <tr><td>Horse Racing</td><td>0</td><td>0</td><td>—</td></tr>
-          </tbody>
-        </table>
+      <div class="stat-label">Projected first-innings score</div>
+      <div class="stat-value" id="projection">—</div>
+      <div class="bar"><span id="projection-bar" style="width:0%"></span></div>
+      <p id="explanation">Enter match details and calculate to see a projection.</p>
+      <div class="result">
+        <strong>Model note</strong>
+        <p>Actual scores depend on pitch, weather, bowling quality, match situation and many other factors. This basic model does not account for all of them.</p>
       </div>
     </div>
-  </section>
-  <p class="notice">Demo environment: all displayed matches and projections are illustrative examples, not live data or verified predictions. Horse-racing projections are for statistical analysis only.</p>
+  </div>
+</section>
 </main>
 
-<footer>© 2026 SPORTS EDGE PRO · Sports statistics and analytics</footer>
+<footer>SPORTS EDGE PRO · Independent sports analytics demo · Not live data</footer>
 
 <script>
-const sports = {
-  cricket: [
-    {league:"T20 CRICKET · DEMO",status:"SAMPLE MATCH",a:"India",ae:"🇮🇳",b:"Australia",be:"🇦🇺",time:"Demo fixture",venue:"Sample venue",prediction:"Illustrative analysis only",score:"Projected score: 175–190"},
-    {league:"ODI CRICKET · DEMO",status:"SAMPLE MATCH",a:"England",ae:"🏴",b:"South Africa",be:"🇿🇦",time:"Demo fixture",venue:"Sample venue",prediction:"Illustrative analysis only",score:"Projected score: 260–285"}
-  ],
-  tennis: [
-    {league:"ATP TENNIS · DEMO",status:"SAMPLE MATCH",a:"Player A",ae:"🎾",b:"Player B",be:"🎾",time:"Demo fixture",venue:"Hard court",prediction:"Illustrative analysis only",score:"Surface: Hard"},
-    {league:"WTA TENNIS · DEMO",status:"SAMPLE MATCH",a:"Player C",ae:"🎾",b:"Player D",be:"🎾",time:"Demo fixture",venue:"Clay court",prediction:"Illustrative analysis only",score:"Surface: Clay"}
-  ],
-  racing: [
-    {league:"HORSE RACING · DEMO",status:"SAMPLE RACE",a:"Thunder Bolt",ae:"🏇",b:"Silver Arrow",be:"🏇",time:"Demo race",venue:"Sample racecourse",prediction:"Illustrative analysis only",score:"Distance: 1600 m"},
-    {league:"HORSE RACING · DEMO",status:"SAMPLE RACE",a:"Golden Star",ae:"🏇",b:"Rapid Wind",be:"🏇",time:"Demo race",venue:"Sample racecourse",prediction:"Illustrative analysis only",score:"Distance: 1200 m"}
-  ]
+const data={
+ cricket:[
+  {type:"T20 CRICKET · DEMO",a:"🇮🇳 India",b:"🇦🇺 Australia",note:"Sample match"},
+  {type:"ODI CRICKET · DEMO",a:"🏴 England",b:"🇿🇦 South Africa",note:"Sample match"},
+  {type:"TEST CRICKET · DEMO",a:"🇳🇿 New Zealand",b:"🇵🇰 Pakistan",note:"Sample match"}
+ ],
+ tennis:[
+  {type:"ATP · DEMO",a:"Player A",b:"Player B",note:"Sample matchup"},
+  {type:"WTA · DEMO",a:"Player C",b:"Player D",note:"Sample matchup"}
+ ],
+ racing:[
+  {type:"RACE ANALYSIS · DEMO",a:"Horse A",b:"Horse B",note:"Illustrative comparison"},
+  {type:"RACE ANALYSIS · DEMO",a:"Horse C",b:"Horse D",note:"Illustrative comparison"}
+ ]
 };
-
-function renderSport(sport){
-  const container=document.getElementById("matchCards");
-  container.innerHTML="";
-  sports[sport].forEach(match=>{
-    const card=document.createElement("article");
-    card.className="card";
-    card.innerHTML=`
-      <div class="card-top">
-        <span class="league">${match.league}</span>
-        <span class="tag">${match.status}</span>
-      </div>
-      <div class="match">
-        <div class="team"><span class="emoji">${match.ae}</span>${match.a}</div>
-        <span class="vs">VS</span>
-        <div class="team"><span class="emoji">${match.be}</span>${match.b}</div>
-      </div>
-      <div class="details"><span>${match.time}</span><span>${match.venue}</span></div>
-      <div class="prediction"><b>${match.prediction}</b><br>${match.score}</div>
-      <button class="action">View analysis</button>`;
-    card.querySelector("button").addEventListener("click",()=>{
-      alert("Detailed analysis will be added in the next development phase. This is sample data.");
-    });
-    container.appendChild(card);
-  });
+let currentSport="cricket";
+function setSport(s,btn){
+ currentSport=s;
+ document.querySelectorAll(".sport-btn").forEach(b=>b.classList.remove("active"));
+ btn.classList.add("active");
+ renderMatches();
 }
-
-document.querySelectorAll(".tab").forEach(button=>{
-  button.addEventListener("click",()=>{
-    document.querySelectorAll(".tab").forEach(tab=>tab.classList.remove("active"));
-    button.classList.add("active");
-    renderSport(button.dataset.sport);
-  });
-});
-
-renderSport("cricket");
+function renderMatches(){
+ const list=document.getElementById("match-list");
+ list.innerHTML="";
+ data[currentSport].forEach((m,i)=>{
+  const card=document.createElement("div");
+  card.className="match";
+  card.innerHTML=`<div class="match-top"><span>${m.type}</span><span style="color:#36d399">DEMO DATA</span></div>
+  <div class="teams"><span>${m.a}</span><span class="vs">VS</span><span>${m.b}</span></div>
+  <p>${m.note}</p><button class="secondary" onclick="openAnalysis()">Open analysis →</button>`;
+  list.appendChild(card);
+ });
+}
+function openAnalysis(){showSection("analysis")}
+function showSection(id){
+ document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ if(id==="matches")renderMatches();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function calculate(){
+ const overs=Number(document.getElementById("overs").value);
+ const runs=Number(document.getElementById("runs").value);
+ const wickets=Number(document.getElementById("wickets").value);
+ const limit=Number(document.getElementById("format").value);
+ const out=document.getElementById("projection");
+ const note=document.getElementById("explanation");
+ if(!Number.isFinite(overs)||!Number.isFinite(runs)||overs<=0||overs>limit||runs<0||wickets>=10){
+  out.textContent="Invalid input";
+  note.textContent="Check overs, runs and wickets.";
+  return;
+ }
+ const rate=runs/overs;
+ const remaining=limit-overs;
+ const multiplier=Math.max(.65,1-(wickets*.035));
+ const estimate=Math.round(runs+rate*remaining*multiplier);
+ out.textContent=estimate+" runs";
+ document.getElementById("projection-bar").style.width=Math.min(100,estimate/(limit===20?250:400)*100)+"%";
+ note.textContent=`Current run rate: ${rate.toFixed(2)}. Estimated remaining runs: ${estimate-runs}. This is a simple run-rate extrapolation adjusted for wickets.`;
+}
+renderMatches();
 </script>
 </body>
 </html>
