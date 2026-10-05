@@ -1,2591 +1,2025 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>SPORTS EDGE PRO</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top right, #2a2105 0%, transparent 30%),
-        linear-gradient(135deg, #050505, #0c0c0c 55%, #111);
-      color: #fff;
-      min-height: 100vh;
-    }
-
-    .gold {
-      color: #d4af37;
-    }
-
-    /* =========================
-       LOGIN
-    ========================= */
-
-    #loginPage {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .login-box {
-      width: 100%;
-      max-width: 430px;
-      background: rgba(20,20,20,.95);
-      border: 1px solid #3a3218;
-      border-radius: 20px;
-      padding: 35px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.6);
-    }
-
-    .login-logo {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    .login-logo h1 {
-      font-size: 30px;
-      letter-spacing: 2px;
-    }
-
-    .login-logo p {
-      color: #999;
-      margin-top: 8px;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 14px;
-      border-radius: 10px;
-      border: 1px solid #333;
-      background: #111;
-      color: white;
-      font-size: 15px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #d4af37;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 10px;
-      padding: 13px 18px;
-      font-weight: bold;
-    }
-
-    .gold-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #d4af37, #f0d56a);
-      color: #111;
-      margin-top: 5px;
-    }
-
-    .secondary-btn {
-      background: #191919;
-      color: #ddd;
-      border: 1px solid #333;
-    }
-
-    .login-links {
-      text-align: center;
-      margin-top: 18px;
-    }
-
-    .login-links button {
-      background: none;
-      color: #d4af37;
-      padding: 5px;
-    }
-
-    #loginMessage {
-      margin-top: 15px;
-      text-align: center;
-      color: #ff7777;
-      min-height: 20px;
-    }
-
-    /* =========================
-       DASHBOARD
-    ========================= */
-
-    #dashboard {
-      display: none;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(5,5,5,.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid #29230f;
-    }
-
-    .header-inner {
-      max-width: 1400px;
-      margin: auto;
-      padding: 18px 25px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand h1 {
-      font-size: 23px;
-      letter-spacing: 2px;
-    }
-
-    .brand span {
-      color: #d4af37;
-    }
-
-    .brand small {
-      display: block;
-      color: #777;
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    .user-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .user-email {
-      color: #aaa;
-      font-size: 13px;
-    }
-
-    .logout {
-      background: #191919;
-      color: #ddd;
-      border: 1px solid #333;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: auto;
-      padding: 35px 25px 70px;
-    }
-
-    .hero {
-      padding: 35px;
-      border: 1px solid #322a12;
-      border-radius: 22px;
-      background:
-        linear-gradient(135deg, rgba(212,175,55,.12), rgba(255,255,255,.02)),
-        #101010;
-      margin-bottom: 25px;
-    }
-
-    .hero h2 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #999;
-      max-width: 700px;
-      line-height: 1.6;
-    }
-
-    /* =========================
-       NAV
-    ========================= */
-
-    .main-nav {
-      display: flex;
-      gap: 10px;
-      margin: 25px 0;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      background: #141414;
-      color: #999;
-      border: 1px solid #292929;
-      padding: 12px 20px;
-      border-radius: 10px;
-    }
-
-    .nav-btn.active {
-      background: linear-gradient(135deg, #d4af37, #f0d56a);
-      color: #111;
-      border-color: #d4af37;
-    }
-
-    /* =========================
-       STATS
-    ========================= */
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .stat {
-      background: #111;
-      border: 1px solid #252525;
-      border-radius: 15px;
-      padding: 20px;
-    }
-
-    .stat-label {
-      color: #777;
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-
-    .stat-value {
-      font-size: 27px;
-      font-weight: bold;
-      margin-top: 8px;
-      color: #d4af37;
-    }
-
-    /* =========================
-       SECTION HEADER
-    ========================= */
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 30px 0 18px;
-      gap: 15px;
-    }
-
-    .section-head h2 {
-      font-size: 24px;
-    }
-
-    .section-head p {
-      color: #777;
-      font-size: 13px;
-      margin-top: 5px;
-    }
-
-    .refresh {
-      background: #181818;
-      color: #d4af37;
-      border: 1px solid #3a3218;
-    }
-
-    /* =========================
-       CRICKET CARDS
-    ========================= */
-
-    .match-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .match-card {
-      background: linear-gradient(145deg, #151515, #0d0d0d);
-      border: 1px solid #292929;
-      border-radius: 18px;
-      padding: 20px;
-      transition: .2s;
-    }
-
-    .match-card:hover {
-      transform: translateY(-3px);
-      border-color: #806c25;
-    }
-
-    .match-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 10px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    .live {
-      background: #501616;
-      color: #ff7070;
-    }
-
-    .upcoming {
-      background: #493d12;
-      color: #f0d56a;
-    }
-
-    .completed {
-      background: #1b3020;
-      color: #72d88a;
-    }
-
-    .free-badge {
-      background: #1e351f;
-      color: #8de39b;
-    }
-
-    .teams {
-      display: grid;
-      grid-template-columns: 1fr 45px 1fr;
-      align-items: center;
-      text-align: center;
-      gap: 5px;
-    }
-
-    .team {
-      font-weight: bold;
-      line-height: 1.3;
-    }
-
-    .vs {
-      color: #777;
-      font-size: 11px;
-    }
-
-    .score {
-      color: #d4af37;
-      font-size: 18px;
-      margin-top: 5px;
-    }
-
-    .match-details {
-      border-top: 1px solid #242424;
-      margin-top: 18px;
-      padding-top: 14px;
-      color: #777;
-      font-size: 12px;
-      line-height: 1.8;
-    }
-
-    /* =========================
-       RACING
-    ========================= */
-
-    #racingSection {
-      display: none;
-    }
-
-    .racing-banner {
-      background:
-        linear-gradient(135deg, rgba(212,175,55,.15), rgba(0,0,0,.1)),
-        #111;
-      border: 1px solid #3b3113;
-      border-radius: 20px;
-      padding: 25px;
-      margin-bottom: 25px;
-    }
-
-    .racing-banner h2 {
-      font-size: 28px;
-    }
-
-    .racing-banner p {
-      color: #888;
-      margin-top: 7px;
-    }
-
-    .country-tabs {
-      display: flex;
-      gap: 10px;
-      margin: 20px 0;
-      flex-wrap: wrap;
-    }
-
-    .country-btn {
-      background: #171717;
-      border: 1px solid #303030;
-      color: #aaa;
-      padding: 10px 16px;
-    }
-
-    .country-btn.active {
-      background: #d4af37;
-      color: #111;
-    }
-
-    .meeting {
-      margin-bottom: 30px;
-    }
-
-    .meeting-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #151515;
-      border: 1px solid #292929;
-      border-radius: 14px 14px 0 0;
-      padding: 16px 20px;
-    }
-
-    .meeting-title h3 {
-      font-size: 20px;
-    }
-
-    .country {
-      color: #d4af37;
-      font-size: 12px;
-    }
-
-    .race-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .race-card {
-      background: #0f0f0f;
-      border: 1px solid #282828;
-      border-radius: 15px;
-      padding: 18px;
-      transition: .2s;
-    }
-
-    .race-card:hover {
-      border-color: #806c25;
-      transform: translateY(-2px);
-    }
-
-    .race-time {
-      font-size: 25px;
-      font-weight: bold;
-      color: #d4af37;
-    }
-
-    .race-name {
-      margin-top: 7px;
-      font-weight: bold;
-      line-height: 1.4;
-    }
-
-    .race-info {
-      color: #777;
-      font-size: 12px;
-      margin-top: 10px;
-      line-height: 1.8;
-    }
-
-    .race-footer {
-      margin-top: 15px;
-      border-top: 1px solid #242424;
-      padding-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .prediction {
-      color: #79d98b;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .view-race {
-      background: #191919;
-      border: 1px solid #383838;
-      color: #d4af37;
-      padding: 8px 12px;
-      font-size: 11px;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 50px;
-      color: #777;
-    }
-
-    .error-box {
-      background: #261313;
-      border: 1px solid #552222;
-      color: #ff8585;
-      padding: 20px;
-      border-radius: 12px;
-    }
-
-    /* =========================
-       RACE MODAL
-    ========================= */
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(0,0,0,.82);
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    .modal-box {
-      max-width: 900px;
-      margin: 50px auto;
-      background: #111;
-      border: 1px solid #3a3218;
-      border-radius: 20px;
-      padding: 25px;
-    }
-
-    .modal-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .close-modal {
-      background: #222;
-      color: #fff;
-      width: 40px;
-      height: 40px;
-      padding: 0;
-    }
-
-    .runner-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .runner {
-      background: #181818;
-      border: 1px solid #292929;
-      border-radius: 12px;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .runner-left {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .runner-number {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #29230f;
-      color: #d4af37;
-      border-radius: 50%;
-      font-weight: bold;
-    }
-
-    .runner-name {
-      font-weight: bold;
-    }
-
-    .runner-extra {
-      color: #777;
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    .pick {
-      color: #79d98b;
-      font-weight: bold;
-      font-size: 11px;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media(max-width: 1000px) {
-      .match-grid,
-      .race-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media(max-width: 650px) {
-      .header-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .user-area {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .container {
-        padding: 20px 14px 50px;
-      }
-
-      .hero {
-        padding: 24px;
-      }
-
-      .hero h2 {
-        font-size: 27px;
-      }
-
-      .match-grid,
-      .race-grid,
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .section-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPORTS EDGE PRO</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:
+radial-gradient(circle at top right,#292005 0%,transparent 30%),
+linear-gradient(135deg,#050505,#0d0d0d 60%,#111);
+color:#fff;
+min-height:100vh;
+}
+
+.gold{color:#d4af37}
+
+button{
+cursor:pointer;
+border:none;
+border-radius:10px;
+padding:12px 18px;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:14px;
+margin-bottom:14px;
+border-radius:10px;
+border:1px solid #333;
+background:#111;
+color:#fff;
+font-size:15px;
+}
+
+#loginPage{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.login-box{
+width:100%;
+max-width:430px;
+background:#151515;
+border:1px solid #3a3218;
+border-radius:20px;
+padding:35px;
+box-shadow:0 20px 60px #000;
+}
+
+.login-logo{text-align:center;margin-bottom:28px}
+
+.login-logo h1{
+font-size:30px;
+letter-spacing:2px;
+}
+
+.login-logo p{
+color:#888;
+margin-top:8px;
+}
+
+.gold-btn{
+width:100%;
+background:linear-gradient(135deg,#d4af37,#f0d56a);
+color:#111;
+}
+
+.login-links{
+text-align:center;
+margin-top:18px;
+}
+
+.login-links button{
+background:none;
+color:#d4af37;
+padding:5px;
+}
+
+#loginMessage{
+margin-top:15px;
+text-align:center;
+color:#ff7777;
+min-height:20px;
+}
+
+#dashboard{display:none}
+
+header{
+position:sticky;
+top:0;
+z-index:50;
+background:rgba(5,5,5,.96);
+border-bottom:1px solid #29230f;
+}
+
+.header-inner{
+max-width:1400px;
+margin:auto;
+padding:18px 25px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.brand h1{
+font-size:23px;
+letter-spacing:2px;
+}
+
+.brand small{
+display:block;
+color:#777;
+font-size:11px;
+margin-top:4px;
+}
+
+.user-area{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.user-email{
+color:#aaa;
+font-size:13px;
+}
+
+.logout{
+background:#191919;
+color:#ddd;
+border:1px solid #333;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:35px 25px 70px;
+}
+
+.hero{
+padding:35px;
+border:1px solid #322a12;
+border-radius:22px;
+background:linear-gradient(135deg,rgba(212,175,55,.12),rgba(255,255,255,.02)),#101010;
+margin-bottom:25px;
+}
+
+.hero h2{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.hero p{
+color:#999;
+line-height:1.6;
+}
+
+.main-nav{
+display:flex;
+gap:10px;
+margin:25px 0;
+flex-wrap:wrap;
+}
+
+.nav-btn{
+background:#141414;
+color:#999;
+border:1px solid #292929;
+padding:12px 20px;
+border-radius:10px;
+}
+
+.nav-btn.active{
+background:linear-gradient(135deg,#d4af37,#f0d56a);
+color:#111;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:30px;
+}
+
+.stat{
+background:#111;
+border:1px solid #252525;
+border-radius:15px;
+padding:20px;
+}
+
+.stat-label{
+color:#777;
+font-size:12px;
+text-transform:uppercase;
+}
+
+.stat-value{
+font-size:27px;
+font-weight:bold;
+margin-top:8px;
+color:#d4af37;
+}
+
+.section-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:30px 0 18px;
+}
+
+.section-head p{
+color:#777;
+font-size:13px;
+margin-top:5px;
+}
+
+.refresh{
+background:#181818;
+color:#d4af37;
+border:1px solid #3a3218;
+}
+
+.match-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.match-card{
+background:linear-gradient(145deg,#151515,#0d0d0d);
+border:1px solid #292929;
+border-radius:18px;
+padding:20px;
+}
+
+.match-top{
+display:flex;
+justify-content:space-between;
+margin-bottom:18px;
+}
+
+.badge{
+display:inline-block;
+padding:5px 9px;
+border-radius:20px;
+font-size:10px;
+font-weight:bold;
+text-transform:uppercase;
+}
+
+.live{
+background:#501616;
+color:#ff7070;
+}
+
+.upcoming{
+background:#493d12;
+color:#f0d56a;
+}
+
+.completed{
+background:#1b3020;
+color:#72d88a;
+}
+
+.free-badge{
+background:#1e351f;
+color:#8de39b;
+}
+
+.teams{
+display:grid;
+grid-template-columns:1fr 45px 1fr;
+align-items:center;
+text-align:center;
+gap:5px;
+}
+
+.team{
+font-weight:bold;
+line-height:1.3;
+}
+
+.score{
+color:#d4af37;
+font-size:18px;
+margin-top:5px;
+}
+
+.vs{
+color:#777;
+font-size:11px;
+}
+
+.match-details{
+border-top:1px solid #242424;
+margin-top:18px;
+padding-top:14px;
+color:#777;
+font-size:12px;
+line-height:1.8;
+}
+
+/* RACING */
+
+#racingSection{display:none}
+
+.racing-banner{
+background:linear-gradient(135deg,rgba(212,175,55,.15),rgba(0,0,0,.1)),#111;
+border:1px solid #3b3113;
+border-radius:20px;
+padding:25px;
+margin-bottom:20px;
+}
+
+.racing-banner h2{
+font-size:28px;
+}
+
+.racing-banner p{
+color:#888;
+margin-top:7px;
+}
+
+.country-tabs{
+display:flex;
+gap:10px;
+margin:20px 0;
+flex-wrap:wrap;
+}
+
+.country-btn{
+background:#171717;
+border:1px solid #303030;
+color:#aaa;
+}
+
+.country-btn.active{
+background:#d4af37;
+color:#111;
+}
+
+.meeting{
+margin-bottom:30px;
+}
+
+.meeting-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#151515;
+border:1px solid #292929;
+border-radius:14px;
+padding:18px 20px;
+margin-bottom:12px;
+}
+
+.meeting-title h3{
+font-size:21px;
+}
+
+.country{
+color:#d4af37;
+font-size:12px;
+font-weight:bold;
+}
+
+.race-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+}
+
+.race-card{
+background:linear-gradient(145deg,#151515,#0c0c0c);
+border:1px solid #292929;
+border-radius:16px;
+padding:18px;
+transition:.2s;
+}
+
+.race-card:hover{
+transform:translateY(-3px);
+border-color:#806c25;
+}
+
+.race-number{
+font-size:11px;
+color:#777;
+text-transform:uppercase;
+margin-bottom:6px;
+}
+
+.race-time{
+font-size:27px;
+font-weight:bold;
+color:#d4af37;
+}
+
+.race-name{
+font-size:15px;
+font-weight:bold;
+line-height:1.4;
+margin-top:7px;
+min-height:43px;
+}
+
+.race-info{
+color:#888;
+font-size:12px;
+line-height:1.9;
+margin-top:14px;
+}
+
+.race-footer{
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-top:1px solid #242424;
+margin-top:15px;
+padding-top:13px;
+}
+
+.edge{
+color:#79d98b;
+font-size:11px;
+font-weight:bold;
+}
+
+.view-race{
+background:#191919;
+border:1px solid #383838;
+color:#d4af37;
+padding:8px 12px;
+font-size:11px;
+}
+
+.loading{
+text-align:center;
+padding:50px;
+color:#777;
+}
+
+.error-box{
+background:#261313;
+border:1px solid #552222;
+color:#ff8585;
+padding:20px;
+border-radius:12px;
+}
+
+/* MODAL */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+z-index:100;
+background:rgba(0,0,0,.85);
+padding:20px;
+overflow-y:auto;
+}
+
+.modal-box{
+max-width:800px;
+margin:50px auto;
+background:#111;
+border:1px solid #3a3218;
+border-radius:20px;
+padding:25px;
+}
+
+.modal-head{
+display:flex;
+justify-content:space-between;
+margin-bottom:20px;
+}
+
+.close-modal{
+background:#222;
+color:#fff;
+width:40px;
+height:40px;
+padding:0;
+}
+
+.runner-list{
+display:grid;
+gap:10px;
+}
+
+.runner{
+background:#181818;
+border:1px solid #292929;
+border-radius:12px;
+padding:15px;
+display:flex;
+justify-content:space-between;
+}
+
+.runner-left{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.runner-number{
+width:32px;
+height:32px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#29230f;
+color:#d4af37;
+border-radius:50%;
+font-weight:bold;
+}
+
+.runner-name{
+font-weight:bold;
+}
+
+.pick{
+color:#79d98b;
+font-size:11px;
+font-weight:bold;
+}
+
+@media(max-width:1000px){
+.match-grid,.race-grid{
+grid-template-columns:repeat(2,1fr);
+}
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:650px){
+.header-inner{
+flex-direction:column;
+align-items:flex-start;
+gap:12px;
+}
+
+.user-area{
+width:100%;
+justify-content:space-between;
+}
+
+.container{
+padding:20px 14px 50px;
+}
+
+.hero h2{
+font-size:27px;
+}
+
+.match-grid,.race-grid,.stats{
+grid-template-columns:1fr;
+}
+
+.section-head{
+align-items:flex-start;
+flex-direction:column;
+}
+}
+</style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     LOGIN PAGE
-===================================================== -->
+<!-- LOGIN -->
 
 <div id="loginPage">
 
-  <div class="login-box">
+<div class="login-box">
 
-    <div class="login-logo">
-      <h1>SPORTS <span class="gold">EDGE</span> PRO</h1>
-      <p>Sports Intelligence Platform</p>
-    </div>
+<div class="login-logo">
+<h1>SPORTS <span class="gold">EDGE</span> PRO</h1>
+<p>Sports Intelligence Platform</p>
+</div>
 
-    <input
-      type="email"
-      id="email"
-      placeholder="Email address"
-    >
+<input type="email" id="email" placeholder="Email address">
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Password"
-    >
+<input type="password" id="password" placeholder="Password">
 
-    <button
-      class="gold-btn"
-      id="loginBtn"
-    >
-      LOGIN
-    </button>
+<button class="gold-btn" id="loginBtn">LOGIN</button>
 
-    <div class="login-links">
-      <button id="createBtn">Create Account</button>
-      <br>
-      <button id="forgotBtn">Forgot Password?</button>
-    </div>
+<div class="login-links">
+<button id="createBtn">Create Account</button>
+<br>
+<button id="forgotBtn">Forgot Password?</button>
+</div>
 
-    <div id="loginMessage"></div>
+<div id="loginMessage"></div>
 
-  </div>
-
+</div>
 </div>
 
 
-<!-- =====================================================
-     DASHBOARD
-===================================================== -->
+<!-- DASHBOARD -->
 
 <div id="dashboard">
 
-  <header>
+<header>
 
-    <div class="header-inner">
+<div class="header-inner">
 
-      <div class="brand">
-        <h1>SPORTS <span>EDGE</span> PRO</h1>
-        <small>SPORTS DATA LIVE</small>
-      </div>
+<div class="brand">
+<h1>SPORTS <span class="gold">EDGE</span> PRO</h1>
+<small>SPORTS DATA LIVE</small>
+</div>
 
-      <div class="user-area">
-        <span class="user-email" id="userEmail"></span>
-        <button class="logout" id="logoutBtn">Logout</button>
-      </div>
+<div class="user-area">
+<span class="user-email" id="userEmail"></span>
+<button class="logout" id="logoutBtn">Logout</button>
+</div>
 
-    </div>
-
-  </header>
-
-
-  <main class="container">
-
-    <div class="hero">
-
-      <h2>
-        Sports <span class="gold">Intelligence</span>
-      </h2>
-
-      <p>
-        Live sports data, racing intelligence and
-        Sports Edge Pro analysis — all in one place.
-      </p>
-
-    </div>
+</div>
+</header>
 
 
-    <!-- NAVIGATION -->
+<main class="container">
 
-    <div class="main-nav">
+<div class="hero">
 
-      <button
-        class="nav-btn active"
-        id="cricketTab"
-        onclick="showSection('cricket')"
-      >
-        🏏 Cricket
-      </button>
+<h2>
+Sports <span class="gold">Intelligence</span>
+</h2>
 
-      <button
-        class="nav-btn"
-        id="racingTab"
-        onclick="showSection('racing')"
-      >
-        🏇 UK & Ireland Racing
-      </button>
-
-    </div>
-
-
-    <!-- =================================================
-         CRICKET SECTION
-    ================================================= -->
-
-    <section id="cricketSection">
-
-      <div class="stats">
-
-        <div class="stat">
-          <div class="stat-label">Total Matches</div>
-          <div class="stat-value" id="totalMatches">--</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Cricket</div>
-          <div class="stat-value">100%</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Live</div>
-          <div class="stat-value" id="liveMatches">--</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Data Status</div>
-          <div class="stat-value" id="dataStatus">--</div>
-        </div>
-
-      </div>
-
-
-      <div class="section-head">
-
-        <div>
-          <h2>Live & Upcoming</h2>
-          <p>Current cricket matches</p>
-        </div>
-
-        <button
-          class="refresh"
-          onclick="loadMatches()"
-        >
-          ↻ Refresh
-        </button>
-
-      </div>
-
-      <div
-        id="matches"
-        class="match-grid"
-      >
-        <div class="loading">
-          Loading cricket matches...
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         RACING SECTION
-    ================================================= -->
-
-    <section id="racingSection">
-
-      <div class="racing-banner">
-
-        <h2>
-          🏇 UK & <span class="gold">Ireland</span> Racing
-        </h2>
-
-        <p>
-          Today's British and Irish racing with
-          SPORTS EDGE PRO analysis.
-        </p>
-
-      </div>
-
-
-      <div class="country-tabs">
-
-        <button
-          class="country-btn active"
-          id="allRacesBtn"
-          onclick="filterRacing('ALL')"
-        >
-          🇬🇧🇮🇪 All
-        </button>
-
-        <button
-          class="country-btn"
-          id="gbRacesBtn"
-          onclick="filterRacing('GB')"
-        >
-          🇬🇧 Great Britain
-        </button>
-
-        <button
-          class="country-btn"
-          id="ireRacesBtn"
-          onclick="filterRacing('IRE')"
-        >
-          🇮🇪 Ireland
-        </button>
-
-        <button
-          class="refresh"
-          onclick="loadRacing()"
-        >
-          ↻ Refresh
-        </button>
-
-      </div>
-
-
-      <div id="racingContainer">
-
-        <div class="loading">
-          Loading UK & Ireland racing...
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
+<p>
+Live cricket data and UK & Ireland horse racing intelligence.
+</p>
 
 </div>
 
 
-<!-- =====================================================
-     RACE MODAL
-===================================================== -->
+<!-- NAV -->
+
+<div class="main-nav">
+
+<button
+class="nav-btn active"
+id="cricketTab"
+onclick="showSection('cricket')">
+🏏 Cricket
+</button>
+
+<button
+class="nav-btn"
+id="racingTab"
+onclick="showSection('racing')">
+🏇 UK & Ireland Racing
+</button>
+
+</div>
+
+
+<!-- CRICKET -->
+
+<section id="cricketSection">
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-label">Total Matches</div>
+<div class="stat-value" id="totalMatches">--</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">Cricket</div>
+<div class="stat-value">100%</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">Live</div>
+<div class="stat-value" id="liveMatches">--</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">Data Status</div>
+<div class="stat-value" id="dataStatus">--</div>
+</div>
+
+</div>
+
+<div class="section-head">
+
+<div>
+<h2>Live & Upcoming</h2>
+<p>Current cricket matches</p>
+</div>
+
+<button class="refresh" onclick="loadMatches()">
+↻ Refresh
+</button>
+
+</div>
+
+<div id="matches" class="match-grid">
+<div class="loading">
+Loading cricket matches...
+</div>
+</div>
+
+</section>
+
+
+<!-- RACING -->
+
+<section id="racingSection">
+
+<div class="racing-banner">
+
+<h2>
+🏇 UK & <span class="gold">Ireland</span> Racing
+</h2>
+
+<p>
+Today's British and Irish racecards.
+SPORTS EDGE PRO analysis coming next.
+</p>
+
+</div>
+
+
+<div class="country-tabs">
+
+<button
+class="country-btn active"
+id="allRacesBtn"
+onclick="filterRacing('ALL')">
+🇬🇧🇮🇪 All
+</button>
+
+<button
+class="country-btn"
+id="gbRacesBtn"
+onclick="filterRacing('GB')">
+🇬🇧 Great Britain
+</button>
+
+<button
+class="country-btn"
+id="ireRacesBtn"
+onclick="filterRacing('IRE')">
+🇮🇪 Ireland
+</button>
+
+<button class="refresh" onclick="loadRacing()">
+↻ Refresh
+</button>
+
+</div>
+
+
+<div id="racingContainer">
+
+<div class="loading">
+Loading UK & Ireland racing...
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- RACE MODAL -->
+
+<div class="modal" id="raceModal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<div>
+
+<h2 id="modalRaceTitle">
+Race
+</h2>
+
+<p
+id="modalRaceInfo"
+style="color:#777;margin-top:7px">
+</p>
+
+</div>
+
+<button
+class="close-modal"
+onclick="closeRace()">
+✕
+</button>
+
+</div>
+
 
 <div
-  class="modal"
-  id="raceModal"
->
+style="
+background:#171717;
+border:1px solid #3a3218;
+padding:18px;
+border-radius:14px;
+margin-bottom:20px;
+">
 
-  <div class="modal-box">
+<div
+style="
+color:#d4af37;
+font-size:12px;
+font-weight:bold;
+">
+SPORTS EDGE PRO
+</div>
 
-    <div class="modal-head">
+<div
+style="
+font-size:22px;
+font-weight:bold;
+margin-top:8px;
+">
+🏇 Race Information
+</div>
 
-      <div>
-        <h2 id="modalRaceTitle">Race</h2>
-        <p
-          id="modalRaceInfo"
-          style="color:#777;margin-top:6px;"
-        ></p>
-      </div>
-
-      <button
-        class="close-modal"
-        onclick="closeRace()"
-      >
-        ✕
-      </button>
-
-    </div>
-
-
-    <div
-      id="modalPrediction"
-      style="
-        background:#171717;
-        border:1px solid #3a3218;
-        padding:18px;
-        border-radius:14px;
-        margin-bottom:20px;
-      "
-    ></div>
-
-
-    <h3 style="margin-bottom:12px;">
-      Runners
-    </h3>
-
-    <div
-      id="runnerList"
-      class="runner-list"
-    ></div>
-
-  </div>
+<div
+style="
+color:#888;
+font-size:13px;
+margin-top:7px;
+">
+Runner-level prediction will be added once the API provides the individual horse data.
+</div>
 
 </div>
 
 
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
+<h3 style="margin-bottom:12px">
+Runners
+</h3>
+
+<div id="runnerList" class="runner-list">
+</div>
+
+</div>
+</div>
+
+
+<!-- FIREBASE -->
 
 <script type="module">
 
-  import {
-    initializeApp
-  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    sendPasswordResetEmail,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDoudYXuwRqGxpOUl7BfQmmrloYoyKiPK0",
-    authDomain: "ports-edge-pro.firebaseapp.com",
-    projectId: "ports-edge-pro",
-    storageBucket: "ports-edge-pro.firebasestorage.app",
-    messagingSenderId: "811569206008",
-    appId: "1:811569206008:web:bd2acd5ec511f0c9d4e10d",
-    measurementId: "G-2S8PCFC271"
-  };
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+const firebaseConfig = {
+apiKey:"AIzaSyDoudYXuwRqGxpOUl7BfQmmrloYoyKiPK0",
+authDomain:"ports-edge-pro.firebaseapp.com",
+projectId:"ports-edge-pro",
+storageBucket:"ports-edge-pro.firebasestorage.app",
+messagingSenderId:"811569206008",
+appId:"1:811569206008:web:bd2acd5ec511f0c9d4e10d",
+measurementId:"G-2S8PCFC271"
+};
 
 
-  const loginPage = document.getElementById("loginPage");
-  const dashboard = document.getElementById("dashboard");
-  const loginMessage = document.getElementById("loginMessage");
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
 
 
-  function showMessage(message) {
-    loginMessage.textContent = message;
-  }
+const loginPage=
+document.getElementById("loginPage");
+
+const dashboard=
+document.getElementById("dashboard");
+
+const loginMessage=
+document.getElementById("loginMessage");
 
 
-  document.getElementById("loginBtn").addEventListener("click", async () => {
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-    if (!email || !password) {
-      showMessage("Please enter email and password.");
-      return;
-    }
-
-    try {
-
-      showMessage("");
-
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    } catch (error) {
-
-      showMessage(error.message);
-
-    }
-
-  });
+function showMessage(message){
+loginMessage.textContent=message;
+}
 
 
-  document.getElementById("createBtn").addEventListener("click", async () => {
+document
+.getElementById("loginBtn")
+.addEventListener("click",async()=>{
 
-    const email =
-      document.getElementById("email").value.trim();
+const email=
+document.getElementById("email").value.trim();
 
-    const password =
-      document.getElementById("password").value;
+const password=
+document.getElementById("password").value;
 
-    if (!email || !password) {
-      showMessage("Enter email and password to create an account.");
-      return;
-    }
+if(!email||!password){
+showMessage("Please enter email and password.");
+return;
+}
 
-    try {
+try{
 
-      showMessage("");
+showMessage("");
 
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-    } catch (error) {
+}catch(error){
 
-      showMessage(error.message);
+showMessage(error.message);
 
-    }
+}
 
-  });
-
-
-  document.getElementById("forgotBtn").addEventListener("click", async () => {
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    if (!email) {
-      showMessage("Enter your email first.");
-      return;
-    }
-
-    try {
-
-      await sendPasswordResetEmail(auth, email);
-
-      showMessage(
-        "Password reset email sent."
-      );
-
-    } catch (error) {
-
-      showMessage(error.message);
-
-    }
-
-  });
+});
 
 
-  document.getElementById("logoutBtn").addEventListener("click", async () => {
+document
+.getElementById("createBtn")
+.addEventListener("click",async()=>{
 
-    await signOut(auth);
+const email=
+document.getElementById("email").value.trim();
 
-  });
+const password=
+document.getElementById("password").value;
+
+if(!email||!password){
+showMessage("Enter email and password to create an account.");
+return;
+}
+
+try{
+
+showMessage("");
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+}catch(error){
+
+showMessage(error.message);
+
+}
+
+});
 
 
-  onAuthStateChanged(auth, (user) => {
+document
+.getElementById("forgotBtn")
+.addEventListener("click",async()=>{
 
-    if (user) {
+const email=
+document.getElementById("email").value.trim();
 
-      loginPage.style.display = "none";
-      dashboard.style.display = "block";
+if(!email){
+showMessage("Enter your email first.");
+return;
+}
 
-      document.getElementById("userEmail").textContent =
-        user.email || "";
+try{
 
-      loadMatches();
+await sendPasswordResetEmail(auth,email);
 
-    } else {
+showMessage("Password reset email sent.");
 
-      loginPage.style.display = "flex";
-      dashboard.style.display = "none";
+}catch(error){
 
-    }
+showMessage(error.message);
 
-  });
+}
+
+});
+
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click",async()=>{
+await signOut(auth);
+});
+
+
+onAuthStateChanged(auth,user=>{
+
+if(user){
+
+loginPage.style.display="none";
+dashboard.style.display="block";
+
+document.getElementById("userEmail").textContent=
+user.email||"";
+
+loadMatches();
+
+}else{
+
+loginPage.style.display="flex";
+dashboard.style.display="none";
+
+}
+
+});
 
 </script>
 
 
-<!-- =====================================================
-     WEBSITE JAVASCRIPT
-===================================================== -->
+<!-- MAIN JAVASCRIPT -->
 
 <script>
 
-  const API_BASE =
-    "https://sports-edge-api.sk-suneeth.workers.dev";
+const API_BASE=
+"https://sports-edge-api.sk-suneeth.workers.dev";
 
+let allRaces=[];
+let raceFilter="ALL";
 
-  let allRacingData = [];
-  let currentRaceFilter = "ALL";
 
+function first(...values){
 
-  /* ==========================================
-     BASIC HELPERS
-  ========================================== */
+for(const value of values){
 
-  function clean(value) {
+if(
+value!==undefined &&
+value!==null &&
+String(value).trim()!==""
+){
+return value;
+}
 
-    if (value === null || value === undefined) {
-      return "";
-    }
+}
 
-    if (typeof value === "string" ||
-        typeof value === "number" ||
-        typeof value === "boolean") {
-      return value;
-    }
+return "";
+}
 
-    if (Array.isArray(value)) {
-      return value
-        .map(clean)
-        .filter(v => v !== "");
-    }
 
-    if (typeof value === "object") {
+function escapeHTML(value){
 
-      if (value.name) return value.name;
-      if (value.title) return value.title;
-      if (value.team) return value.team;
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
-      return Object.values(value)
-        .map(clean)
-        .filter(v => v !== "")
-        .join(" ");
-    }
+}
 
-    return "";
-  }
 
+function formatDate(value){
 
-  function first(...values) {
+if(!value)return "";
 
-    for (const value of values) {
+try{
 
-      if (
-        value !== undefined &&
-        value !== null &&
-        String(value).trim() !== ""
-      ) {
-        return value;
-      }
+const d=new Date(value);
 
-    }
+if(isNaN(d.getTime()))return value;
 
-    return "";
-  }
+return d.toLocaleString(
+"en-IN",
+{
+day:"2-digit",
+month:"short",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit"
+}
+);
 
+}catch{
+return value;
+}
 
-  function escapeHTML(value) {
+}
 
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
 
-  }
+/* =========================
+CRICKET
+========================= */
 
+function parseMatchTitle(title){
 
-  function formatDate(value) {
+const text=String(title||"").trim();
 
-    if (!value) return "";
+const parts=
+text.split(/\s+vs\s+|\s+v\s+/i);
 
-    try {
+if(parts.length<2){
 
-      const d = new Date(value);
+return{
+team1:text,
+team2:"",
+details:""
+};
 
-      if (isNaN(d.getTime())) {
-        return value;
-      }
+}
 
-      return d.toLocaleString(
-        "en-IN",
-        {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        }
-      );
+const team1=parts[0].trim();
 
-    } catch {
+const right=parts.slice(1).join(" vs ");
 
-      return value;
+const comma=right.indexOf(",");
 
-    }
+if(comma===-1){
 
-  }
+return{
+team1,
+team2:right.trim(),
+details:""
+};
 
+}
 
-  function statusClass(status) {
+return{
+team1,
+team2:right.substring(0,comma).trim(),
+details:right.substring(comma+1).trim()
+};
 
-    const s = String(status || "").toLowerCase();
+}
 
-    if (
-      s.includes("live") ||
-      s.includes("progress")
-    ) {
-      return "live";
-    }
 
-    if (
-      s.includes("complete") ||
-      s.includes("result") ||
-      s.includes("finished")
-    ) {
-      return "completed";
-    }
+function statusClass(status){
 
-    return "upcoming";
+const s=
+String(status||"").toLowerCase();
 
-  }
+if(
+s.includes("live")||
+s.includes("progress")
+)return"live";
 
+if(
+s.includes("complete")||
+s.includes("result")||
+s.includes("finished")
+)return"completed";
 
-  /* ==========================================
-     CRICKET
-  ========================================== */
+return"upcoming";
 
-  function parseMatchTitle(title) {
+}
+
+
+async function loadMatches(){
+
+const container=
+document.getElementById("matches");
+
+container.innerHTML=
+`<div class="loading">
+Loading cricket matches...
+</div>`;
+
+try{
+
+const response=
+await fetch(`${API_BASE}/matches`);
+
+const data=
+await response.json();
+
+const matches=
+Array.isArray(data?.data)
+?data.data
+:Array.isArray(data)
+?data
+:[];
+
+document.getElementById("dataStatus").textContent=
+response.ok?"ONLINE":"ERROR";
+
+document.getElementById("totalMatches").textContent=
+matches.length;
+
+const live=
+matches.filter(m=>
+String(
+first(
+m.status,
+m.matchStatus
+)
+).toLowerCase().includes("live")
+).length;
+
+document.getElementById("liveMatches").textContent=
+live;
+
+if(!matches.length){
+
+container.innerHTML=
+`<div class="loading">
+No cricket matches available.
+</div>`;
+
+return;
+}
+
+
+container.innerHTML=
+matches.map(match=>{
+
+const parsed=
+parseMatchTitle(
+first(
+match.name,
+match.title,
+match.matchTitle
+)
+);
 
-    const text = String(title || "").trim();
+const team1=
+first(
+match.team1,
+match.teamA,
+match.teams?.[0]?.name,
+parsed.team1
+);
 
-    if (!text) {
+const team2=
+first(
+match.team2,
+match.teamB,
+match.teams?.[1]?.name,
+parsed.team2
+);
 
-      return {
-        team1: "Team 1",
-        team2: "Team 2",
-        details: ""
-      };
+const status=
+first(match.status,"Upcoming");
 
-    }
+const score1=
+first(
+match.score?.[0]?.r,
+match.team1Score,
+""
+);
 
-    const parts =
-      text.split(/\s+vs\s+|\s+v\s+/i);
+const score2=
+first(
+match.score?.[1]?.r,
+match.team2Score,
+""
+);
 
-    if (parts.length < 2) {
+const venue=
+first(
+match.venue,
+match.stadium,
+""
+);
 
-      return {
-        team1: text,
-        team2: "",
-        details: ""
-      };
+const date=
+first(
+match.dateTimeGMT,
+match.dateTime,
+match.date,
+""
+);
 
-    }
+const series=
+first(
+match.series,
+match.seriesName,
+parsed.details,
+""
+);
 
-    const team1 =
-      parts[0].trim();
+return`
 
-    const right =
-      parts.slice(1).join(" vs ");
+<div class="match-card">
 
-    const commaIndex =
-      right.indexOf(",");
+<div class="match-top">
 
-    let team2 = right;
-    let details = "";
+<span class="badge ${statusClass(status)}">
+${escapeHTML(status)}
+</span>
 
-    if (commaIndex !== -1) {
+<span class="badge free-badge">
+FREE
+</span>
 
-      team2 =
-        right.substring(0, commaIndex).trim();
+</div>
 
-      details =
-        right.substring(commaIndex + 1).trim();
+<div class="teams">
 
-    }
+<div class="team">
+${escapeHTML(team1)}
+<div class="score">
+${escapeHTML(score1)}
+</div>
+</div>
 
-    return {
-      team1,
-      team2,
-      details
-    };
+<div class="vs">VS</div>
 
-  }
+<div class="team">
+${escapeHTML(team2)}
+<div class="score">
+${escapeHTML(score2)}
+</div>
+</div>
 
+</div>
 
-  function cleanTeamName(name) {
+<div class="match-details">
 
-    let value =
-      String(name || "").trim();
+${series?`🏆 ${escapeHTML(series)}<br>`:""}
 
-    value =
-      value.replace(/^Cricket\s+/i, "");
+${venue?`📍 ${escapeHTML(venue)}<br>`:""}
 
-    return value;
+${date?`🕒 ${escapeHTML(formatDate(date))}`:""}
 
-  }
+</div>
 
+</div>
 
-  async function loadMatches() {
+`;
 
-    const container =
-      document.getElementById("matches");
+}).join("");
 
-    container.innerHTML =
-      `<div class="loading">Loading cricket matches...</div>`;
+}catch(error){
 
-    try {
+document.getElementById("dataStatus").textContent=
+"ERROR";
 
-      const response =
-        await fetch(`${API_BASE}/matches`);
+container.innerHTML=
+`<div class="error-box">
+Unable to load cricket data.
+</div>`;
 
-      const data =
-        await response.json();
+}
 
-      const matches =
-        Array.isArray(data?.data)
-          ? data.data
-          : Array.isArray(data)
-            ? data
-            : [];
+}
 
-      showMatches(matches);
 
-      document.getElementById("dataStatus").textContent =
-        response.ok ? "ONLINE" : "ERROR";
+/* =========================
+SECTION SWITCH
+========================= */
 
-    } catch (error) {
+window.showSection=function(section){
 
-      document.getElementById("dataStatus").textContent =
-        "ERROR";
+const cricket=
+document.getElementById("cricketSection");
 
-      container.innerHTML =
-        `<div class="error-box">
-          Unable to load cricket data.
-        </div>`;
+const racing=
+document.getElementById("racingSection");
 
-    }
+const cricketTab=
+document.getElementById("cricketTab");
 
-  }
+const racingTab=
+document.getElementById("racingTab");
 
 
-  function showMatches(matches) {
+if(section==="racing"){
 
-    const container =
-      document.getElementById("matches");
+cricket.style.display="none";
+racing.style.display="block";
 
-    document.getElementById("totalMatches").textContent =
-      matches.length;
+cricketTab.classList.remove("active");
+racingTab.classList.add("active");
 
-    const liveCount =
-      matches.filter(m => {
+loadRacing();
 
-        const status =
-          String(
-            first(
-              m.status,
-              m.matchStatus,
-              m.match_status
-            )
-          ).toLowerCase();
+}else{
 
-        return (
-          status.includes("live") ||
-          status.includes("progress")
-        );
+cricket.style.display="block";
+racing.style.display="none";
 
-      }).length;
+cricketTab.classList.add("active");
+racingTab.classList.remove("active");
 
-    document.getElementById("liveMatches").textContent =
-      liveCount;
+}
 
+};
 
-    if (!matches.length) {
 
-      container.innerHTML =
-        `<div class="loading">
-          No cricket matches available.
-        </div>`;
+/* =========================
+RACING
+========================= */
 
-      return;
+async function loadRacing(){
 
-    }
+const container=
+document.getElementById("racingContainer");
 
+container.innerHTML=
+`<div class="loading">
+Loading UK & Ireland racing...
+</div>`;
 
-    container.innerHTML =
-      matches.map(match => {
+try{
 
-        const title =
-          first(
-            match.name,
-            match.title,
-            match.matchTitle
-          );
+const response=
+await fetch(`${API_BASE}/racing`);
 
-        const parsed =
-          parseMatchTitle(title);
+const data=
+await response.json();
 
+if(!response.ok||data.success===false){
 
-        let team1 =
-          first(
-            match.team1,
-            match.teamA,
-            match.teams?.[0]?.name,
-            parsed.team1
-          );
+throw new Error(
+data.error||"Racing API error"
+);
 
-        let team2 =
-          first(
-            match.team2,
-            match.teamB,
-            match.teams?.[1]?.name,
-            parsed.team2
-          );
+}
 
 
-        team1 =
-          cleanTeamName(clean(team1));
+/*
+IMPORTANT:
 
-        team2 =
-          cleanTeamName(clean(team2));
+Your actual API response is:
 
+races
+  ↓
+meeting
+  ↓
+races
+  ↓
+individual race
 
-        const score1 =
-          first(
-            match.score?.[0]?.r,
-            match.score?.[0]?.runs,
-            match.team1Score,
-            ""
-          );
+We extract that structure here.
+*/
 
-        const score2 =
-          first(
-            match.score?.[1]?.r,
-            match.score?.[1]?.runs,
-            match.team2Score,
-            ""
-          );
+allRaces=[];
 
 
-        const status =
-          first(
-            match.status,
-            match.matchStatus,
-            "Upcoming"
-          );
+if(Array.isArray(data.races)){
 
+data.races.forEach(meeting=>{
 
-        const venue =
-          first(
-            match.venue,
-            match.stadium,
-            match.location,
-            ""
-          );
+const course=
+first(
+meeting.course,
+meeting.course_name,
+meeting.venue
+);
 
+const country=
+first(
+meeting.country,
+meeting.region
+);
 
-        const date =
-          first(
-            match.dateTimeGMT,
-            match.dateTime,
-            match.date,
-            ""
-          );
+if(Array.isArray(meeting.races)){
 
+meeting.races.forEach(race=>{
 
-        const series =
-          first(
-            match.series,
-            match.seriesName,
-            parsed.details,
-            ""
-          );
+allRaces.push({
 
+...race,
 
-        return `
+course:
+first(
+race.course,
+course
+),
 
-          <div class="match-card">
+country:
+first(
+race.country,
+country
+),
 
-            <div class="match-top">
+region:
+first(
+race.region,
+meeting.region,
+country
+)
 
-              <span class="badge ${statusClass(status)}">
-                ${escapeHTML(status)}
-              </span>
+});
 
-              <span class="badge free-badge">
-                FREE
-              </span>
+});
 
-            </div>
+}
 
+});
 
-            <div class="teams">
+}
 
-              <div class="team">
-                ${escapeHTML(team1)}
-                <div class="score">
-                  ${escapeHTML(score1)}
-                </div>
-              </div>
 
-              <div class="vs">
-                VS
-              </div>
+renderRacing();
 
-              <div class="team">
-                ${escapeHTML(team2)}
-                <div class="score">
-                  ${escapeHTML(score2)}
-                </div>
-              </div>
+}catch(error){
 
-            </div>
+console.error(error);
 
+container.innerHTML=
+`<div class="error-box">
+Unable to load racing data.<br><br>
+${escapeHTML(error.message)}
+</div>`;
 
-            <div class="match-details">
+}
 
-              ${series
-                ? `🏆 ${escapeHTML(series)}<br>`
-                : ""
-              }
+}
 
-              ${venue
-                ? `📍 ${escapeHTML(venue)}<br>`
-                : ""
-              }
 
-              ${date
-                ? `🕒 ${escapeHTML(formatDate(date))}`
-                : ""
-              }
+/* =========================
+COUNTRY
+========================= */
 
-            </div>
+function getCountry(race){
 
-          </div>
+const value=
+String(
+first(
+race.region,
+race.country,
+race.country_code
+)
+).toUpperCase();
 
-        `;
+if(
+value==="GB"||
+value==="ENG"||
+value==="SCO"||
+value==="WAL"
+)return"GB";
 
-      }).join("");
+if(
+value==="IRE"||
+value==="IRL"||
+value==="NIR"
+)return"IRE";
 
-  }
+return"";
+}
 
 
-  /* ==========================================
-     SECTION SWITCH
-  ========================================== */
+window.filterRacing=function(filter){
 
-  window.showSection = function(section) {
+raceFilter=filter;
 
-    const cricket =
-      document.getElementById("cricketSection");
+document
+.getElementById("allRacesBtn")
+.classList.toggle(
+"active",
+filter==="ALL"
+);
 
-    const racing =
-      document.getElementById("racingSection");
+document
+.getElementById("gbRacesBtn")
+.classList.toggle(
+"active",
+filter==="GB"
+);
 
-    const cricketTab =
-      document.getElementById("cricketTab");
+document
+.getElementById("ireRacesBtn")
+.classList.toggle(
+"active",
+filter==="IRE"
+);
 
-    const racingTab =
-      document.getElementById("racingTab");
+renderRacing();
 
+};
 
-    if (section === "racing") {
 
-      cricket.style.display = "none";
-      racing.style.display = "block";
+/* =========================
+DISPLAY RACES
+========================= */
 
-      cricketTab.classList.remove("active");
-      racingTab.classList.add("active");
+function renderRacing(){
 
-      loadRacing();
+const container=
+document.getElementById("racingContainer");
 
-    } else {
+let races=
+allRaces;
 
-      cricket.style.display = "block";
-      racing.style.display = "none";
 
-      cricketTab.classList.add("active");
-      racingTab.classList.remove("active");
+if(raceFilter!=="ALL"){
 
-    }
+races=
+races.filter(
+race=>getCountry(race)===raceFilter
+);
 
-  };
+}
 
 
-  /* ==========================================
-     HORSE RACING
-  ========================================== */
+if(!races.length){
 
-  async function loadRacing() {
+container.innerHTML=
+`<div class="loading">
+No races available.
+</div>`;
 
-    const container =
-      document.getElementById("racingContainer");
+return;
+}
 
-    container.innerHTML =
-      `<div class="loading">
-        Loading UK & Ireland racing...
-      </div>`;
 
+/*
+Group by racecourse
+*/
 
-    try {
+const meetings={};
 
-      const response =
-        await fetch(`${API_BASE}/racing`);
 
-      const data =
-        await response.json();
+races.forEach(race=>{
 
+const course=
+first(
+race.course,
+"Unknown Course"
+);
 
-      if (!response.ok || data.success === false) {
+if(!meetings[course]){
+meetings[course]=[];
+}
 
-        throw new Error(
-          data.error || "Racing API error"
-        );
+meetings[course].push(race);
 
-      }
+});
 
 
-      allRacingData =
-        extractRaces(data);
+container.innerHTML=
+Object.entries(meetings)
+.map(([course,races])=>{
 
+const country=
+getCountry(races[0]);
 
-      renderRacing();
+const flag=
+country==="IRE"
+?"🇮🇪"
+:"🇬🇧";
 
-    } catch (error) {
+const countryName=
+country==="IRE"
+?"IRELAND"
+:"GREAT BRITAIN";
 
-      console.error(error);
 
-      container.innerHTML =
-        `<div class="error-box">
-          Unable to load racing data.<br><br>
-          ${escapeHTML(error.message)}
-        </div>`;
+return`
 
-    }
+<div class="meeting">
 
-  }
+<div class="meeting-title">
 
+<h3>
+${flag}
+${escapeHTML(course)}
+</h3>
 
-  function extractRaces(data) {
+<span class="country">
+${countryName}
+</span>
 
-    /*
-      The API may return:
+</div>
 
-      data.races
-      OR
-      data.data
-      OR
-      data.meetings
-      OR
-      data.data.meetings
-    */
+<div class="race-grid">
 
-    if (Array.isArray(data?.races)) {
-      return data.races;
-    }
+${races
+.map((race,index)=>
+createRaceCard(race,index)
+)
+.join("")}
 
+</div>
 
-    if (Array.isArray(data?.data?.races)) {
-      return data.data.races;
-    }
+</div>
 
+`;
 
-    if (Array.isArray(data?.meetings)) {
+}).join("");
 
-      const result = [];
+}
 
-      data.meetings.forEach(meeting => {
 
-        const races =
-          Array.isArray(meeting.races)
-            ? meeting.races
-            : [];
+/* =========================
+RACE CARD
+========================= */
 
-        races.forEach(race => {
+function createRaceCard(race,index){
 
-          result.push({
-            ...race,
-            course:
-              first(
-                race.course,
-                meeting.course,
-                meeting.name
-              ),
+const time=
+first(
+race.time,
+race.start_time,
+race.off_time,
+"--:--"
+);
 
-            country:
-              first(
-                race.country,
-                meeting.country
-              ),
+const raceName=
+first(
+race.name,
+race.race_name,
+race.title,
+`Race ${index+1}`
+);
 
-            region:
-              first(
-                race.region,
-                meeting.region
-              )
+const distance=
+first(
+race.distance,
+"--"
+);
 
-          });
+const going=
+first(
+race.going,
+"--"
+);
 
-        });
+const surface=
+first(
+race.surface,
+"--"
+);
 
-      });
+const runnerCount=
+first(
+race.runners,
+race.runner_count,
+race.number_of_runners,
+""
+);
 
-      return result;
 
-    }
+const raceData=
+encodeURIComponent(
+JSON.stringify(race)
+);
 
 
-    if (Array.isArray(data?.data)) {
+return`
 
-      const result = [];
+<div class="race-card">
 
-      data.data.forEach(item => {
+<div class="race-number">
+RACE ${index+1}
+</div>
 
-        if (Array.isArray(item.races)) {
+<div class="race-time">
+${escapeHTML(time)}
+</div>
 
-          item.races.forEach(race => {
+<div class="race-name">
+${escapeHTML(raceName)}
+</div>
 
-            result.push({
-              ...race,
-              course:
-                first(
-                  race.course,
-                  item.course,
-                  item.name
-                ),
+<div class="race-info">
 
-              country:
-                first(
-                  race.country,
-                  item.country
-                ),
+📏 <b>Distance:</b>
+${escapeHTML(distance)}
+<br>
 
-              region:
-                first(
-                  race.region,
-                  item.region
-                )
+🌱 <b>Going:</b>
+${escapeHTML(going)}
+<br>
 
-            });
+🏇 <b>Surface:</b>
+${escapeHTML(surface)}
 
-          });
+${
+runnerCount
+?`<br>🐎 <b>Runners:</b>
+${escapeHTML(runnerCount)}`
+:""
+}
 
-        } else {
+</div>
 
-          result.push(item);
+<div class="race-footer">
 
-        }
+<span class="edge">
+EDGE ANALYSIS
+</span>
 
-      });
+<button
+class="view-race"
+onclick='openRace("${raceData}")'>
+VIEW RACE →
+</button>
 
-      return result;
+</div>
 
-    }
+</div>
 
+`;
 
-    return [];
+}
 
-  }
 
+/* =========================
+RACE MODAL
+========================= */
 
-  function raceCountry(race) {
+window.openRace=function(encoded){
 
-    const region =
-      String(
-        first(
-          race.region,
-          race.country,
-          race.country_code
-        )
-      ).toUpperCase();
+try{
 
+const race=
+JSON.parse(
+decodeURIComponent(encoded)
+);
 
-    if (
-      region === "GB" ||
-      region === "ENG" ||
-      region === "SCO" ||
-      region === "WAL"
-    ) {
-      return "GB";
-    }
+const course=
+first(
+race.course,
+"Racecourse"
+);
 
+const time=
+first(
+race.time,
+race.start_time,
+race.off_time,
+"--:--"
+);
 
-    if (
-      region === "IRE" ||
-      region === "IRL" ||
-      region === "NIR"
-    ) {
-      return "IRE";
-    }
+const name=
+first(
+race.name,
+race.race_name,
+race.title,
+"Race"
+);
 
+const distance=
+first(
+race.distance,
+"--"
+);
 
-    return "";
+const going=
+first(
+race.going,
+"--"
+);
 
-  }
+const surface=
+first(
+race.surface,
+"--"
+);
 
 
-  window.filterRacing = function(filter) {
+document.getElementById(
+"modalRaceTitle"
+).textContent=
+`${course} — ${time}`;
 
-    currentRaceFilter = filter;
 
-    document
-      .getElementById("allRacesBtn")
-      .classList.toggle(
-        "active",
-        filter === "ALL"
-      );
+document.getElementById(
+"modalRaceInfo"
+).textContent=
+`${name} • ${distance} • ${going} • ${surface}`;
 
-    document
-      .getElementById("gbRacesBtn")
-      .classList.toggle(
-        "active",
-        filter === "GB"
-      );
 
-    document
-      .getElementById("ireRacesBtn")
-      .classList.toggle(
-        "active",
-        filter === "IRE"
-      );
+const runnerList=
+document.getElementById(
+"runnerList"
+);
 
 
-    renderRacing();
+/*
+Currently the API response shown
+contains runners as a NUMBER,
+not individual horse objects.
 
-  };
+So we don't invent horse names.
+*/
 
+if(
+Array.isArray(race.runners)
+){
 
-  function renderRacing() {
+runnerList.innerHTML=
+race.runners.map(
+(runner,index)=>{
 
-    const container =
-      document.getElementById("racingContainer");
+const name=
+first(
+runner.name,
+runner.horse_name,
+runner.horse,
+`Horse ${index+1}`
+);
 
+return`
 
-    let races =
-      [...allRacingData];
+<div class="runner">
 
+<div class="runner-left">
 
-    if (currentRaceFilter !== "ALL") {
+<div class="runner-number">
+${index+1}
+</div>
 
-      races =
-        races.filter(
-          race =>
-            raceCountry(race) ===
-            currentRaceFilter
-        );
+<div class="runner-name">
+${escapeHTML(name)}
+</div>
 
-    }
+</div>
 
+${
+index===0
+?`<div class="pick">
+⭐ TOP PICK
+</div>`
+:""
+}
 
-    if (!races.length) {
+</div>
 
-      container.innerHTML =
-        `<div class="loading">
-          No UK/Ireland races available.
-        </div>`;
+`;
 
-      return;
+}).join("");
 
-    }
+}else{
 
+runnerList.innerHTML=
+`
 
-    /*
-      Group races by course
-    */
+<div
+style="
+background:#181818;
+border:1px solid #292929;
+border-radius:12px;
+padding:20px;
+color:#888;
+line-height:1.7;
+">
 
-    const groups = {};
+<b style="color:#d4af37">
+🐎 ${escapeHTML(
+first(
+race.runners,
+""
+)
+)} RUNNERS
+</b>
 
+<br><br>
 
-    races.forEach(race => {
+The current free API response gives us
+the number of runners, but not the
+individual horse names and form.
 
-      const course =
-        first(
-          race.course,
-          race.course_name,
-          race.venue,
-          "Unknown Course"
-        );
+<br><br>
 
+<strong style="color:#fff">
+Next step:
+</strong>
 
-      if (!groups[course]) {
-        groups[course] = [];
-      }
+We need the detailed runner endpoint
+to build the SPORTS EDGE PRO horse
+prediction.
 
+</div>
 
-      groups[course].push(race);
+`;
 
-    });
+}
 
 
-    container.innerHTML =
-      Object.entries(groups)
-        .map(([course, courseRaces]) => {
+document.getElementById(
+"raceModal"
+).style.display=
+"block";
 
-          const country =
-            raceCountry(courseRaces[0]);
 
+}catch(error){
 
-          const flag =
-            country === "IRE"
-              ? "🇮🇪"
-              : "🇬🇧";
+console.error(error);
 
+}
 
-          return `
+};
 
-            <div class="meeting">
 
-              <div class="meeting-title">
+window.closeRace=function(){
 
-                <h3>
-                  ${flag}
-                  ${escapeHTML(course)}
-                </h3>
+document.getElementById(
+"raceModal"
+).style.display=
+"none";
 
-                <span class="country">
-                  ${country === "IRE"
-                    ? "IRELAND"
-                    : "GREAT BRITAIN"
-                  }
-                </span>
+};
 
-              </div>
 
+document.getElementById(
+"raceModal"
+).addEventListener(
+"click",
+function(event){
 
-              <div class="race-grid">
+if(event.target===this){
+closeRace();
+}
 
-                ${courseRaces
-                  .map(
-                    (race, index) =>
-                      createRaceCard(
-                        race,
-                        index
-                      )
-                  )
-                  .join("")
-                }
-
-              </div>
-
-            </div>
-
-          `;
-
-        })
-        .join("");
-
-  }
-
-
-  function createRaceCard(race, index) {
-
-    const time =
-      first(
-        race.time,
-        race.start_time,
-        race.off_time,
-        "--:--"
-      );
-
-
-    const raceName =
-      first(
-        race.name,
-        race.race_name,
-        race.title,
-        `Race ${index + 1}`
-      );
-
-
-    const distance =
-      first(
-        race.distance,
-        "--"
-      );
-
-
-    const going =
-      first(
-        race.going,
-        "--"
-      );
-
-
-    const surface =
-      first(
-        race.surface,
-        "--"
-      );
-
-
-    const runners =
-      first(
-        race.runners,
-        race.runner_count,
-        ""
-      );
-
-
-    /*
-      If runner objects are available,
-      we calculate a simple preliminary
-      Sports Edge score.
-    */
-
-    const runnerArray =
-      Array.isArray(race.runners)
-        ? race.runners
-        : [];
-
-
-    let predictionText =
-      "EDGE ANALYSIS";
-
-
-    if (runnerArray.length) {
-
-      const best =
-        calculateBestRunner(
-          runnerArray
-        );
-
-      if (best) {
-
-        predictionText =
-          `⭐ TOP PICK: ${best.name}`;
-
-      }
-
-    }
-
-
-    const raceJSON =
-      encodeURIComponent(
-        JSON.stringify(race)
-      );
-
-
-    return `
-
-      <div class="race-card">
-
-        <div class="race-time">
-          ${escapeHTML(time)}
-        </div>
-
-
-        <div class="race-name">
-          ${escapeHTML(raceName)}
-        </div>
-
-
-        <div class="race-info">
-
-          📏 Distance:
-          ${escapeHTML(distance)}
-          <br>
-
-          🌱 Going:
-          ${escapeHTML(going)}
-          <br>
-
-          🏟 Surface:
-          ${escapeHTML(surface)}
-
-          ${
-            runners
-              ? `<br>🐎 Runners: ${escapeHTML(runners)}`
-              : ""
-          }
-
-        </div>
-
-
-        <div class="race-footer">
-
-          <span class="prediction">
-            ${escapeHTML(predictionText)}
-          </span>
-
-          <button
-            class="view-race"
-            onclick='openRaceFromEncoded("${raceJSON}")'
-          >
-            VIEW RACE →
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-
-  /*
-    Preliminary prediction engine.
-
-    It looks for available:
-    rating
-    speed
-    form
-    odds
-    weight
-    jockey/trainer ratings
-
-    We can make this much more advanced
-    once we inspect the actual runner data.
-  */
-
-  function calculateRunnerScore(runner) {
-
-    let score = 0;
-
-
-    const rating =
-      Number(
-        first(
-          runner.rating,
-          runner.official_rating,
-          runner.rpr,
-          runner.or
-        )
-      );
-
-
-    const speed =
-      Number(
-        first(
-          runner.speed_rating,
-          runner.speed
-        )
-      );
-
-
-    const form =
-      String(
-        first(
-          runner.form,
-          ""
-        )
-      );
-
-
-    if (!isNaN(rating) && rating > 0) {
-      score += Math.min(rating, 150) * 0.5;
-    }
-
-
-    if (!isNaN(speed) && speed > 0) {
-      score += Math.min(speed, 150) * 0.3;
-    }
-
-
-    if (form) {
-
-      const digits =
-        form
-          .match(/[1-9]/g);
-
-      if (digits) {
-
-        let formScore = 0;
-
-        digits
-          .slice(0, 6)
-          .forEach(x => {
-
-            const position =
-              Number(x);
-
-            if (position === 1) {
-              formScore += 10;
-            } else if (position === 2) {
-              formScore += 7;
-            } else if (position === 3) {
-              formScore += 5;
-            } else if (position === 4) {
-              formScore += 3;
-            } else {
-              formScore += 1;
-            }
-
-          });
-
-        score += formScore;
-
-      }
-
-    }
-
-
-    return score;
-
-  }
-
-
-  function calculateBestRunner(runners) {
-
-    if (!Array.isArray(runners) ||
-        !runners.length) {
-      return null;
-    }
-
-
-    const scored =
-      runners.map((runner, index) => {
-
-        return {
-          runner,
-          index,
-          score:
-            calculateRunnerScore(
-              runner
-            ),
-
-          name:
-            first(
-              runner.name,
-              runner.horse_name,
-              runner.horse,
-              `Horse ${index + 1}`
-            )
-
-        };
-
-      });
-
-
-    scored.sort(
-      (a,b) =>
-        b.score - a.score
-    );
-
-
-    return scored[0];
-
-  }
-
-
-  /* ==========================================
-     RACE MODAL
-  ========================================== */
-
-  window.openRaceFromEncoded =
-    function(encoded) {
-
-      try {
-
-        const race =
-          JSON.parse(
-            decodeURIComponent(encoded)
-          );
-
-        openRace(race);
-
-      } catch(error) {
-
-        console.error(error);
-
-      }
-
-    };
-
-
-  function openRace(race) {
-
-    const modal =
-      document.getElementById("raceModal");
-
-
-    const course =
-      first(
-        race.course,
-        race.venue,
-        "Racecourse"
-      );
-
-
-    const time =
-      first(
-        race.time,
-        race.start_time,
-        race.off_time,
-        ""
-      );
-
-
-    const name =
-      first(
-        race.name,
-        race.race_name,
-        race.title,
-        "Race"
-      );
-
-
-    const distance =
-      first(
-        race.distance,
-        "--"
-      );
-
-
-    const going =
-      first(
-        race.going,
-        "--"
-      );
-
-
-    document.getElementById(
-      "modalRaceTitle"
-    ).textContent =
-      `${course} — ${time}`;
-
-
-    document.getElementById(
-      "modalRaceInfo"
-    ).textContent =
-      `${name} • ${distance} • ${going}`;
-
-
-    const runners =
-      Array.isArray(race.runners)
-        ? race.runners
-        : [];
-
-
-    const prediction =
-      calculateBestRunner(
-        runners
-      );
-
-
-    const predictionBox =
-      document.getElementById(
-        "modalPrediction"
-      );
-
-
-    if (prediction) {
-
-      predictionBox.innerHTML = `
-
-        <div
-          style="
-            color:#d4af37;
-            font-size:12px;
-            text-transform:uppercase;
-          "
-        >
-          SPORTS EDGE PRO PREDICTION
-        </div>
-
-        <div
-          style="
-            font-size:24px;
-            font-weight:bold;
-            margin-top:8px;
-          "
-        >
-          ⭐ ${escapeHTML(prediction.name)}
-        </div>
-
-        <div
-          style="
-            color:#79d98b;
-            margin-top:7px;
-            font-size:13px;
-          "
-        >
-          Top preliminary selection
-        </div>
-
-      `;
-
-    } else {
-
-      predictionBox.innerHTML = `
-
-        <div style="color:#d4af37;font-weight:bold;">
-          SPORTS EDGE PRO
-        </div>
-
-        <div style="color:#777;margin-top:7px;">
-          Runner-level data is not available
-          for this race yet.
-        </div>
-
-      `;
-
-    }
-
-
-    const list =
-      document.getElementById(
-        "runnerList"
-      );
-
-
-    if (!runners.length) {
-
-      list.innerHTML =
-        `<div class="loading">
-          Runner details are not included
-          in the current API response.
-        </div>`;
-
-    } else {
-
-      const sorted =
-        runners
-          .map((runner, index) => ({
-            runner,
-            index,
-            score:
-              calculateRunnerScore(
-                runner
-              )
-          }))
-          .sort(
-            (a,b) =>
-              b.score - a.score
-          );
-
-
-      list.innerHTML =
-        sorted.map(
-          (item, index) => {
-
-            const runner =
-              item.runner;
-
-
-            const runnerName =
-              first(
-                runner.name,
-                runner.horse_name,
-                runner.horse,
-                `Horse ${item.index + 1}`
-              );
-
-
-            const number =
-              first(
-                runner.number,
-                runner.no,
-                runner.cloth_number,
-                item.index + 1
-              );
-
-
-            const form =
-              first(
-                runner.form,
-                ""
-              );
-
-
-            return `
-
-              <div class="runner">
-
-                <div class="runner-left">
-
-                  <div class="runner-number">
-                    ${escapeHTML(number)}
-                  </div>
-
-                  <div>
-
-                    <div class="runner-name">
-                      ${escapeHTML(runnerName)}
-                    </div>
-
-                    ${
-                      form
-                        ? `<div class="runner-extra">
-                            Form: ${escapeHTML(form)}
-                           </div>`
-                        : ""
-                    }
-
-                  </div>
-
-                </div>
-
-
-                ${
-                  index === 0
-                    ? `<div class="pick">
-                        ⭐ TOP PICK
-                       </div>`
-                    : index === 1
-                      ? `<div class="pick">
-                          🥈 2ND PICK
-                         </div>`
-                      : ""
-                }
-
-              </div>
-
-            `;
-
-          }
-        ).join("");
-
-    }
-
-
-    modal.style.display =
-      "block";
-
-  }
-
-
-  window.closeRace =
-    function() {
-
-      document.getElementById(
-        "raceModal"
-      ).style.display =
-        "none";
-
-    };
-
-
-  document.getElementById(
-    "raceModal"
-  ).addEventListener(
-    "click",
-    function(event) {
-
-      if (event.target === this) {
-        closeRace();
-      }
-
-    }
-  );
+});
 
 </script>
 
