@@ -1,1833 +1,2056 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SPORTS EDGE PRO</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-:root{
-  --bg:#05080f;
-  --panel:#0b111d;
-  --panel2:#101927;
-  --line:#202d40;
-  --gold:#ffc400;
-  --gold2:#ff9d00;
-  --white:#f5f7fb;
-  --muted:#8d9bb0;
-  --green:#20d889;
-  --red:#ff4d5a;
-  --blue:#4c8dff;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at 80% 0%,rgba(255,196,0,.08),transparent 30%),
-    radial-gradient(circle at 0% 40%,rgba(50,110,255,.08),transparent 28%),
-    var(--bg);
-  color:var(--white);
-  min-height:100vh;
-}
-
-/* HEADER */
-
-.header{
-  height:76px;
-  border-bottom:1px solid var(--line);
-  background:rgba(5,8,15,.92);
-  backdrop-filter:blur(15px);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 5%;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-  font-style:italic;
-  letter-spacing:-.5px;
-}
-
-.logo span{
-  color:var(--gold);
-}
-
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-
-.live-indicator{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  color:#aeb9c9;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.live-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
-}
-
-/* MAIN */
-
-.container{
-  width:min(1450px,92%);
-  margin:0 auto;
-  padding:38px 0 70px;
-}
-
-/* DASHBOARD HERO */
-
-.hero{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:30px;
-  margin-bottom:28px;
-}
-
-.hero-title{
-  font-size:34px;
-  font-weight:900;
-  letter-spacing:-1px;
-}
-
-.hero-title span{
-  color:var(--gold);
-}
-
-.hero-sub{
-  margin-top:8px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-.user-area{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.user-email{
-  max-width:250px;
-  color:#bdc7d6;
-  font-size:12px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.logout{
-  border:1px solid #334158;
-  background:#111a29;
-  color:#dce3ee;
-  border-radius:9px;
-  padding:10px 16px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.logout:hover{
-  border-color:var(--gold);
-  color:var(--gold);
-}
-
-/* STAT BOXES */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:40px;
-}
-
-.stat{
-  background:linear-gradient(145deg,#0d1625,#080e18);
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:21px;
-  position:relative;
-  overflow:hidden;
-}
-
-.stat:after{
-  content:"";
-  position:absolute;
-  right:-30px;
-  top:-30px;
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  background:rgba(255,196,0,.05);
-}
-
-.stat-label{
-  color:#738197;
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  font-weight:800;
-}
-
-.stat-number{
-  margin-top:8px;
-  font-size:28px;
-  font-weight:900;
-}
-
-.stat-number.gold{
-  color:var(--gold);
-}
-
-.stat-number.green{
-  color:var(--green);
-}
-
-.stat-number.blue{
-  color:#65a0ff;
-}
-
-/* SECTION */
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:17px;
-}
-
-.section-title{
-  font-size:21px;
-  font-weight:900;
-}
-
-.section-sub{
-  color:#65748a;
-  font-size:12px;
-  margin-top:5px;
-}
-
-.refresh{
-  border:none;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;
-  border-radius:9px;
-  padding:11px 18px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.refresh:hover{
-  filter:brightness(1.08);
-}
-
-/* MATCH GRID */
-
-.matches{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:18px;
-}
-
-/* MATCH CARD */
-
-.match-card{
-  background:
-    linear-gradient(145deg,rgba(17,28,44,.98),rgba(7,12,21,.98));
-  border:1px solid var(--line);
-  border-radius:18px;
-  overflow:hidden;
-  transition:.22s ease;
-  position:relative;
-}
-
-.match-card:hover{
-  transform:translateY(-4px);
-  border-color:#3a4b63;
-  box-shadow:0 20px 50px rgba(0,0,0,.35);
-}
-
-.card-top{
-  padding:14px 17px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #1b2636;
-}
-
-.match-type{
-  color:#66758b;
-  font-size:10px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.badge{
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:9px;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  background:#1b2534;
-  color:#9eabbc;
-}
-
-.badge.live{
-  background:rgba(255,77,90,.12);
-  color:#ff6974;
-  border:1px solid rgba(255,77,90,.25);
-}
-
-.badge.upcoming{
-  background:rgba(255,196,0,.10);
-  color:var(--gold);
-  border:1px solid rgba(255,196,0,.22);
-}
-
-.badge.done{
-  background:#17212d;
-  color:#78869a;
-}
-
-/* MATCH BODY */
-
-.card-body{
-  padding:20px;
-}
-
-.series{
-  color:#718097;
-  font-size:11px;
-  margin-bottom:14px;
-  min-height:15px;
-}
-
-.teams{
-  display:grid;
-  grid-template-columns:1fr 45px 1fr;
-  align-items:center;
-  gap:8px;
-  min-height:75px;
-}
-
-.team{
-  font-size:16px;
-  line-height:1.25;
-  font-weight:900;
-}
-
-.team.right{
-  text-align:right;
-}
-
-.vs{
-  width:35px;
-  height:35px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:#151f2e;
-  border:1px solid #29384d;
-  color:#718096;
-  font-size:10px;
-  font-weight:900;
-  margin:auto;
-}
-
-.score{
-  margin-top:18px;
-  padding:13px 14px;
-  background:#070d16;
-  border:1px solid #172334;
-  border-radius:11px;
-}
-
-.score-label{
-  color:var(--gold);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  font-weight:900;
-  margin-bottom:6px;
-}
-
-.score-value{
-  color:#edf2f9;
-  font-size:13px;
-  line-height:1.45;
-  font-weight:700;
-}
-
-.result{
-  margin-top:12px;
-  color:#aab6c7;
-  font-size:11px;
-  line-height:1.4;
-}
-
-.card-bottom{
-  border-top:1px solid #192536;
-  padding:13px 20px;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  color:#728198;
-  font-size:10px;
-}
-
-.meta{
-  display:flex;
-  gap:7px;
-  align-items:flex-start;
-}
-
-.meta strong{
-  color:#aab7c8;
-  font-weight:700;
-}
-
-/* LOADING */
-
-.loading{
-  grid-column:1/-1;
-  padding:60px 20px;
-  text-align:center;
-  background:#0a111c;
-  border:1px solid var(--line);
-  border-radius:17px;
-  color:#718096;
-}
-
-.spinner{
-  width:34px;
-  height:34px;
-  border:3px solid #1e2b3c;
-  border-top-color:var(--gold);
-  border-radius:50%;
-  margin:0 auto 15px;
-  animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg);}
-}
-
-/* LOGIN */
-
-#loginScreen{
-  min-height:calc(100vh - 76px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:30px 15px;
-}
-
-.login-card{
-  width:100%;
-  max-width:420px;
-  background:linear-gradient(145deg,#0d1625,#080e17);
-  border:1px solid #253348;
-  border-radius:22px;
-  padding:36px;
-  box-shadow:0 30px 80px rgba(0,0,0,.4);
-}
-
-.login-brand{
-  text-align:center;
-  font-size:29px;
-  font-weight:900;
-  font-style:italic;
-}
-
-.login-brand span{
-  color:var(--gold);
-}
-
-.login-desc{
-  text-align:center;
-  color:#748197;
-  font-size:12px;
-  margin:8px 0 28px;
-}
-
-.field{
-  margin-bottom:15px;
-}
-
-.field label{
-  display:block;
-  color:#9ca9bb;
-  font-size:11px;
-  font-weight:700;
-  margin-bottom:7px;
-}
-
-.field input{
-  width:100%;
-  padding:13px;
-  background:#060b13;
-  border:1px solid #29384c;
-  border-radius:10px;
-  color:white;
-  outline:none;
-}
-
-.field input:focus{
-  border-color:var(--gold);
-}
-
-.login-btn,
-.create-btn{
-  width:100%;
-  border-radius:10px;
-  padding:13px;
-  cursor:pointer;
-  font-weight:900;
-}
-
-.login-btn{
-  border:none;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;
-}
-
-.create-btn{
-  margin-top:9px;
-  border:1px solid #2b3b51;
-  background:#111a28;
-  color:#e6ebf3;
-}
-
-.forgot{
-  display:block;
-  width:100%;
-  border:none;
-  background:none;
-  color:var(--gold);
-  margin-top:17px;
-  cursor:pointer;
-  font-size:11px;
-}
-
-.message{
-  display:none;
-  margin-top:15px;
-  padding:11px;
-  border-radius:9px;
-  font-size:11px;
-  line-height:1.5;
-}
-
-.message.show{
-  display:block;
-}
-
-.message.error{
-  color:#ff929a;
-  background:rgba(255,77,90,.08);
-  border:1px solid rgba(255,77,90,.2);
-}
-
-.message.success{
-  color:#6ee9ac;
-  background:rgba(32,216,137,.08);
-  border:1px solid rgba(32,216,137,.2);
-}
-
-/* FOOTER */
-
-footer{
-  text-align:center;
-  color:#465468;
-  border-top:1px solid #111c2b;
-  padding:25px;
-  font-size:10px;
-  letter-spacing:.5px;
-}
-
-/* TABLET */
-
-@media(max-width:1050px){
-  .matches{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-/* MOBILE */
-
-@media(max-width:650px){
-
-  .header{
-    padding:0 18px;
-  }
-
-  .logo{
-    font-size:19px;
-  }
-
-  .live-indicator{
-    display:none;
-  }
-
-  .container{
-    width:94%;
-    padding-top:25px;
-  }
-
-  .hero{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .hero-title{
-    font-size:27px;
-  }
-
-  .user-area{
-    width:100%;
-    justify-content:space-between;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .stat{
-    padding:16px;
-  }
-
-  .stat-number{
-    font-size:23px;
-  }
-
-  .matches{
-    grid-template-columns:1fr;
-  }
-
-  .section-head{
-    align-items:flex-start;
-    gap:12px;
-  }
-
-  .refresh{
-    padding:9px 13px;
-  }
-
-  .login-card{
-    padding:28px 21px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SPORTS EDGE PRO</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(212,175,55,.10), transparent 30%),
+        #080808;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .gold {
+      color: #d4af37;
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    #loginPage {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at top, rgba(212,175,55,.15), transparent 35%),
+        #050505;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 430px;
+      background: #111;
+      border: 1px solid rgba(212,175,55,.25);
+      border-radius: 22px;
+      padding: 35px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.7);
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-logo h1 {
+      color: #d4af37;
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    .login-logo p {
+      color: #888;
+      margin-top: 8px;
+    }
+
+    .input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 14px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #181818;
+      color: white;
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: #d4af37;
+    }
+
+    .gold-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #d4af37, #f1d878);
+      color: #111;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #171717;
+      color: #ddd;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #loginMessage {
+      margin-top: 15px;
+      text-align: center;
+      color: #ff7676;
+      font-size: 14px;
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    #dashboard {
+      display: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,8,8,.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid #222;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: auto;
+      padding: 17px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #d4af37, #8e6d18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+      font-weight: 900;
+    }
+
+    .brand h1 {
+      font-size: 19px;
+      letter-spacing: 1.5px;
+    }
+
+    .brand small {
+      display: block;
+      color: #777;
+      margin-top: 3px;
+    }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-email {
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .logout {
+      background: transparent;
+      border: 1px solid #444;
+      color: #ddd;
+      padding: 9px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 35px 25px 70px;
+    }
+
+    .hero {
+      padding: 35px;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(212,175,55,.13), rgba(255,255,255,.025)),
+        #101010;
+      border: 1px solid rgba(212,175,55,.18);
+      margin-bottom: 25px;
+    }
+
+    .hero h2 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #999;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .section-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #111;
+      color: #aaa;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .nav-btn.active {
+      background: #d4af37;
+      color: #111;
+      border-color: #d4af37;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: #111;
+      border: 1px solid #222;
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .stat-label {
+      color: #777;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      margin-top: 8px;
+      color: #d4af37;
+    }
+
+    /* =========================
+       SECTION HEADER
+    ========================= */
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 15px;
+    }
+
+    .section-head h2 {
+      font-size: 25px;
+    }
+
+    .refresh-btn {
+      background: #151515;
+      border: 1px solid #333;
+      color: #ddd;
+      padding: 10px 16px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       CRICKET
+    ========================= */
+
+    .matches-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .match-card {
+      background: linear-gradient(145deg, #151515, #0e0e0e);
+      border: 1px solid #272727;
+      border-radius: 18px;
+      padding: 20px;
+      transition: .2s;
+    }
+
+    .match-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212,175,55,.45);
+    }
+
+    .match-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 17px;
+    }
+
+    .badge {
+      padding: 6px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .live {
+      background: rgba(255,60,60,.15);
+      color: #ff6666;
+    }
+
+    .upcoming {
+      background: rgba(212,175,55,.15);
+      color: #d4af37;
+    }
+
+    .completed {
+      background: rgba(100,100,100,.18);
+      color: #aaa;
+    }
+
+    .free-badge {
+      color: #7fe29b;
+      background: rgba(50,200,100,.10);
+      padding: 6px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .teams {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .team-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .team-name {
+      font-weight: 700;
+    }
+
+    .team-score {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .vs {
+      text-align: center;
+      color: #555;
+      font-size: 11px;
+    }
+
+    .series {
+      color: #aaa;
+      font-size: 12px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .venue {
+      color: #777;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    /* =========================
+       HORSE RACING
+    ========================= */
+
+    #racingSection {
+      display: none;
+    }
+
+    .racing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .meeting-card {
+      background:
+        linear-gradient(145deg, rgba(212,175,55,.08), rgba(255,255,255,.015)),
+        #101010;
+      border: 1px solid #292929;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .meeting-header {
+      padding: 20px;
+      border-bottom: 1px solid #292929;
+      background: rgba(255,255,255,.02);
+    }
+
+    .country-tag {
+      font-size: 10px;
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .meeting-name {
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .race-list {
+      padding: 10px;
+    }
+
+    .race-card {
+      padding: 16px;
+      border-radius: 13px;
+      margin-bottom: 8px;
+      background: #151515;
+      border: 1px solid #222;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .race-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .race-card:hover {
+      border-color: rgba(212,175,55,.45);
+      background: #191919;
+    }
+
+    .race-time-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .race-time {
+      color: #d4af37;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .race-number {
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .race-name {
+      font-weight: 700;
+      margin-top: 9px;
+      line-height: 1.4;
+    }
+
+    .race-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .race-detail {
+      background: #202020;
+      color: #999;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+    }
+
+    .prediction-box {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 9px;
+      background: rgba(212,175,55,.06);
+      border: 1px solid rgba(212,175,55,.12);
+      color: #888;
+      font-size: 11px;
+    }
+
+    .prediction-title {
+      color: #d4af37;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    /* =========================
+       LOADING / EMPTY
+    ========================= */
+
+    .loading {
+      padding: 45px;
+      text-align: center;
+      color: #777;
+      background: #101010;
+      border: 1px solid #222;
+      border-radius: 18px;
+    }
+
+    .error {
+      padding: 25px;
+      text-align: center;
+      color: #ff7777;
+      background: rgba(255,60,60,.05);
+      border: 1px solid rgba(255,60,60,.15);
+      border-radius: 15px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 1000px) {
+      .matches-grid,
+      .racing-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .header-inner {
+        padding: 14px 15px;
+      }
+
+      .user-email {
+        display: none;
+      }
+
+      main {
+        padding: 22px 14px 50px;
+      }
+
+      .hero {
+        padding: 25px;
+      }
+
+      .hero h2 {
+        font-size: 29px;
+      }
+
+      .matches-grid,
+      .racing-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .login-box {
+        padding: 25px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-<!-- HEADER -->
+<!-- =========================================================
+     LOGIN PAGE
+========================================================= -->
 
-<header class="header">
+<div id="loginPage">
 
-  <div class="logo">
-    SPORTS <span>EDGE PRO</span>
-  </div>
+  <div class="login-box">
 
-  <div class="header-right">
-
-    <div class="live-indicator">
-      <span class="live-dot"></span>
-      Sports Data Live
+    <div class="login-logo">
+      <h1>SPORTS EDGE PRO</h1>
+      <p>Sports Intelligence Platform</p>
     </div>
 
-  </div>
+    <input
+      id="email"
+      class="input"
+      type="email"
+      placeholder="Email"
+    >
 
-</header>
+    <input
+      id="password"
+      class="input"
+      type="password"
+      placeholder="Password"
+    >
 
-
-<!-- LOGIN -->
-
-<section id="loginScreen">
-
-  <div class="login-card">
-
-    <div class="login-brand">
-      SPORTS <span>EDGE PRO</span>
-    </div>
-
-    <div class="login-desc">
-      Your professional sports intelligence dashboard
-    </div>
-
-
-    <div class="field">
-
-      <label>Email Address</label>
-
-      <input
-        id="email"
-        type="email"
-        placeholder="Enter your email"
-        autocomplete="email"
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label>Password</label>
-
-      <input
-        id="password"
-        type="password"
-        placeholder="Enter your password"
-        autocomplete="current-password"
-      >
-
-    </div>
-
-
-    <button id="loginBtn" class="login-btn">
+    <button id="loginBtn" class="gold-btn">
       LOGIN
     </button>
 
-    <button id="createBtn" class="create-btn">
+    <button id="signupBtn" class="secondary-btn">
       CREATE ACCOUNT
     </button>
 
-    <button id="forgotBtn" class="forgot">
-      Forgot Password?
+    <button id="forgotBtn" class="secondary-btn">
+      FORGOT PASSWORD
     </button>
 
-    <div id="authMessage" class="message"></div>
+    <div id="loginMessage"></div>
 
   </div>
 
-</section>
+</div>
 
 
-<!-- DASHBOARD -->
+<!-- =========================================================
+     DASHBOARD
+========================================================= -->
 
-<main id="dashboard" class="container" style="display:none;">
+<div id="dashboard">
 
-  <!-- HERO -->
+  <header>
 
-  <section class="hero">
+    <div class="header-inner">
 
-    <div>
+      <div class="brand">
 
-      <div class="hero-title">
-        Sports <span>Intelligence</span>
+        <div class="brand-icon">
+          SE
+        </div>
+
+        <div>
+          <h1>SPORTS EDGE PRO</h1>
+          <small>Sports Data Live</small>
+        </div>
+
       </div>
 
-      <div class="hero-sub">
-        Live cricket data, scores and match information
+      <div class="user-area">
+
+        <span id="userEmail" class="user-email"></span>
+
+        <button id="logoutBtn" class="logout">
+          Logout
+        </button>
+
       </div>
 
     </div>
 
+  </header>
 
-    <div class="user-area">
 
-      <div
-        id="userEmail"
-        class="user-email">
-      </div>
+  <main>
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+      <h2>
+        Sports <span class="gold">Intelligence</span>
+      </h2>
+
+      <p>
+        Live cricket data and UK & Ireland horse racing,
+        powered by SPORTS EDGE PRO.
+      </p>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="section-nav">
 
       <button
-        id="logoutBtn"
-        class="logout">
-        Logout
+        id="cricketNav"
+        class="nav-btn active"
+        onclick="showSection('cricket')"
+      >
+        🏏 Cricket
       </button>
 
-    </div>
-
-  </section>
-
-
-  <!-- STATS -->
-
-  <section class="stats">
-
-    <div class="stat">
-
-      <div class="stat-label">
-        Total Matches
-      </div>
-
-      <div
-        id="totalMatches"
-        class="stat-number gold">
-        0
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-label">
-        Cricket
-      </div>
-
-      <div class="stat-number blue">
-        100%
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-label">
-        Live
-      </div>
-
-      <div
-        id="liveMatches"
-        class="stat-number green">
-        0
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-label">
-        Data Status
-      </div>
-
-      <div
-        id="dataStatus"
-        class="stat-number">
-        —
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- MATCHES -->
-
-  <section>
-
-    <div class="section-head">
-
-      <div>
-
-        <div class="section-title">
-          Live & Upcoming
-        </div>
-
-        <div
-          id="matchStatus"
-          class="section-sub">
-          Loading sports data...
-        </div>
-
-      </div>
-
-
       <button
-        id="refreshBtn"
-        class="refresh">
-        ↻ Refresh
+        id="racingNav"
+        class="nav-btn"
+        onclick="showSection('racing')"
+      >
+        🏇 Horse Racing
       </button>
 
     </div>
 
 
-    <div
-      id="matchesBox"
-      class="matches">
+    <!-- =====================================================
+         CRICKET SECTION
+    ====================================================== -->
 
-      <div class="loading">
+    <section id="cricketSection">
 
-        <div class="spinner"></div>
+      <div class="stats">
 
-        Loading cricket matches...
+        <div class="stat">
+          <div class="stat-label">Total Matches</div>
+          <div id="totalMatches" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Cricket</div>
+          <div class="stat-value">100%</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Live</div>
+          <div id="liveMatches" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Data Status</div>
+          <div id="dataStatus" class="stat-value">...</div>
+        </div>
 
       </div>
 
-    </div>
 
-  </section>
+      <div class="section-head">
 
-</main>
+        <h2>Live & Upcoming</h2>
+
+        <button
+          class="refresh-btn"
+          onclick="loadMatches()"
+        >
+          ↻ Refresh
+        </button>
+
+      </div>
+
+      <div id="matchesContainer" class="matches-grid">
+
+        <div class="loading">
+          Loading cricket matches...
+        </div>
+
+      </div>
+
+    </section>
 
 
-<footer>
-  SPORTS EDGE PRO &nbsp;•&nbsp; SPORTS DATA & ANALYTICS
-</footer>
+    <!-- =====================================================
+         HORSE RACING SECTION
+    ====================================================== -->
 
+    <section id="racingSection">
+
+      <div class="stats">
+
+        <div class="stat">
+          <div class="stat-label">Meetings</div>
+          <div id="totalMeetings" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">UK</div>
+          <div id="ukMeetings" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Ireland</div>
+          <div id="ireMeetings" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Racing Data</div>
+          <div id="racingStatus" class="stat-value">...</div>
+        </div>
+
+      </div>
+
+
+      <div class="section-head">
+
+        <div>
+          <h2>🏇 UK & Ireland Racing</h2>
+        </div>
+
+        <button
+          class="refresh-btn"
+          onclick="loadRacing()"
+        >
+          ↻ Refresh
+        </button>
+
+      </div>
+
+
+      <div
+        id="racingContainer"
+        class="racing-grid"
+      >
+
+        <div class="loading">
+          Loading UK & Ireland races...
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- =========================================================
+     FIREBASE
+========================================================= -->
 
 <script type="module">
 
-/* =========================================
-   FIREBASE
-========================================= */
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-import {
-  initializeApp
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  onAuthStateChanged,
-  signOut
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDoudYXuwRqGxpOUl7BfQmmrloYoyKiPK0",
+    authDomain: "ports-edge-pro.firebaseapp.com",
+    projectId: "ports-edge-pro",
+    storageBucket: "ports-edge-pro.firebasestorage.app",
+    messagingSenderId: "811569206008",
+    appId: "1:811569206008:web:bd2acd5ec511f0c9d4e10d",
+    measurementId: "G-2S8PCFC271"
+  };
 
 
-const firebaseConfig = {
+  const app = initializeApp(firebaseConfig);
 
-  apiKey:
-    "AIzaSyDoudYXuwRqGxpOUl7BfQmmrloYoyKiPK0",
+  const auth = getAuth(app);
 
-  authDomain:
-    "ports-edge-pro.firebaseapp.com",
 
-  projectId:
-    "ports-edge-pro",
+  const API_BASE =
+    "https://sports-edge-api.sk-suneeth.workers.dev";
 
-  storageBucket:
-    "ports-edge-pro.firebasestorage.app",
 
-  messagingSenderId:
-    "811569206008",
+  /* ========================================================
+     ELEMENTS
+  ======================================================== */
 
-  appId:
-    "1:811569206008:web:bd2acd5ec511f0c9d4e10d",
+  const loginPage =
+    document.getElementById("loginPage");
 
-  measurementId:
-    "G-2S8PCFC271"
+  const dashboard =
+    document.getElementById("dashboard");
 
-};
+  const loginMessage =
+    document.getElementById("loginMessage");
 
+  const emailInput =
+    document.getElementById("email");
 
-const app =
-  initializeApp(firebaseConfig);
+  const passwordInput =
+    document.getElementById("password");
 
-const auth =
-  getAuth(app);
 
+  /* ========================================================
+     LOGIN
+  ======================================================== */
 
-/* =========================================
-   API
-========================================= */
+  document
+    .getElementById("loginBtn")
+    .addEventListener("click", async () => {
 
-const MATCH_API =
-  "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
 
+      if (!email || !password) {
+        loginMessage.textContent =
+          "Please enter email and password.";
+        return;
+      }
 
-/* =========================================
-   ELEMENTS
-========================================= */
+      loginMessage.textContent = "Logging in...";
 
-const loginScreen =
-  document.getElementById("loginScreen");
+      try {
 
-const dashboard =
-  document.getElementById("dashboard");
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
-const emailInput =
-  document.getElementById("email");
+        loginMessage.textContent = "";
 
-const passwordInput =
-  document.getElementById("password");
+      } catch (error) {
 
-const loginBtn =
-  document.getElementById("loginBtn");
-
-const createBtn =
-  document.getElementById("createBtn");
-
-const forgotBtn =
-  document.getElementById("forgotBtn");
-
-const logoutBtn =
-  document.getElementById("logoutBtn");
-
-const refreshBtn =
-  document.getElementById("refreshBtn");
-
-const authMessage =
-  document.getElementById("authMessage");
-
-const userEmail =
-  document.getElementById("userEmail");
-
-const matchesBox =
-  document.getElementById("matchesBox");
-
-const matchStatus =
-  document.getElementById("matchStatus");
-
-const totalMatches =
-  document.getElementById("totalMatches");
-
-const liveMatches =
-  document.getElementById("liveMatches");
-
-const dataStatus =
-  document.getElementById("dataStatus");
-
-
-/* =========================================
-   MESSAGE
-========================================= */
-
-function showMessage(text,type="error"){
-
-  authMessage.textContent=text;
-
-  authMessage.className=
-    "message show "+type;
-
-}
-
-
-/* =========================================
-   LOGIN
-========================================= */
-
-loginBtn.addEventListener("click",async()=>{
-
-  const email=
-    emailInput.value.trim();
-
-  const password=
-    passwordInput.value;
-
-
-  if(!email || !password){
-
-    showMessage(
-      "Please enter your email and password."
-    );
-
-    return;
-  }
-
-
-  loginBtn.disabled=true;
-
-  loginBtn.textContent=
-    "LOGGING IN...";
-
-
-  try{
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-  }catch(error){
-
-    showMessage(
-      firebaseError(error)
-    );
-
-  }finally{
-
-    loginBtn.disabled=false;
-
-    loginBtn.textContent=
-      "LOGIN";
-
-  }
-
-});
-
-
-/* =========================================
-   CREATE ACCOUNT
-========================================= */
-
-createBtn.addEventListener("click",async()=>{
-
-  const email=
-    emailInput.value.trim();
-
-  const password=
-    passwordInput.value;
-
-
-  if(!email || !password){
-
-    showMessage(
-      "Enter an email and password first."
-    );
-
-    return;
-  }
-
-
-  if(password.length<6){
-
-    showMessage(
-      "Password must contain at least 6 characters."
-    );
-
-    return;
-  }
-
-
-  createBtn.disabled=true;
-
-  createBtn.textContent=
-    "CREATING...";
-
-
-  try{
-
-    await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-  }catch(error){
-
-    showMessage(
-      firebaseError(error)
-    );
-
-  }finally{
-
-    createBtn.disabled=false;
-
-    createBtn.textContent=
-      "CREATE ACCOUNT";
-
-  }
-
-});
-
-
-/* =========================================
-   FORGOT PASSWORD
-========================================= */
-
-forgotBtn.addEventListener("click",async()=>{
-
-  const email=
-    emailInput.value.trim();
-
-
-  if(!email){
-
-    showMessage(
-      "Enter your email address first."
-    );
-
-    return;
-  }
-
-
-  try{
-
-    await sendPasswordResetEmail(
-      auth,
-      email
-    );
-
-    showMessage(
-      "Password reset email sent.",
-      "success"
-    );
-
-  }catch(error){
-
-    showMessage(
-      firebaseError(error)
-    );
-
-  }
-
-});
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-logoutBtn.addEventListener(
-  "click",
-  ()=>signOut(auth)
-);
-
-
-/* =========================================
-   AUTH STATE
-========================================= */
-
-onAuthStateChanged(auth,user=>{
-
-  if(user){
-
-    loginScreen.style.display=
-      "none";
-
-    dashboard.style.display=
-      "block";
-
-    userEmail.textContent=
-      user.email || "User";
-
-    loadMatches();
-
-  }else{
-
-    loginScreen.style.display=
-      "flex";
-
-    dashboard.style.display=
-      "none";
-
-  }
-
-});
-
-
-/* =========================================
-   FIREBASE ERRORS
-========================================= */
-
-function firebaseError(error){
-
-  const code=
-    error?.code || "";
-
-
-  if(code==="auth/invalid-credential")
-    return "Incorrect email or password.";
-
-  if(code==="auth/email-already-in-use")
-    return "This email is already registered.";
-
-  if(code==="auth/invalid-email")
-    return "Please enter a valid email.";
-
-  if(code==="auth/weak-password")
-    return "Password must contain at least 6 characters.";
-
-  if(code==="auth/user-not-found")
-    return "No account found with this email.";
-
-  if(code==="auth/too-many-requests")
-    return "Too many attempts. Try again later.";
-
-  return error?.message ||
-    "Something went wrong.";
-
-}
-
-
-/* =========================================
-   CLEAN VALUE
-========================================= */
-
-function clean(value){
-
-  if(value===null ||
-     value===undefined)
-    return "";
-
-
-  if(
-    typeof value==="string" ||
-    typeof value==="number" ||
-    typeof value==="boolean"
-  )
-    return String(value);
-
-
-  if(Array.isArray(value)){
-
-    return value
-      .map(clean)
-      .filter(Boolean)
-      .join(" • ");
-
-  }
-
-
-  if(typeof value==="object"){
-
-    if(value.name)
-      return clean(value.name);
-
-    if(value.teamName)
-      return clean(value.teamName);
-
-    if(value.shortName)
-      return clean(value.shortName);
-
-    if(value.title)
-      return clean(value.title);
-
-    if(value.text)
-      return clean(value.text);
-
-
-    return Object.values(value)
-      .map(clean)
-      .filter(Boolean)
-      .join(" • ");
-
-  }
-
-
-  return "";
-
-}
-
-
-/* =========================================
-   FIRST VALUE
-========================================= */
-
-function first(...values){
-
-  for(const value of values){
-
-    const result=
-      clean(value).trim();
-
-    if(result)
-      return result;
-
-  }
-
-  return "";
-
-}
-
-
-/* =========================================
-   STATUS
-========================================= */
-
-function statusClass(status){
-
-  const s=
-    String(status||"").toLowerCase();
-
-
-  if(
-    s.includes("live") ||
-    s.includes("playing") ||
-    s.includes("progress")
-  )
-    return "live";
-
-
-  if(
-    s.includes("complete") ||
-    s.includes("finished") ||
-    s.includes("result") ||
-    s.includes("drawn")
-  )
-    return "done";
-
-
-  return "upcoming";
-
-}
-
-
-/* =========================================
-   ESCAPE
-========================================= */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================
-   DATE
-========================================= */
-
-function formatDate(value){
-
-  if(!value)
-    return "";
-
-
-  const date=
-    new Date(value);
-
-
-  if(isNaN(date.getTime()))
-    return clean(value);
-
-
-  return date.toLocaleString(
-    "en-IN",
-    {
-      day:"2-digit",
-      month:"short",
-      year:"numeric",
-      hour:"2-digit",
-      minute:"2-digit"
-    }
-  );
-
-}
-
-
-/* =========================================
-   SHOW MATCHES
-========================================= */
-
-function showMatches(data){
-
-  matchesBox.innerHTML="";
-
-
-  let list=
-    Array.isArray(data)
-      ? data
-      : data?.matches ||
-        data?.data ||
-        data?.events ||
-        [];
-
-
-  if(!Array.isArray(list))
-    list=[];
-
-
-  totalMatches.textContent=
-    list.length;
-
-
-  if(!list.length){
-
-    matchStatus.textContent=
-      "No matches available.";
-
-    dataStatus.textContent=
-      "NO DATA";
-
-    matchesBox.innerHTML=`
-      <div class="loading">
-        No cricket matches are currently available.
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  let liveCount=0;
-
-
-  list.forEach((match,index)=>{
-
-    const status=
-      first(
-        match.status,
-        match.matchStatus,
-        match.state,
-        match.statusText
-      );
-
-
-    const statusType=
-      statusClass(status);
-
-
-    if(statusType==="live")
-      liveCount++;
-
-
-    let team1=
-      first(
-        match.team1,
-        match.homeTeam,
-        match.teamA,
-        match.firstTeam
-      );
-
-
-    let team2=
-      first(
-        match.team2,
-        match.awayTeam,
-        match.teamB,
-        match.secondTeam
-      );
-
-
-    const title=
-      first(
-        match.name,
-        match.title,
-        match.matchName
-      );
-
-
-    /* Try to extract teams from title */
-
-    if(
-      (!team1 || !team2) &&
-      title.toLowerCase().includes(" vs ")
-    ){
-
-      const parts=
-        title.split(/\s+vs\s+/i);
-
-      if(parts.length>=2){
-
-        team1=
-          team1 || parts[0];
-
-        team2=
-          team2 || parts[1];
+        loginMessage.textContent =
+          error.message;
 
       }
 
+    });
+
+
+  /* ========================================================
+     CREATE ACCOUNT
+  ======================================================== */
+
+  document
+    .getElementById("signupBtn")
+    .addEventListener("click", async () => {
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        loginMessage.textContent =
+          "Enter email and password first.";
+        return;
+      }
+
+      if (password.length < 6) {
+        loginMessage.textContent =
+          "Password must be at least 6 characters.";
+        return;
+      }
+
+      loginMessage.textContent =
+        "Creating account...";
+
+      try {
+
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        loginMessage.textContent =
+          "Account created successfully.";
+
+      } catch (error) {
+
+        loginMessage.textContent =
+          error.message;
+
+      }
+
+    });
+
+
+  /* ========================================================
+     FORGOT PASSWORD
+  ======================================================== */
+
+  document
+    .getElementById("forgotBtn")
+    .addEventListener("click", async () => {
+
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        loginMessage.textContent =
+          "Enter your email first.";
+        return;
+      }
+
+      try {
+
+        await sendPasswordResetEmail(
+          auth,
+          email
+        );
+
+        loginMessage.style.color = "#70e090";
+
+        loginMessage.textContent =
+          "Password reset email sent.";
+
+      } catch (error) {
+
+        loginMessage.style.color = "#ff7777";
+
+        loginMessage.textContent =
+          error.message;
+
+      }
+
+    });
+
+
+  /* ========================================================
+     LOGOUT
+  ======================================================== */
+
+  document
+    .getElementById("logoutBtn")
+    .addEventListener("click", async () => {
+
+      await signOut(auth);
+
+    });
+
+
+  /* ========================================================
+     AUTH STATE
+  ======================================================== */
+
+  onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+      loginPage.style.display = "none";
+
+      dashboard.style.display = "block";
+
+      document.getElementById("userEmail")
+        .textContent = user.email || "";
+
+      loadMatches();
+
+    } else {
+
+      loginPage.style.display = "flex";
+
+      dashboard.style.display = "none";
+
     }
-
-
-    const series=
-      first(
-        match.series,
-        match.seriesName,
-        match.tournament,
-        match.competition
-      );
-
-
-    const venue=
-      first(
-        match.venue,
-        match.ground,
-        match.location,
-        match.stadium
-      );
-
-
-    const score=
-      first(
-        match.score,
-        match.scorecard,
-        match.scores,
-        match.result
-      );
-
-
-    const date=
-      first(
-        match.date,
-        match.dateTime,
-        match.startTime,
-        match.start,
-        match.startDate,
-        match.startDateTime
-      );
-
-
-    const result=
-      first(
-        match.result,
-        match.status
-      );
-
-
-    const card=
-      document.createElement("article");
-
-    card.className=
-      "match-card";
-
-
-    const badgeText=
-      statusType==="live"
-        ? "LIVE"
-        : statusType==="done"
-          ? "COMPLETED"
-          : "UPCOMING";
-
-
-    card.innerHTML=`
-
-      <div class="card-top">
-
-        <div class="match-type">
-          MATCH ${String(index+1).padStart(2,"0")}
-        </div>
-
-        <div class="badge ${statusType}">
-          ${badgeText}
-        </div>
-
-      </div>
-
-
-      <div class="card-body">
-
-        <div class="series">
-          ${escapeHTML(series || "Cricket")}
-        </div>
-
-
-        <div class="teams">
-
-          <div class="team">
-            ${escapeHTML(team1 || title || "Team 1")}
-          </div>
-
-          <div class="vs">
-            VS
-          </div>
-
-          <div class="team right">
-            ${escapeHTML(team2 || "Team 2")}
-          </div>
-
-        </div>
-
-
-        ${
-          score
-          ? `
-            <div class="score">
-
-              <div class="score-label">
-                SCORE
-              </div>
-
-              <div class="score-value">
-                ${escapeHTML(score)}
-              </div>
-
-            </div>
-          `
-          : ""
-        }
-
-
-        ${
-          result &&
-          result!==status
-          ? `
-            <div class="result">
-              ${escapeHTML(result)}
-            </div>
-          `
-          : ""
-        }
-
-      </div>
-
-
-      <div class="card-bottom">
-
-        ${
-          venue
-          ? `
-            <div class="meta">
-              <span>📍</span>
-              <strong>${escapeHTML(venue)}</strong>
-            </div>
-          `
-          : ""
-        }
-
-
-        ${
-          date
-          ? `
-            <div class="meta">
-              <span>🕐</span>
-              <strong>${escapeHTML(formatDate(date))}</strong>
-            </div>
-          `
-          : ""
-        }
-
-      </div>
-
-    `;
-
-
-    matchesBox.appendChild(card);
 
   });
 
 
-  liveMatches.textContent=
-    liveCount;
+  /* ========================================================
+     SECTION SWITCH
+  ======================================================== */
+
+  window.showSection = function(section) {
+
+    const cricket =
+      document.getElementById("cricketSection");
+
+    const racing =
+      document.getElementById("racingSection");
+
+    const cricketNav =
+      document.getElementById("cricketNav");
+
+    const racingNav =
+      document.getElementById("racingNav");
 
 
-  dataStatus.textContent=
-    "ONLINE";
+    if (section === "cricket") {
 
+      cricket.style.display = "block";
+      racing.style.display = "none";
 
-  dataStatus.className=
-    "stat-number green";
+      cricketNav.classList.add("active");
+      racingNav.classList.remove("active");
 
+    } else {
 
-  matchStatus.textContent=
-    list.length +
-    " cricket matches available";
+      cricket.style.display = "none";
+      racing.style.display = "block";
 
-}
+      cricketNav.classList.remove("active");
+      racingNav.classList.add("active");
 
-
-/* =========================================
-   LOAD API
-========================================= */
-
-async function loadMatches(){
-
-  matchStatus.textContent=
-    "Connecting to cricket data...";
-
-
-  dataStatus.textContent=
-    "…";
-
-
-  matchesBox.innerHTML=`
-
-    <div class="loading">
-
-      <div class="spinner"></div>
-
-      Loading live cricket data...
-
-    </div>
-
-  `;
-
-
-  try{
-
-    const response=
-      await fetch(
-        MATCH_API,
-        {
-          cache:"no-store"
-        }
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "API HTTP "+response.status
-      );
+      loadRacing();
 
     }
 
-
-    const data=
-      await response.json();
+  };
 
 
-    console.log(
-      "SPORTS EDGE PRO DATA:",
-      data
+  /* ========================================================
+     CLEAN API DATA
+  ======================================================== */
+
+  function clean(value) {
+
+    if (
+      value === null ||
+      value === undefined
+    ) {
+      return "";
+    }
+
+    if (
+      typeof value === "string" ||
+      typeof value === "number" ||
+      typeof value === "boolean"
+    ) {
+      return String(value);
+    }
+
+    if (Array.isArray(value)) {
+
+      return value
+        .map(clean)
+        .filter(Boolean)
+        .join(", ");
+
+    }
+
+    if (typeof value === "object") {
+
+      const preferred = [
+        "name",
+        "shortname",
+        "shortName",
+        "title",
+        "value",
+        "text"
+      ];
+
+      for (const key of preferred) {
+
+        if (value[key] !== undefined) {
+
+          const result = clean(value[key]);
+
+          if (result) return result;
+
+        }
+
+      }
+
+      return "";
+
+    }
+
+    return "";
+
+  }
+
+
+  /* ========================================================
+     ESCAPE HTML
+  ======================================================== */
+
+  function escapeHTML(value) {
+
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* ========================================================
+     FORMAT DATE
+  ======================================================== */
+
+  function formatDate(value) {
+
+    if (!value) return "";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return String(value);
+    }
+
+    return date.toLocaleString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
     );
 
-
-    showMatches(data);
-
-
-  }catch(error){
-
-    console.error(error);
+  }
 
 
-    dataStatus.textContent=
-      "ERROR";
+  /* ========================================================
+     CRICKET STATUS
+  ======================================================== */
 
-    dataStatus.className=
-      "stat-number";
+  function getMatchStatus(match) {
+
+    const status =
+      String(
+        match.status ||
+        match.matchStatus ||
+        ""
+      ).toLowerCase();
+
+    if (
+      status.includes("live") ||
+      status.includes("in progress")
+    ) {
+      return "LIVE";
+    }
+
+    if (
+      status.includes("won") ||
+      status.includes("completed") ||
+      status.includes("finished")
+    ) {
+      return "COMPLETED";
+    }
+
+    return "UPCOMING";
+
+  }
 
 
-    matchStatus.textContent=
-      "Unable to connect to sports data.";
+  /* ========================================================
+     CRICKET
+  ======================================================== */
+
+  window.loadMatches = async function() {
+
+    const container =
+      document.getElementById(
+        "matchesContainer"
+      );
+
+    const status =
+      document.getElementById(
+        "dataStatus"
+      );
+
+    container.innerHTML =
+      `<div class="loading">
+        Loading cricket matches...
+      </div>`;
+
+    try {
+
+      const response =
+        await fetch(
+          `${API_BASE}/matches`
+        );
+
+      if (!response.ok) {
+        throw new Error(
+          "Cricket API error"
+        );
+      }
+
+      const data =
+        await response.json();
+
+      let matches =
+        Array.isArray(data.data)
+          ? data.data
+          : [];
+
+      document.getElementById(
+        "totalMatches"
+      ).textContent =
+        matches.length;
 
 
-    matchesBox.innerHTML=`
+      const liveCount =
+        matches.filter(
+          m =>
+            getMatchStatus(m) === "LIVE"
+        ).length;
 
-      <div class="loading">
+      document.getElementById(
+        "liveMatches"
+      ).textContent =
+        liveCount;
 
-        <strong>
-          Unable to load cricket data
-        </strong>
 
-        <br><br>
+      status.textContent = "ONLINE";
 
-        Check your connection and click
-        <b>Refresh</b>.
+
+      if (!matches.length) {
+
+        container.innerHTML =
+          `<div class="loading">
+            No cricket matches available.
+          </div>`;
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        matches.map(
+          (match) => {
+
+            let team1 =
+              clean(
+                match.teamInfo?.[0]?.name ||
+                match.teams?.[0] ||
+                match.team1 ||
+                ""
+              );
+
+            let team2 =
+              clean(
+                match.teamInfo?.[1]?.name ||
+                match.teams?.[1] ||
+                match.team2 ||
+                ""
+              );
+
+
+            let score1 = "";
+            let score2 = "";
+
+
+            if (
+              Array.isArray(match.score)
+            ) {
+
+              score1 =
+                clean(
+                  match.score[0]
+                );
+
+              score2 =
+                clean(
+                  match.score[1]
+                );
+
+            }
+
+
+            const status =
+              getMatchStatus(match);
+
+
+            const badgeClass =
+              status === "LIVE"
+                ? "live"
+                : status === "COMPLETED"
+                  ? "completed"
+                  : "upcoming";
+
+
+            return `
+              <div class="match-card">
+
+                <div class="match-top">
+
+                  <span class="badge ${badgeClass}">
+                    ${status}
+                  </span>
+
+                  <span class="free-badge">
+                    FREE
+                  </span>
+
+                </div>
+
+                <div class="teams">
+
+                  <div class="team-row">
+
+                    <span class="team-name">
+                      ${escapeHTML(team1)}
+                    </span>
+
+                    <span class="team-score">
+                      ${escapeHTML(score1)}
+                    </span>
+
+                  </div>
+
+                  <div class="vs">
+                    VS
+                  </div>
+
+                  <div class="team-row">
+
+                    <span class="team-name">
+                      ${escapeHTML(team2)}
+                    </span>
+
+                    <span class="team-score">
+                      ${escapeHTML(score2)}
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <div class="series">
+                  ${escapeHTML(
+                    match.name ||
+                    match.series ||
+                    match.matchType ||
+                    ""
+                  )}
+                </div>
+
+                <div class="venue">
+                  📍 ${escapeHTML(
+                    match.venue ||
+                    ""
+                  )}
+                </div>
+
+              </div>
+            `;
+
+          }
+        ).join("");
+
+
+    } catch (error) {
+
+      status.textContent = "OFFLINE";
+
+      container.innerHTML =
+        `<div class="error">
+          Unable to load cricket data.
+          <br><br>
+          ${escapeHTML(error.message)}
+        </div>`;
+
+    }
+
+  };
+
+
+  /* ========================================================
+     HORSE RACING
+  ======================================================== */
+
+  window.loadRacing = async function() {
+
+    const container =
+      document.getElementById(
+        "racingContainer"
+      );
+
+    const status =
+      document.getElementById(
+        "racingStatus"
+      );
+
+    container.innerHTML =
+      `<div class="loading">
+        Loading UK & Ireland racing...
+      </div>`;
+
+
+    try {
+
+      const response =
+        await fetch(
+          `${API_BASE}/racing`
+        );
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Horse Racing API error"
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      if (!data.success) {
+
+        throw new Error(
+          data.error ||
+          "Racing data unavailable"
+        );
+
+      }
+
+
+      let meetings =
+        Array.isArray(data.meetings)
+          ? data.meetings
+          : [];
+
+
+      /* ------------------------------------------
+         FINAL UK / IRELAND FILTER
+      ------------------------------------------ */
+
+      meetings =
+        meetings.filter(
+          meeting => {
+
+            const country =
+              String(
+                meeting.country ||
+                meeting.country_code ||
+                meeting.region ||
+                ""
+              ).toUpperCase();
+
+            return (
+              country === "GB" ||
+              country === "IRE" ||
+              country === "NIR" ||
+              country === "UK" ||
+              country === "ENGLAND" ||
+              country === "SCOTLAND" ||
+              country === "WALES" ||
+              country === "IRELAND"
+            );
+
+          }
+        );
+
+
+      document.getElementById(
+        "totalMeetings"
+      ).textContent =
+        meetings.length;
+
+
+      const uk =
+        meetings.filter(
+          m => {
+
+            const country =
+              String(
+                m.country ||
+                m.country_code ||
+                m.region ||
+                ""
+              ).toUpperCase();
+
+            return (
+              country === "GB" ||
+              country === "UK" ||
+              country === "ENGLAND" ||
+              country === "SCOTLAND" ||
+              country === "WALES"
+            );
+
+          }
+        ).length;
+
+
+      const ire =
+        meetings.filter(
+          m => {
+
+            const country =
+              String(
+                m.country ||
+                m.country_code ||
+                m.region ||
+                ""
+              ).toUpperCase();
+
+            return (
+              country === "IRE" ||
+              country === "NIR" ||
+              country === "IRELAND"
+            );
+
+          }
+        ).length;
+
+
+      document.getElementById(
+        "ukMeetings"
+      ).textContent = uk;
+
+
+      document.getElementById(
+        "ireMeetings"
+      ).textContent = ire;
+
+
+      status.textContent = "ONLINE";
+
+
+      if (!meetings.length) {
+
+        container.innerHTML =
+          `<div class="loading">
+            No UK or Irish races found today.
+          </div>`;
+
+        return;
+
+      }
+
+
+      /* ------------------------------------------
+         MEETING CARDS
+      ------------------------------------------ */
+
+      container.innerHTML =
+        meetings.map(
+          meeting => {
+
+            const country =
+              String(
+                meeting.country ||
+                meeting.country_code ||
+                meeting.region ||
+                ""
+              ).toUpperCase();
+
+
+            const flag =
+              (
+                country === "IRE" ||
+                country === "NIR" ||
+                country === "IRELAND"
+              )
+                ? "🇮🇪"
+                : "🇬🇧";
+
+
+            const course =
+              clean(
+                meeting.course ||
+                meeting.name ||
+                meeting.course_name ||
+                "Race Meeting"
+              );
+
+
+            const races =
+              Array.isArray(
+                meeting.races
+              )
+                ? meeting.races
+                : [];
+
+
+            /*
+              Some versions of the API return the
+              races directly in the meeting object.
+            */
+
+            let raceData = races;
+
+
+            if (!raceData.length) {
+
+              if (
+                Array.isArray(
+                  meeting.racecards
+                )
+              ) {
+
+                raceData =
+                  meeting.racecards;
+
+              } else {
+
+                raceData = [];
+
+              }
+
+            }
+
+
+            return `
+              <div class="meeting-card">
+
+                <div class="meeting-header">
+
+                  <div class="country-tag">
+                    ${flag} ${escapeHTML(
+                      country
+                    )}
+                  </div>
+
+                  <div class="meeting-name">
+                    ${escapeHTML(course)}
+                  </div>
+
+                </div>
+
+                <div class="race-list">
+
+                  ${
+                    raceData.length
+                      ? raceData
+                          .map(
+                            (race, index) =>
+                              renderRace(
+                                race,
+                                index + 1,
+                                meeting
+                              )
+                          )
+                          .join("")
+                      : renderSingleMeetingRace(
+                          meeting
+                        )
+                  }
+
+                </div>
+
+              </div>
+            `;
+
+          }
+        ).join("");
+
+
+    } catch (error) {
+
+      status.textContent = "OFFLINE";
+
+      container.innerHTML =
+        `<div class="error">
+          Unable to load racing data.
+          <br><br>
+          ${escapeHTML(
+            error.message
+          )}
+        </div>`;
+
+    }
+
+  };
+
+
+  /* ========================================================
+     RENDER INDIVIDUAL RACE
+  ======================================================== */
+
+  function renderRace(
+    race,
+    index,
+    meeting
+  ) {
+
+    const time =
+      clean(
+        race.time ||
+        race.off_time ||
+        race.start_time ||
+        race.race_time ||
+        ""
+      );
+
+
+    const raceName =
+      clean(
+        race.name ||
+        race.race_name ||
+        race.title ||
+        `Race ${index}`
+      );
+
+
+    const distance =
+      clean(
+        race.distance ||
+        ""
+      );
+
+
+    const going =
+      clean(
+        race.going ||
+        ""
+      );
+
+
+    const surface =
+      clean(
+        race.surface ||
+        ""
+      );
+
+
+    const runners =
+      clean(
+        race.runners ||
+        race.runner_count ||
+        ""
+      );
+
+
+    const className =
+      clean(
+        race.class ||
+        race.race_class ||
+        ""
+      );
+
+
+    return `
+      <div class="race-card">
+
+        <div class="race-time-row">
+
+          <div class="race-time">
+            ${escapeHTML(
+              time || "--:--"
+            )}
+          </div>
+
+          <div class="race-number">
+            RACE ${index}
+          </div>
+
+        </div>
+
+        <div class="race-name">
+          ${escapeHTML(raceName)}
+        </div>
+
+        <div class="race-details">
+
+          ${
+            distance
+              ? `<span class="race-detail">
+                   📏 ${escapeHTML(distance)}
+                 </span>`
+              : ""
+          }
+
+          ${
+            going
+              ? `<span class="race-detail">
+                   🌱 ${escapeHTML(going)}
+                 </span>`
+              : ""
+          }
+
+          ${
+            surface
+              ? `<span class="race-detail">
+                   🏟 ${escapeHTML(surface)}
+                 </span>`
+              : ""
+          }
+
+          ${
+            runners
+              ? `<span class="race-detail">
+                   🐎 ${escapeHTML(runners)} runners
+                 </span>`
+              : ""
+          }
+
+          ${
+            className
+              ? `<span class="race-detail">
+                   ${escapeHTML(className)}
+                 </span>`
+              : ""
+          }
+
+        </div>
+
+        <div class="prediction-box">
+
+          <div class="prediction-title">
+            ★ SPORTS EDGE PRO
+          </div>
+
+          Prediction engine will analyse
+          individual runners when runner data
+          is available.
+
+        </div>
 
       </div>
-
     `;
 
   }
 
-}
+
+  /* ========================================================
+     FALLBACK MEETING RACE
+     ======================================================== */
+
+  function renderSingleMeetingRace(
+    meeting
+  ) {
+
+    const time =
+      clean(
+        meeting.time ||
+        meeting.off_time ||
+        ""
+      );
 
 
-/* =========================================
-   REFRESH
-========================================= */
+    const distance =
+      clean(
+        meeting.distance ||
+        ""
+      );
 
-refreshBtn.addEventListener(
-  "click",
-  loadMatches
-);
+
+    const going =
+      clean(
+        meeting.going ||
+        ""
+      );
+
+
+    const surface =
+      clean(
+        meeting.surface ||
+        ""
+      );
+
+
+    const runners =
+      clean(
+        meeting.runners ||
+        ""
+      );
+
+
+    const raceName =
+      clean(
+        meeting.race_name ||
+        meeting.name ||
+        "Today's Race"
+      );
+
+
+    return `
+      <div class="race-card">
+
+        <div class="race-time-row">
+
+          <div class="race-time">
+            ${escapeHTML(
+              time || "--:--"
+            )}
+          </div>
+
+          <div class="race-number">
+            RACE
+          </div>
+
+        </div>
+
+        <div class="race-name">
+          ${escapeHTML(raceName)}
+        </div>
+
+        <div class="race-details">
+
+          ${
+            distance
+              ? `<span class="race-detail">
+                   📏 ${escapeHTML(distance)}
+                 </span>`
+              : ""
+          }
+
+          ${
+            going
+              ? `<span class="race-detail">
+                   🌱 ${escapeHTML(going)}
+                 </span>`
+              : ""
+          }
+
+          ${
+            surface
+              ? `<span class="race-detail">
+                   🏟 ${escapeHTML(surface)}
+                 </span>`
+              : ""
+          }
+
+          ${
+            runners
+              ? `<span class="race-detail">
+                   🐎 ${escapeHTML(runners)} runners
+                 </span>`
+              : ""
+          }
+
+        </div>
+
+        <div class="prediction-box">
+
+          <div class="prediction-title">
+            ★ SPORTS EDGE PRO
+          </div>
+
+          Prediction analysis coming
+          with individual runner data.
+
+        </div>
+
+      </div>
+    `;
+
+  }
 
 </script>
 
