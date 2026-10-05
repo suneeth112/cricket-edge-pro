@@ -1,768 +1,218 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+function showMatches(data) {
 
-  <title>SPORTS EDGE PRO</title>
+  matchesBox.innerHTML = "";
 
-  <style>
-    * {
-      box-sizing: border-box;
+  const list =
+    Array.isArray(data)
+      ? data
+      : data.matches ||
+        data.data ||
+        data.events ||
+        [];
+
+  if (!Array.isArray(list) || list.length === 0) {
+    matchStatus.textContent = "No matches found.";
+    return;
+  }
+
+  matchStatus.textContent =
+    list.length + " match(es)";
+
+
+  function cleanValue(value) {
+
+    if (value === null || value === undefined) {
+      return "";
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #07111f;
-      color: white;
+    if (typeof value === "string" ||
+        typeof value === "number" ||
+        typeof value === "boolean") {
+      return String(value);
     }
 
-    header {
-      background: #0e2038;
-      border-bottom: 1px solid #263e5b;
-      padding: 18px 5%;
-      font-size: 25px;
-      font-weight: bold;
+    if (Array.isArray(value)) {
+      return value
+        .map(cleanValue)
+        .filter(Boolean)
+        .join(" • ");
     }
 
-    .brand span {
-      color: #ffc329;
+    if (typeof value === "object") {
+
+      // Common team/object formats
+      if (value.name) return cleanValue(value.name);
+      if (value.teamName) return cleanValue(value.teamName);
+      if (value.shortName) return cleanValue(value.shortName);
+      if (value.title) return cleanValue(value.title);
+
+      return Object.values(value)
+        .map(cleanValue)
+        .filter(Boolean)
+        .join(" • ");
     }
 
-    main {
-      min-height: calc(100vh - 140px);
-      padding: 35px 16px;
-    }
-
-    .login-container {
-      max-width: 440px;
-      margin: 45px auto;
-      padding: 30px;
-      background: #11243e;
-      border: 1px solid #294767;
-      border-radius: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 25px;
-      margin: 0 0 18px;
-    }
-
-    h1 span {
-      color: #ffc329;
-    }
-
-    .subtitle {
-      color: #b7c7d9;
-      line-height: 1.6;
-      margin-bottom: 26px;
-    }
-
-    input {
-      width: 100%;
-      padding: 16px;
-      margin: 10px 0;
-      border: 1px solid #3a5877;
-      border-radius: 9px;
-      background: #071526;
-      color: white;
-      font-size: 16px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #ffc329;
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 9px;
-      padding: 15px;
-      margin-top: 12px;
-      background: #ffc329;
-      color: #07111f;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #ffda65;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .secondary {
-      background: #294767;
-      color: white;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    #status {
-      margin-top: 18px;
-      color: #ffc329;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
-
-    .small-note {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #9fb2c8;
-      line-height: 1.5;
-    }
-
-    .switch-text {
-      margin-top: 20px;
-      color: #b7c7d9;
-    }
-
-    .switch-btn {
-      background: transparent;
-      color: #ffc329;
-      padding: 5px;
-      margin: 0;
-      width: auto;
-    }
-
-    #dashboard {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .dashboard-top {
-      background: #11243e;
-      border: 1px solid #294767;
-      border-radius: 14px;
-      padding: 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .dashboard-top h2 {
-      margin: 0 0 8px;
-    }
-
-    .dashboard-top p {
-      color: #b7c7d9;
-      margin: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .dashboard-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .dashboard-actions button {
-      width: auto;
-      margin: 0;
-      min-width: 110px;
-    }
-
-    .section-title {
-      margin: 30px 0 18px;
-      font-size: 23px;
-    }
-
-    #matches {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-    }
-
-    .match-card {
-      background: #11243e;
-      border: 1px solid #294767;
-      border-radius: 14px;
-      padding: 20px;
-      min-height: 120px;
-    }
-
-    .match-card h3 {
-      margin: 0 0 12px;
-      color: #ffc329;
-      font-size: 18px;
-    }
-
-    .match-card p {
-      color: #c5d2e0;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
-
-    #matchStatus {
-      color: #b7c7d9;
-      margin: 15px 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #8298b1;
-      border-top: 1px solid #263e5b;
-    }
-
-    @media (max-width: 500px) {
-      header {
-        font-size: 21px;
-      }
-
-      .login-container {
-        padding: 22px;
-        margin: 20px auto;
-      }
-
-      .dashboard-top {
-        align-items: stretch;
-      }
-
-      .dashboard-actions button {
-        flex: 1;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <div class="brand">SPORTS <span>EDGE PRO</span></div>
-</header>
-
-<main>
-
-  <!-- EMAIL LOGIN -->
-  <section id="loginPanel" class="login-container">
-
-    <h1>Welcome to <span>SPORTS EDGE PRO</span></h1>
-
-    <p class="subtitle">
-      Sign in to access the sports dashboard.
-    </p>
-
-    <input
-      type="email"
-      id="email"
-      placeholder="Enter your email"
-      autocomplete="email"
-    >
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Enter your password"
-      autocomplete="current-password"
-    >
-
-    <button id="loginBtn">
-      Login
-    </button>
-
-    <button id="signupBtn" class="secondary">
-      Create Account
-    </button>
-
-    <button id="resetBtn" class="switch-btn">
-      Forgot Password?
-    </button>
-
-    <p id="status" role="status"></p>
-
-    <p class="small-note">
-      Secure login powered by Firebase Authentication.
-    </p>
-
-  </section>
-
-
-  <!-- DASHBOARD -->
-  <section id="dashboard" class="hidden">
-
-    <div class="dashboard-top">
-
-      <div>
-        <h2>Sports Dashboard</h2>
-        <p id="userInfo">Logged-in user</p>
-      </div>
-
-      <div class="dashboard-actions">
-        <button id="refreshBtn">
-          Refresh
-        </button>
-
-        <button id="logoutBtn" class="secondary">
-          Logout
-        </button>
-      </div>
-
-    </div>
-
-    <h2 class="section-title">
-      Live & Upcoming Matches
-    </h2>
-
-    <p id="matchStatus">
-      Loading matches...
-    </p>
-
-    <div id="matches"></div>
-
-  </section>
-
-</main>
-
-<footer>
-  SPORTS EDGE PRO · Sports analysis platform
-</footer>
-
-
-<script type="module">
-
-  import { initializeApp } from
-    "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-  import {
-    getAuth,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
-    onAuthStateChanged,
-    signOut
-  } from
-    "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
-
-  /* FIREBASE CONFIG */
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDoudYXuwRqGxpOUl7BfQmmrloYoyKiPK0",
-    authDomain: "ports-edge-pro.firebaseapp.com",
-    projectId: "ports-edge-pro",
-    storageBucket: "ports-edge-pro.firebasestorage.app",
-    messagingSenderId: "811569206008",
-    appId: "1:811569206008:web:bd2acd5ec511f0c9d4e10d",
-    measurementId: "G-2S8PCFC271"
-  };
-
-
-  /* APP */
-
-  const MATCH_API =
-    "https://sports-edge-api.sk-suneeth.workers.dev/matches";
-
-  const app = initializeApp(firebaseConfig);
-
-  const auth = getAuth(app);
-
-
-  /* ELEMENTS */
-
-  const loginPanel =
-    document.getElementById("loginPanel");
-
-  const dashboard =
-    document.getElementById("dashboard");
-
-  const emailInput =
-    document.getElementById("email");
-
-  const passwordInput =
-    document.getElementById("password");
-
-  const status =
-    document.getElementById("status");
-
-  const matchStatus =
-    document.getElementById("matchStatus");
-
-  const matchesBox =
-    document.getElementById("matches");
-
-  const loginBtn =
-    document.getElementById("loginBtn");
-
-  const signupBtn =
-    document.getElementById("signupBtn");
-
-  const resetBtn =
-    document.getElementById("resetBtn");
-
-
-  /* STATUS */
-
-  function setStatus(message) {
-    status.textContent = message;
+    return "";
   }
 
 
-  /* LOGIN */
+  list.forEach((match) => {
 
-  loginBtn.addEventListener("click", async () => {
+    const card =
+      document.createElement("article");
 
-    const email =
-      emailInput.value.trim();
+    card.className = "match-card";
 
-    const password =
-      passwordInput.value;
 
-    if (!email || !password) {
-      setStatus("Please enter your email and password.");
-      return;
+    /* MATCH TITLE */
+
+    const title =
+      document.createElement("h3");
+
+    let matchTitle =
+      match.name ||
+      match.title ||
+      match.matchName;
+
+
+    if (!matchTitle &&
+        match.team1 &&
+        match.team2) {
+
+      matchTitle =
+        cleanValue(match.team1) +
+        " vs " +
+        cleanValue(match.team2);
     }
 
-    loginBtn.disabled = true;
 
-    setStatus("Signing in...");
+    if (!matchTitle &&
+        match.homeTeam &&
+        match.awayTeam) {
 
-    try {
-
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      setStatus("Login successful.");
-
-    } catch (error) {
-
-      console.error(error);
-
-      if (error.code === "auth/invalid-credential") {
-        setStatus("Incorrect email or password.");
-      } else if (error.code === "auth/user-not-found") {
-        setStatus("Account not found. Please create an account.");
-      } else {
-        setStatus(
-          "Login failed: " +
-          error.message
-        );
-      }
-
-    } finally {
-
-      loginBtn.disabled = false;
-
+      matchTitle =
+        cleanValue(match.homeTeam) +
+        " vs " +
+        cleanValue(match.awayTeam);
     }
 
-  });
 
+    title.textContent =
+      cleanValue(matchTitle) ||
+      "Cricket Match";
 
-  /* CREATE ACCOUNT */
 
-  signupBtn.addEventListener("click", async () => {
+    card.appendChild(title);
 
-    const email =
-      emailInput.value.trim();
 
-    const password =
-      passwordInput.value;
+    /* STATUS */
 
-    if (!email || !password) {
-      setStatus("Enter an email and password first.");
-      return;
-    }
+    const statusText =
+      match.status ||
+      match.matchStatus ||
+      match.state;
 
-    if (password.length < 6) {
-      setStatus("Password must be at least 6 characters.");
-      return;
-    }
 
-    signupBtn.disabled = true;
+    if (statusText) {
 
-    setStatus("Creating your account...");
-
-    try {
-
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      setStatus("Account created successfully.");
-
-    } catch (error) {
-
-      console.error(error);
-
-      if (error.code === "auth/email-already-in-use") {
-
-        setStatus(
-          "This email already has an account. Please login."
-        );
-
-      } else {
-
-        setStatus(
-          "Account creation failed: " +
-          error.message
-        );
-
-      }
-
-    } finally {
-
-      signupBtn.disabled = false;
-
-    }
-
-  });
-
-
-  /* PASSWORD RESET */
-
-  resetBtn.addEventListener("click", async () => {
-
-    const email =
-      emailInput.value.trim();
-
-    if (!email) {
-      setStatus(
-        "Enter your email first, then click Forgot Password."
-      );
-      return;
-    }
-
-    try {
-
-      await sendPasswordResetEmail(
-        auth,
-        email
-      );
-
-      setStatus(
-        "Password reset email sent. Check your inbox."
-      );
-
-    } catch (error) {
-
-      console.error(error);
-
-      setStatus(
-        "Could not send reset email: " +
-        error.message
-      );
-
-    }
-
-  });
-
-
-  /* AUTH STATE */
-
-  onAuthStateChanged(auth, async (user) => {
-
-    if (user) {
-
-      loginPanel.classList.add("hidden");
-
-      dashboard.classList.remove("hidden");
-
-      document.getElementById("userInfo").textContent =
-        "Logged in as: " + user.email;
-
-      await loadMatches();
-
-    } else {
-
-      dashboard.classList.add("hidden");
-
-      loginPanel.classList.remove("hidden");
-
-      matchesBox.innerHTML = "";
-
-      matchStatus.textContent = "";
-
-    }
-
-  });
-
-
-  /* LOGOUT */
-
-  document.getElementById("logoutBtn")
-    .addEventListener("click", async () => {
-
-      try {
-
-        await signOut(auth);
-
-      } catch (error) {
-
-        setStatus(
-          "Logout failed: " +
-          error.message
-        );
-
-      }
-
-    });
-
-
-  /* REFRESH */
-
-  document.getElementById("refreshBtn")
-    .addEventListener(
-      "click",
-      loadMatches
-    );
-
-
-  /* DISPLAY MATCHES */
-
-  function showMatches(data) {
-
-    matchesBox.innerHTML = "";
-
-    const list =
-      Array.isArray(data)
-        ? data
-        : data.matches ||
-          data.data ||
-          data.events ||
-          [];
-
-    if (!Array.isArray(list) || list.length === 0) {
-
-      matchStatus.textContent =
-        "No matches found.";
-
-      return;
-
-    }
-
-    matchStatus.textContent =
-      list.length + " match(es)";
-
-
-    list.forEach((match) => {
-
-      const card =
-        document.createElement("article");
-
-      card.className =
-        "match-card";
-
-
-      const title =
-        document.createElement("h3");
-
-      title.textContent =
-        match.name ||
-        match.title ||
-        [match.team1, match.team2]
-          .filter(Boolean)
-          .join(" vs ") ||
-        [match.homeTeam, match.awayTeam]
-          .filter(Boolean)
-          .join(" vs ") ||
-        "Match";
-
-
-      const details =
+      const status =
         document.createElement("p");
 
-      details.textContent =
-        match.status ||
-        match.matchStatus ||
-        match.venue ||
-        "Match information";
+      status.textContent =
+        "Status: " +
+        cleanValue(statusText);
 
-
-      card.appendChild(title);
-
-      card.appendChild(details);
-
-
-      const scoreText =
-        match.score ||
-        match.scorecard ||
-        "";
-
-
-      if (scoreText) {
-
-        const score =
-          document.createElement("p");
-
-        score.textContent =
-          scoreText;
-
-        card.appendChild(score);
-
-      }
-
-
-      matchesBox.appendChild(card);
-
-    });
-
-  }
-
-
-  /* LOAD MATCHES */
-
-  async function loadMatches() {
-
-    matchStatus.textContent =
-      "Loading matches...";
-
-    matchesBox.innerHTML = "";
-
-
-    try {
-
-      const response =
-        await fetch(MATCH_API);
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          "API returned HTTP " +
-          response.status
-        );
-
-      }
-
-
-      const data =
-        await response.json();
-
-
-      showMatches(data);
-
-
-    } catch (error) {
-
-      console.error(
-        "Match loading error:",
-        error
-      );
-
-      matchStatus.textContent =
-        "Could not load matches. Check your API connection.";
+      card.appendChild(status);
 
     }
 
-  }
 
-</script>
+    /* TOURNAMENT / SERIES */
 
-</body>
-</html>
+    const tournament =
+      match.series ||
+      match.seriesName ||
+      match.tournament ||
+      match.competition;
+
+
+    if (tournament) {
+
+      const series =
+        document.createElement("p");
+
+      series.textContent =
+        "Series: " +
+        cleanValue(tournament);
+
+      card.appendChild(series);
+
+    }
+
+
+    /* VENUE */
+
+    if (match.venue) {
+
+      const venue =
+        document.createElement("p");
+
+      venue.textContent =
+        "Venue: " +
+        cleanValue(match.venue);
+
+      card.appendChild(venue);
+
+    }
+
+
+    /* SCORE */
+
+    const score =
+      match.score ||
+      match.scorecard ||
+      match.scores;
+
+
+    if (score) {
+
+      const scoreElement =
+        document.createElement("p");
+
+      scoreElement.textContent =
+        "Score: " +
+        cleanValue(score);
+
+      card.appendChild(scoreElement);
+
+    }
+
+
+    /* DATE / TIME */
+
+    const dateTime =
+      match.date ||
+      match.dateTime ||
+      match.startTime ||
+      match.start;
+
+
+    if (dateTime) {
+
+      const time =
+        document.createElement("p");
+
+      time.textContent =
+        "Time: " +
+        cleanValue(dateTime);
+
+      card.appendChild(time);
+
+    }
+
+
+    matchesBox.appendChild(card);
+
+  });
+
+}
