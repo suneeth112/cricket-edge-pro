@@ -6,1312 +6,1694 @@
 
   <title>SPORTS EDGE PRO</title>
 
+  <meta name="description"
+        content="SPORTS EDGE PRO - Live cricket matches, scores and sports analytics.">
+
   <style>
+
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #07111f;
+      background:
+        radial-gradient(circle at top right, #173b73 0%, transparent 35%),
+        radial-gradient(circle at bottom left, #111f3f 0%, transparent 35%),
+        #050914;
       color: #ffffff;
+      min-height: 100vh;
     }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
-      background: #102640;
-      border-bottom: 1px solid #29496a;
-      padding: 22px 5%;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(4, 9, 22, 0.95);
+      border-bottom: 1px solid rgba(255, 193, 7, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 800;
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      font-style: italic;
     }
 
-    header h1 span {
-      color: #ffbd17;
+    .logo span {
+      color: #ffc107;
     }
 
-    .container {
-      width: 90%;
-      max-width: 1150px;
-      margin: 35px auto;
+    .header-badge {
+      color: #aab7d1;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    /* LOGIN */
+    /* =========================
+       MAIN
+    ========================= */
 
-    #loginSection {
-      max-width: 430px;
-      margin: 70px auto;
-      background: #102640;
-      border: 1px solid #315579;
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+    main {
+      width: min(1400px, 92%);
+      margin: 35px auto 70px;
     }
 
-    #loginSection h2 {
-      margin-top: 0;
-      text-align: center;
-      font-size: 28px;
+    /* =========================
+       LOGIN
+    ========================= */
+
+    .login-wrapper {
+      min-height: calc(100vh - 140px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .subtitle {
-      text-align: center;
-      color: #b8c7d9;
-      margin-bottom: 25px;
-    }
-
-    input {
+    .login-card {
       width: 100%;
-      padding: 14px;
-      margin-bottom: 14px;
-      border-radius: 9px;
-      border: 1px solid #496986;
-      background: #081827;
+      max-width: 440px;
+      background: rgba(12, 23, 47, 0.94);
+      border: 1px solid rgba(255, 193, 7, 0.25);
+      border-radius: 24px;
+      padding: 38px;
+      box-shadow:
+        0 25px 70px rgba(0,0,0,0.45),
+        0 0 40px rgba(24, 92, 180, 0.12);
+    }
+
+    .login-logo {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 900;
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    .login-logo span {
+      color: #ffc107;
+    }
+
+    .login-subtitle {
+      text-align: center;
+      color: #94a5c6;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      color: #b9c7df;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 12px;
+      border: 1px solid #30466d;
+      background: #071126;
       color: white;
-      font-size: 15px;
       outline: none;
-    }
-
-    input:focus {
-      border-color: #ffbd17;
-    }
-
-    button {
-      border: none;
-      border-radius: 9px;
-      padding: 13px 20px;
       font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
+    }
+
+    .input-group input:focus {
+      border-color: #ffc107;
+      box-shadow: 0 0 0 3px rgba(255,193,7,0.10);
     }
 
     .primary-btn {
       width: 100%;
-      background: #ffbd17;
-      color: #111;
-      margin-bottom: 10px;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffc107, #ff9800);
+      color: #071126;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 6px;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
     }
 
     .secondary-btn {
       width: 100%;
-      background: #29496a;
+      border: 1px solid #30466d;
+      padding: 13px;
+      border-radius: 12px;
+      background: #0a1730;
       color: white;
-      margin-bottom: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .secondary-btn:hover {
+      border-color: #ffc107;
     }
 
     .forgot-btn {
+      display: block;
       width: 100%;
+      margin-top: 17px;
+      border: none;
       background: transparent;
-      color: #ffbd17;
-      padding: 8px;
+      color: #ffc107;
+      cursor: pointer;
+      font-size: 13px;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
-    #loginMessage {
-      text-align: center;
-      margin-top: 15px;
-      color: #ff8d8d;
-      min-height: 20px;
-    }
-
-    /* DASHBOARD */
-
-    #dashboard {
+    .message {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
       display: none;
+      font-size: 13px;
+      line-height: 1.5;
     }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: rgba(244,67,54,0.12);
+      color: #ff9d95;
+      border: 1px solid rgba(244,67,54,0.25);
+    }
+
+    .message.success {
+      background: rgba(76,175,80,0.12);
+      color: #9be5a0;
+      border: 1px solid rgba(76,175,80,0.25);
+    }
+
+    /* =========================
+       DASHBOARD TOP
+    ========================= */
 
     .dashboard-top {
-      background: #102640;
-      border: 1px solid #315579;
-      border-radius: 16px;
-      padding: 25px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 20px;
-      margin-bottom: 30px;
+      padding: 25px 28px;
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(18, 48, 93, 0.96),
+          rgba(8, 18, 39, 0.96)
+        );
+      border: 1px solid rgba(88, 145, 221, 0.25);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.22);
+      margin-bottom: 35px;
     }
 
-    .dashboard-top h2 {
-      margin: 0 0 8px;
-      font-size: 28px;
+    .dashboard-title {
+      font-size: 25px;
+      font-weight: 900;
+      margin-bottom: 6px;
     }
 
-    .logged-user {
-      color: #b8c7d9;
-      margin: 0;
+    .dashboard-user {
+      color: #91a5c8;
+      font-size: 13px;
+      word-break: break-word;
     }
 
-    .dashboard-buttons {
+    .dashboard-actions {
       display: flex;
       gap: 10px;
     }
 
-    .refresh-btn {
-      background: #ffbd17;
-      color: #111;
+    .action-btn {
+      border: 1px solid #38547e;
+      background: #0b1b37;
+      color: white;
+      border-radius: 11px;
+      padding: 11px 17px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      border-color: #ffc107;
+      color: #ffc107;
     }
 
     .logout-btn {
-      background: #29496a;
-      color: white;
+      background: rgba(244,67,54,0.10);
+      border-color: rgba(244,67,54,0.35);
+      color: #ffaaa4;
+    }
+
+    /* =========================
+       SECTION HEADER
+    ========================= */
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
     }
 
     .section-title {
-      font-size: 27px;
-      margin-bottom: 8px;
+      font-size: 24px;
+      font-weight: 900;
     }
 
-    #matchStatus {
-      color: #aebfd2;
-      margin-bottom: 22px;
+    .match-count {
+      color: #8ea1c3;
+      font-size: 13px;
+      margin-top: 6px;
     }
 
-    /* MATCH GRID */
+    .api-status {
+      color: #91a5c8;
+      font-size: 12px;
+    }
 
-    #matchesBox {
+    /* =========================
+       MATCH GRID
+    ========================= */
+
+    .matches-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
     }
 
     .match-card {
-      background: #102640;
-      border: 1px solid #315579;
-      border-radius: 14px;
-      padding: 20px;
-      min-height: 220px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(18, 55, 106, 0.98),
+          rgba(7, 20, 43, 0.98)
+        );
+      border: 1px solid rgba(83, 142, 220, 0.35);
+      border-radius: 19px;
+      padding: 21px;
+      min-height: 245px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.22);
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .match-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ffc107, #ff9800, #3d8bfd);
     }
 
     .match-card:hover {
-      transform: translateY(-3px);
-      border-color: #ffbd17;
+      transform: translateY(-5px);
+      border-color: rgba(255,193,7,0.65);
+      box-shadow:
+        0 22px 45px rgba(0,0,0,0.30),
+        0 0 25px rgba(255,193,7,0.08);
     }
 
-    .match-card h3 {
-      color: #ffbd17;
-      margin: 0 0 18px;
-      font-size: 19px;
-      line-height: 1.2;
+    .match-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 13px;
     }
 
-    .match-card p {
-      color: #d2dce8;
-      margin: 10px 0;
+    .match-number {
+      color: #748bb1;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: rgba(255,193,7,0.12);
+      color: #ffd45b;
+      border: 1px solid rgba(255,193,7,0.28);
+      white-space: nowrap;
+    }
+
+    .status-badge.live {
+      background: rgba(244,67,54,0.15);
+      color: #ff8e86;
+      border-color: rgba(244,67,54,0.35);
+    }
+
+    .status-badge.completed {
+      background: rgba(96,125,139,0.15);
+      color: #aab9c4;
+      border-color: rgba(96,125,139,0.3);
+    }
+
+    .match-title {
+      color: #ffffff;
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: 900;
+      margin-bottom: 13px;
+    }
+
+    .match-info {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      color: #aebdd6;
+      font-size: 12px;
       line-height: 1.4;
-      font-size: 14px;
+    }
+
+    .info-label {
+      color: #7188ae;
+      font-weight: 800;
     }
 
     .score-box {
-      background: #081827;
-      border-radius: 8px;
-      padding: 10px;
-      margin-top: 12px;
-      color: white;
+      margin-top: 15px;
+      padding: 13px;
+      border-radius: 12px;
+      background: rgba(2, 8, 20, 0.52);
+      border: 1px solid rgba(85,124,180,0.20);
     }
 
     .score-label {
-      color: #ffbd17;
-      font-weight: 700;
+      color: #ffc107;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 5px;
     }
 
-    .error-box {
-      grid-column: 1 / -1;
-      background: #32191d;
-      border: 1px solid #74343c;
-      border-radius: 12px;
-      padding: 20px;
-      color: #ffb7b7;
+    .score-text {
+      color: #f1f5ff;
+      font-size: 12px;
+      line-height: 1.5;
+      word-break: break-word;
     }
 
-    /* MOBILE */
+    .match-time {
+      margin-top: 13px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(112,139,180,0.16);
+      color: #8398ba;
+      font-size: 11px;
+    }
 
-    @media (max-width: 1000px) {
-      #matchesBox {
-        grid-template-columns: repeat(2, 1fr);
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading-box {
+      padding: 45px;
+      text-align: center;
+      border-radius: 18px;
+      background: rgba(10,22,45,0.75);
+      border: 1px solid rgba(75,112,169,0.25);
+      color: #9aacc9;
+    }
+
+    .loader {
+      width: 35px;
+      height: 35px;
+      border: 3px solid rgba(255,255,255,0.12);
+      border-top-color: #ffc107;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
       }
     }
 
-    @media (max-width: 650px) {
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      text-align: center;
+      color: #536886;
+      font-size: 11px;
+      padding: 25px 15px;
+      border-top: 1px solid rgba(75,100,140,0.15);
+      margin-top: 50px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1100px) {
+
+      .matches-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+    }
+
+    @media (max-width: 700px) {
 
       header {
-        padding: 18px 20px;
+        height: 62px;
+        padding: 0 18px;
       }
 
-      header h1 {
-        font-size: 23px;
+      .logo {
+        font-size: 19px;
       }
 
-      .container {
+      .header-badge {
+        display: none;
+      }
+
+      main {
         width: 94%;
-        margin: 20px auto;
-      }
-
-      #loginSection {
-        margin: 35px auto;
-        padding: 25px;
+        margin-top: 20px;
       }
 
       .dashboard-top {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        padding: 20px;
       }
 
-      .dashboard-buttons {
+      .dashboard-actions {
         width: 100%;
       }
 
-      .dashboard-buttons button {
+      .action-btn {
         flex: 1;
       }
 
-      #matchesBox {
+      .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .matches-grid {
         grid-template-columns: 1fr;
       }
+
+      .login-card {
+        padding: 28px 22px;
+      }
+
+      .login-logo {
+        font-size: 27px;
+      }
+
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
+<header>
+  <div class="logo">
+    SPORTS <span>EDGE PRO</span>
+  </div>
 
-  <header>
-    <h1>
-      SPORTS <span>EDGE PRO</span>
-    </h1>
-  </header>
+  <div class="header-badge">
+    Live Sports Intelligence
+  </div>
+</header>
 
 
-  <!-- LOGIN -->
+<main>
 
-  <main class="container">
+  <!-- =========================
+       LOGIN SCREEN
+  ========================= -->
 
-    <section id="loginSection">
+  <section id="loginScreen" class="login-wrapper">
 
-      <h2>Welcome Back</h2>
+    <div class="login-card">
 
-      <p class="subtitle">
-        Sign in to access Sports Edge Pro
-      </p>
+      <div class="login-logo">
+        SPORTS <span>EDGE PRO</span>
+      </div>
 
-      <input
-        id="email"
-        type="email"
-        placeholder="Email address"
-        autocomplete="email"
-      >
+      <div class="login-subtitle">
+        Sign in to access your sports dashboard
+      </div>
 
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-        autocomplete="current-password"
-      >
 
-      <button
-        id="loginBtn"
-        class="primary-btn"
-      >
+      <div class="input-group">
+        <label for="email">Email Address</label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        >
+      </div>
+
+
+      <div class="input-group">
+        <label for="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        >
+      </div>
+
+
+      <button id="loginBtn" class="primary-btn">
         Login
       </button>
 
-      <button
-        id="createBtn"
-        class="secondary-btn"
-      >
+      <button id="createBtn" class="secondary-btn">
         Create Account
       </button>
 
-      <button
-        id="forgotBtn"
-        class="forgot-btn"
-      >
+      <button id="forgotBtn" class="forgot-btn">
         Forgot Password?
       </button>
 
-      <div id="loginMessage"></div>
+      <div id="authMessage" class="message"></div>
 
-    </section>
+    </div>
+
+  </section>
 
 
-    <!-- DASHBOARD -->
+  <!-- =========================
+       DASHBOARD
+  ========================= -->
 
-    <section id="dashboard">
+  <section id="dashboard" style="display:none;">
 
-      <div class="dashboard-top">
+    <div class="dashboard-top">
 
-        <div>
-          <h2>Sports Dashboard</h2>
+      <div>
 
-          <p class="logged-user">
-            Logged in as:
-            <span id="userEmail"></span>
-          </p>
+        <div class="dashboard-title">
+          Sports Dashboard
         </div>
 
-        <div class="dashboard-buttons">
-
-          <button
-            id="refreshBtn"
-            class="refresh-btn"
-          >
-            Refresh
-          </button>
-
-          <button
-            id="logoutBtn"
-            class="logout-btn"
-          >
-            Logout
-          </button>
-
+        <div class="dashboard-user">
+          Logged in as:
+          <strong id="userEmail">-</strong>
         </div>
 
       </div>
 
 
-      <h2 class="section-title">
-        Live & Upcoming Matches
-      </h2>
+      <div class="dashboard-actions">
 
-      <div id="matchStatus">
-        Loading matches...
+        <button id="refreshBtn" class="action-btn">
+          ↻ Refresh
+        </button>
+
+        <button id="logoutBtn" class="action-btn logout-btn">
+          Logout
+        </button>
+
       </div>
 
-      <div id="matchesBox"></div>
-
-    </section>
-
-  </main>
+    </div>
 
 
-  <!-- FIREBASE -->
+    <div class="section-header">
 
-  <script type="module">
+      <div>
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        <div class="section-title">
+          Live & Upcoming Matches
+        </div>
 
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword,
-      sendPasswordResetEmail,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        <div id="matchStatus" class="match-count">
+          Loading matches...
+        </div>
 
+      </div>
 
-    /* ==========================
-       FIREBASE CONFIG
-       ========================== */
+      <div id="apiStatus" class="api-status">
+        Connecting to sports data...
+      </div>
 
-    const firebaseConfig = {
-
-      apiKey:
-        "AIzaSyDoudYXuwRqGxpOUl7BfQmmrloYoyKiPK0",
-
-      authDomain:
-        "ports-edge-pro.firebaseapp.com",
-
-      projectId:
-        "ports-edge-pro",
-
-      storageBucket:
-        "ports-edge-pro.firebasestorage.app",
-
-      messagingSenderId:
-        "811569206008",
-
-      appId:
-        "1:811569206008:web:bd2acd5ec511f0c9d4e10d",
-
-      measurementId:
-        "G-2S8PCFC271"
-    };
+    </div>
 
 
-    const app =
-      initializeApp(firebaseConfig);
+    <div id="matchesBox" class="matches-grid">
 
-    const auth =
-      getAuth(app);
+      <div class="loading-box">
 
+        <div class="loader"></div>
 
-    /* ==========================
-       API
-       ========================== */
+        Loading cricket matches...
 
-    const MATCH_API =
-      "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+      </div>
 
+    </div>
 
-    /* ==========================
-       ELEMENTS
-       ========================== */
+  </section>
 
-    const loginSection =
-      document.getElementById("loginSection");
-
-    const dashboard =
-      document.getElementById("dashboard");
-
-    const emailInput =
-      document.getElementById("email");
-
-    const passwordInput =
-      document.getElementById("password");
-
-    const loginBtn =
-      document.getElementById("loginBtn");
-
-    const createBtn =
-      document.getElementById("createBtn");
-
-    const forgotBtn =
-      document.getElementById("forgotBtn");
-
-    const logoutBtn =
-      document.getElementById("logoutBtn");
-
-    const refreshBtn =
-      document.getElementById("refreshBtn");
-
-    const loginMessage =
-      document.getElementById("loginMessage");
-
-    const userEmail =
-      document.getElementById("userEmail");
-
-    const matchesBox =
-      document.getElementById("matchesBox");
-
-    const matchStatus =
-      document.getElementById("matchStatus");
+</main>
 
 
-    /* ==========================
-       MESSAGE
-       ========================== */
+<footer>
+  SPORTS EDGE PRO • Sports Data & Analytics
+</footer>
 
-    function showMessage(message) {
 
-      loginMessage.textContent =
-        message;
+<script type="module">
+
+  /* ==========================================
+     FIREBASE
+  ========================================== */
+
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyDoudYXuwRqGxpOU7BfQmmrloYoyKiPK0",
+
+    authDomain:
+      "ports-edge-pro.firebaseapp.com",
+
+    projectId:
+      "ports-edge-pro",
+
+    storageBucket:
+      "ports-edge-pro.firebasestorage.app",
+
+    messagingSenderId:
+      "811569206008",
+
+    appId:
+      "1:811569206008:web:bd2acd5ec511f0c9d4e10d",
+
+    measurementId:
+      "G-2S8PCFC271"
+
+  };
+
+
+  const app =
+    initializeApp(firebaseConfig);
+
+  const auth =
+    getAuth(app);
+
+
+  /* ==========================================
+     API
+  ========================================== */
+
+  const MATCH_API =
+    "https://sports-edge-api.sk-suneeth.workers.dev/matches";
+
+
+  /* ==========================================
+     ELEMENTS
+  ========================================== */
+
+  const loginScreen =
+    document.getElementById("loginScreen");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  const emailInput =
+    document.getElementById("email");
+
+  const passwordInput =
+    document.getElementById("password");
+
+  const loginBtn =
+    document.getElementById("loginBtn");
+
+  const createBtn =
+    document.getElementById("createBtn");
+
+  const forgotBtn =
+    document.getElementById("forgotBtn");
+
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+
+  const refreshBtn =
+    document.getElementById("refreshBtn");
+
+  const authMessage =
+    document.getElementById("authMessage");
+
+  const userEmail =
+    document.getElementById("userEmail");
+
+  const matchesBox =
+    document.getElementById("matchesBox");
+
+  const matchStatus =
+    document.getElementById("matchStatus");
+
+  const apiStatus =
+    document.getElementById("apiStatus");
+
+
+  /* ==========================================
+     MESSAGE
+  ========================================== */
+
+  function showMessage(text, type = "error") {
+
+    authMessage.textContent = text;
+
+    authMessage.className =
+      "message show " + type;
+
+  }
+
+
+  function clearMessage() {
+
+    authMessage.textContent = "";
+
+    authMessage.className =
+      "message";
+
+  }
+
+
+  /* ==========================================
+     LOGIN
+  ========================================== */
+
+  loginBtn.addEventListener("click", async () => {
+
+    clearMessage();
+
+    const email =
+      emailInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+
+    if (!email || !password) {
+
+      showMessage(
+        "Please enter your email and password."
+      );
+
+      return;
     }
 
 
-    /* ==========================
-       LOGIN
-       ========================== */
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Logging in...";
 
-    loginBtn.addEventListener(
-      "click",
-      async () => {
 
-        const email =
-          emailInput.value.trim();
+    try {
 
-        const password =
-          passwordInput.value;
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
+    } catch (error) {
 
-        if (!email || !password) {
+      console.error(error);
 
-          showMessage(
-            "Please enter email and password."
-          );
+      showMessage(
+        getFirebaseError(error)
+      );
 
-          return;
-        }
+    } finally {
 
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Login";
 
-        try {
+    }
 
-          showMessage("Logging in...");
+  });
 
-          await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
 
-          showMessage("");
+  /* ==========================================
+     CREATE ACCOUNT
+  ========================================== */
 
-        } catch (error) {
+  createBtn.addEventListener("click", async () => {
 
-          console.error(error);
+    clearMessage();
 
-          showMessage(
-            error.message
-              .replace("Firebase: Error (auth/", "")
-              .replace(").", "")
-          );
-        }
+    const email =
+      emailInput.value.trim();
 
-      }
-    );
+    const password =
+      passwordInput.value;
 
 
-    /* ==========================
-       CREATE ACCOUNT
-       ========================== */
+    if (!email || !password) {
 
-    createBtn.addEventListener(
-      "click",
-      async () => {
+      showMessage(
+        "Enter an email and password first."
+      );
 
-        const email =
-          emailInput.value.trim();
-
-        const password =
-          passwordInput.value;
-
-
-        if (!email || !password) {
-
-          showMessage(
-            "Enter email and password first."
-          );
-
-          return;
-        }
-
-
-        if (password.length < 6) {
-
-          showMessage(
-            "Password must be at least 6 characters."
-          );
-
-          return;
-        }
-
-
-        try {
-
-          showMessage(
-            "Creating account..."
-          );
-
-          await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-
-          showMessage(
-            "Account created successfully."
-          );
-
-        } catch (error) {
-
-          console.error(error);
-
-          showMessage(
-            error.message
-              .replace("Firebase: Error (auth/", "")
-              .replace(").", "")
-          );
-        }
-
-      }
-    );
-
-
-    /* ==========================
-       FORGOT PASSWORD
-       ========================== */
-
-    forgotBtn.addEventListener(
-      "click",
-      async () => {
-
-        const email =
-          emailInput.value.trim();
-
-
-        if (!email) {
-
-          showMessage(
-            "Enter your email address first."
-          );
-
-          return;
-        }
-
-
-        try {
-
-          await sendPasswordResetEmail(
-            auth,
-            email
-          );
-
-          showMessage(
-            "Password reset email sent."
-          );
-
-        } catch (error) {
-
-          console.error(error);
-
-          showMessage(
-            error.message
-              .replace("Firebase: Error (auth/", "")
-              .replace(").", "")
-          );
-        }
-
-      }
-    );
-
-
-    /* ==========================
-       LOGOUT
-       ========================== */
-
-    logoutBtn.addEventListener(
-      "click",
-      async () => {
-
-        try {
-
-          await signOut(auth);
-
-        } catch (error) {
-
-          console.error(error);
-
-        }
-
-      }
-    );
-
-
-    /* ==========================
-       REFRESH
-       ========================== */
-
-    refreshBtn.addEventListener(
-      "click",
-      () => {
-
-        loadMatches();
-
-      }
-    );
-
-
-    /* ==========================
-       AUTH STATE
-       ========================== */
-
-    onAuthStateChanged(
-      auth,
-      (user) => {
-
-        if (user) {
-
-          loginSection.style.display =
-            "none";
-
-          dashboard.style.display =
-            "block";
-
-          userEmail.textContent =
-            user.email || "";
-
-          loadMatches();
-
-        } else {
-
-          loginSection.style.display =
-            "block";
-
-          dashboard.style.display =
-            "none";
-
-          userEmail.textContent =
-            "";
-
-        }
-
-      }
-    );
-
-
-    /* ==================================================
-       CONVERT API DATA INTO READABLE TEXT
-       ================================================== */
-
-    function readable(value) {
-
-      if (
-        value === null ||
-        value === undefined
-      ) {
-        return "";
-      }
-
-
-      if (
-        typeof value === "string" ||
-        typeof value === "number" ||
-        typeof value === "boolean"
-      ) {
-        return String(value);
-      }
-
-
-      /* ARRAY */
-
-      if (Array.isArray(value)) {
-
-        return value
-          .map(readable)
-          .filter(Boolean)
-          .join(" • ");
-      }
-
-
-      /* OBJECT */
-
-      if (typeof value === "object") {
-
-
-        /* TEAM NAME */
-
-        if (
-          value.teamName !== undefined
-        ) {
-
-          let result =
-            readable(value.teamName);
-
-
-          if (
-            value.runs !== undefined
-          ) {
-
-            result +=
-              " " +
-              readable(value.runs);
-          }
-
-
-          if (
-            value.wickets !== undefined
-          ) {
-
-            result +=
-              "/" +
-              readable(value.wickets);
-          }
-
-
-          if (
-            value.overs !== undefined
-          ) {
-
-            result +=
-              " (" +
-              readable(value.overs) +
-              ")";
-          }
-
-
-          return result;
-        }
-
-
-        /* TEAM */
-
-        if (
-          value.team !== undefined &&
-          typeof value.team !== "object"
-        ) {
-
-          return readable(value.team);
-        }
-
-
-        /* NAME */
-
-        if (
-          value.name !== undefined &&
-          typeof value.name !== "object"
-        ) {
-
-          return readable(value.name);
-        }
-
-
-        /* SHORT NAME */
-
-        if (
-          value.shortName !== undefined &&
-          typeof value.shortName !== "object"
-        ) {
-
-          return readable(value.shortName);
-        }
-
-
-        /* TITLE */
-
-        if (
-          value.title !== undefined &&
-          typeof value.title !== "object"
-        ) {
-
-          return readable(value.title);
-        }
-
-
-        /* SCORE */
-
-        if (
-          value.runs !== undefined ||
-          value.wickets !== undefined ||
-          value.overs !== undefined
-        ) {
-
-          let score = "";
-
-
-          if (
-            value.runs !== undefined
-          ) {
-
-            score +=
-              readable(value.runs);
-          }
-
-
-          if (
-            value.wickets !== undefined
-          ) {
-
-            score +=
-              "/" +
-              readable(value.wickets);
-          }
-
-
-          if (
-            value.overs !== undefined
-          ) {
-
-            score +=
-              " (" +
-              readable(value.overs) +
-              ")";
-          }
-
-
-          return score;
-        }
-
-
-        /* GENERIC OBJECT */
-
-        return Object.entries(value)
-          .map(
-            ([key, val]) => {
-
-              const result =
-                readable(val);
-
-              if (!result) {
-                return "";
-              }
-
-              return result;
-            }
-          )
-          .filter(Boolean)
-          .join(" • ");
-      }
-
-
-      return "";
+      return;
     }
 
 
-    /* ==========================
-       MATCH TITLE
-       ========================== */
+    if (password.length < 6) {
 
-    function getMatchTitle(match) {
+      showMessage(
+        "Password must contain at least 6 characters."
+      );
 
-      let title =
-        match.name ||
-        match.title ||
-        match.matchName;
-
-
-      if (title) {
-
-        return readable(title);
-      }
-
-
-      if (
-        match.team1 &&
-        match.team2
-      ) {
-
-        return (
-          readable(match.team1) +
-          " vs " +
-          readable(match.team2)
-        );
-      }
-
-
-      if (
-        match.homeTeam &&
-        match.awayTeam
-      ) {
-
-        return (
-          readable(match.homeTeam) +
-          " vs " +
-          readable(match.awayTeam)
-        );
-      }
-
-
-      return "Cricket Match";
+      return;
     }
 
 
-    /* ==========================
-       SCORE
-       ========================== */
-
-    function getScore(match) {
-
-      const score =
-        match.score ||
-        match.scorecard ||
-        match.scores ||
-        match.innings ||
-        match.inning;
+    createBtn.disabled = true;
+    createBtn.textContent = "Creating...";
 
 
-      if (!score) {
-        return "";
-      }
+    try {
+
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        getFirebaseError(error)
+      );
+
+    } finally {
+
+      createBtn.disabled = false;
+      createBtn.textContent = "Create Account";
+
+    }
+
+  });
 
 
-      return readable(score);
+  /* ==========================================
+     FORGOT PASSWORD
+  ========================================== */
+
+  forgotBtn.addEventListener("click", async () => {
+
+    clearMessage();
+
+    const email =
+      emailInput.value.trim();
+
+
+    if (!email) {
+
+      showMessage(
+        "Enter your email address first."
+      );
+
+      return;
     }
 
 
-    /* ==========================
-       SHOW MATCHES
-       ========================== */
+    try {
 
-    function showMatches(data) {
+      await sendPasswordResetEmail(
+        auth,
+        email
+      );
 
-      matchesBox.innerHTML = "";
+      showMessage(
+        "Password reset email sent. Check your inbox.",
+        "success"
+      );
 
+    } catch (error) {
 
-      let list;
+      console.error(error);
 
-
-      if (Array.isArray(data)) {
-
-        list = data;
-
-      } else {
-
-        list =
-          data.matches ||
-          data.data ||
-          data.events ||
-          data.results ||
-          [];
-      }
-
-
-      if (
-        !Array.isArray(list) ||
-        list.length === 0
-      ) {
-
-        matchStatus.textContent =
-          "No matches found.";
-
-        return;
-      }
-
-
-      matchStatus.textContent =
-        list.length +
-        " match(es)";
-
-
-      list.forEach(
-        (match) => {
-
-          const card =
-            document.createElement(
-              "article"
-            );
-
-          card.className =
-            "match-card";
-
-
-          /* TITLE */
-
-          const title =
-            document.createElement(
-              "h3"
-            );
-
-          title.textContent =
-            getMatchTitle(match);
-
-
-          card.appendChild(title);
-
-
-          /* STATUS */
-
-          const status =
-            match.status ||
-            match.matchStatus ||
-            match.state ||
-            match.result;
-
-
-          if (status) {
-
-            const p =
-              document.createElement(
-                "p"
-              );
-
-            p.textContent =
-              readable(status);
-
-            card.appendChild(p);
-          }
-
-
-          /* SERIES */
-
-          const series =
-            match.seriesName ||
-            match.series ||
-            match.tournament ||
-            match.competition;
-
-
-          if (series) {
-
-            const p =
-              document.createElement(
-                "p"
-              );
-
-            p.textContent =
-              "Series: " +
-              readable(series);
-
-            card.appendChild(p);
-          }
-
-
-          /* VENUE */
-
-          const venue =
-            match.venue ||
-            match.ground ||
-            match.location;
-
-
-          if (venue) {
-
-            const p =
-              document.createElement(
-                "p"
-              );
-
-            p.textContent =
-              "Venue: " +
-              readable(venue);
-
-            card.appendChild(p);
-          }
-
-
-          /* SCORE */
-
-          const score =
-            getScore(match);
-
-
-          if (score) {
-
-            const scoreBox =
-              document.createElement(
-                "div"
-              );
-
-            scoreBox.className =
-              "score-box";
-
-
-            const label =
-              document.createElement(
-                "span"
-              );
-
-            label.className =
-              "score-label";
-
-            label.textContent =
-              "Score: ";
-
-
-            const value =
-              document.createElement(
-                "span"
-              );
-
-            value.textContent =
-              score;
-
-
-            scoreBox.appendChild(label);
-
-            scoreBox.appendChild(value);
-
-            card.appendChild(scoreBox);
-          }
-
-
-          /* DATE / TIME */
-
-          const dateTime =
-            match.dateTime ||
-            match.startTime ||
-            match.start ||
-            match.date;
-
-
-          if (dateTime) {
-
-            const p =
-              document.createElement(
-                "p"
-              );
-
-            p.textContent =
-              "Time: " +
-              readable(dateTime);
-
-            card.appendChild(p);
-          }
-
-
-          matchesBox.appendChild(card);
-
-        }
+      showMessage(
+        getFirebaseError(error)
       );
 
     }
 
-
-    /* ==========================
-       LOAD MATCHES
-       ========================== */
-
-    async function loadMatches() {
-
-      matchStatus.textContent =
-        "Loading matches...";
-
-      matchesBox.innerHTML = "";
+  });
 
 
-      try {
+  /* ==========================================
+     LOGOUT
+  ========================================== */
 
-        const response =
-          await fetch(MATCH_API);
+  logoutBtn.addEventListener("click", async () => {
 
+    try {
 
-        if (!response.ok) {
+      await signOut(auth);
 
-          throw new Error(
-            "API returned " +
-            response.status
-          );
-        }
+    } catch (error) {
 
+      console.error(error);
 
-        const data =
-          await response.json();
+    }
 
-
-        console.log(
-          "SPORTS EDGE API DATA:",
-          data
-        );
+  });
 
 
-        showMatches(data);
+  /* ==========================================
+     FIREBASE AUTH STATE
+  ========================================== */
+
+  onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+      loginScreen.style.display =
+        "none";
+
+      dashboard.style.display =
+        "block";
+
+      userEmail.textContent =
+        user.email || "User";
+
+      loadMatches();
+
+    } else {
+
+      loginScreen.style.display =
+        "flex";
+
+      dashboard.style.display =
+        "none";
+
+    }
+
+  });
 
 
-      } catch (error) {
+  /* ==========================================
+     FIREBASE ERROR MESSAGES
+  ========================================== */
 
-        console.error(
-          "Match API error:",
-          error
-        );
+  function getFirebaseError(error) {
 
-
-        matchStatus.textContent =
-          "Unable to load matches.";
+    const code =
+      error?.code || "";
 
 
-        matchesBox.innerHTML = `
+    if (code === "auth/invalid-credential") {
+      return "Incorrect email or password.";
+    }
 
-          <div class="error-box">
+    if (code === "auth/email-already-in-use") {
+      return "This email is already registered.";
+    }
 
-            <strong>
-              Match data could not be loaded.
-            </strong>
+    if (code === "auth/invalid-email") {
+      return "Please enter a valid email address.";
+    }
 
-            <br><br>
+    if (code === "auth/weak-password") {
+      return "Password is too weak. Use at least 6 characters.";
+    }
 
-            Please try the Refresh button.
+    if (code === "auth/user-not-found") {
+      return "No account was found with this email.";
+    }
 
-          </div>
+    if (code === "auth/too-many-requests") {
+      return "Too many attempts. Please try again later.";
+    }
 
-        `;
+    return (
+      error?.message ||
+      "Something went wrong. Please try again."
+    );
 
+  }
+
+
+  /* ==========================================
+     CLEAN API VALUES
+  ========================================== */
+
+  function cleanValue(value) {
+
+    if (
+      value === null ||
+      value === undefined
+    ) {
+
+      return "";
+
+    }
+
+
+    if (
+      typeof value === "string" ||
+      typeof value === "number" ||
+      typeof value === "boolean"
+    ) {
+
+      return String(value);
+
+    }
+
+
+    if (Array.isArray(value)) {
+
+      return value
+        .map(cleanValue)
+        .filter(Boolean)
+        .join(" • ");
+
+    }
+
+
+    if (typeof value === "object") {
+
+      if (value.name) {
+        return cleanValue(value.name);
+      }
+
+      if (value.teamName) {
+        return cleanValue(value.teamName);
+      }
+
+      if (value.shortName) {
+        return cleanValue(value.shortName);
+      }
+
+      if (value.title) {
+        return cleanValue(value.title);
+      }
+
+      if (value.text) {
+        return cleanValue(value.text);
+      }
+
+      return Object.values(value)
+        .map(cleanValue)
+        .filter(Boolean)
+        .join(" • ");
+
+    }
+
+
+    return "";
+
+  }
+
+
+  /* ==========================================
+     FIND FIRST VALID VALUE
+  ========================================== */
+
+  function firstValue(...values) {
+
+    for (const value of values) {
+
+      const cleaned =
+        cleanValue(value).trim();
+
+      if (cleaned) {
+        return cleaned;
       }
 
     }
 
-  </script>
+    return "";
+
+  }
+
+
+  /* ==========================================
+     STATUS CLASS
+  ========================================== */
+
+  function getStatusClass(status) {
+
+    const value =
+      String(status || "").toLowerCase();
+
+
+    if (
+      value.includes("live") ||
+      value.includes("in progress") ||
+      value.includes("playing")
+    ) {
+
+      return "live";
+
+    }
+
+
+    if (
+      value.includes("complete") ||
+      value.includes("finished") ||
+      value.includes("result")
+    ) {
+
+      return "completed";
+
+    }
+
+
+    return "";
+
+  }
+
+
+  /* ==========================================
+     SHOW MATCHES
+  ========================================== */
+
+  function showMatches(data) {
+
+    matchesBox.innerHTML = "";
+
+
+    let list =
+      Array.isArray(data)
+        ? data
+        : data?.matches ||
+          data?.data ||
+          data?.events ||
+          [];
+
+
+    if (!Array.isArray(list)) {
+      list = [];
+    }
+
+
+    if (list.length === 0) {
+
+      matchStatus.textContent =
+        "No matches found.";
+
+      apiStatus.textContent =
+        "No match data available.";
+
+      matchesBox.innerHTML = `
+        <div class="loading-box">
+          No matches are currently available.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    matchStatus.textContent =
+      list.length + " match(es)";
+
+
+    apiStatus.textContent =
+      "● Data connected";
+
+
+    list.forEach((match, index) => {
+
+      const card =
+        document.createElement("article");
+
+      card.className =
+        "match-card";
+
+
+      /* ==========================
+         TOP
+      ========================== */
+
+      const top =
+        document.createElement("div");
+
+      top.className =
+        "match-top";
+
+
+      const number =
+        document.createElement("div");
+
+      number.className =
+        "match-number";
+
+      number.textContent =
+        "MATCH " +
+        String(index + 1).padStart(2, "0");
+
+
+      const rawStatus =
+        firstValue(
+          match.status,
+          match.matchStatus,
+          match.state,
+          match.statusText
+        );
+
+
+      const badge =
+        document.createElement("div");
+
+      badge.className =
+        "status-badge " +
+        getStatusClass(rawStatus);
+
+      badge.textContent =
+        rawStatus || "Upcoming";
+
+
+      top.appendChild(number);
+      top.appendChild(badge);
+
+      card.appendChild(top);
+
+
+      /* ==========================
+         TITLE
+      ========================== */
+
+      let titleText =
+        firstValue(
+          match.name,
+          match.title,
+          match.matchName
+        );
+
+
+      if (!titleText) {
+
+        const team1 =
+          firstValue(
+            match.team1,
+            match.homeTeam,
+            match.teamA,
+            match.firstTeam
+          );
+
+        const team2 =
+          firstValue(
+            match.team2,
+            match.awayTeam,
+            match.teamB,
+            match.secondTeam
+          );
+
+
+        if (team1 && team2) {
+
+          titleText =
+            team1 +
+            " vs " +
+            team2;
+
+        }
+
+      }
+
+
+      const title =
+        document.createElement("h3");
+
+      title.className =
+        "match-title";
+
+      title.textContent =
+        titleText ||
+        "Cricket Match";
+
+
+      card.appendChild(title);
+
+
+      /* ==========================
+         INFO
+      ========================== */
+
+      const info =
+        document.createElement("div");
+
+      info.className =
+        "match-info";
+
+
+      const seriesText =
+        firstValue(
+          match.series,
+          match.seriesName,
+          match.tournament,
+          match.competition
+        );
+
+
+      if (seriesText) {
+
+        const series =
+          document.createElement("div");
+
+        series.innerHTML =
+          `<span class="info-label">Series:</span> ` +
+          escapeHtml(seriesText);
+
+        info.appendChild(series);
+
+      }
+
+
+      const venueText =
+        firstValue(
+          match.venue,
+          match.ground,
+          match.location,
+          match.stadium
+        );
+
+
+      if (venueText) {
+
+        const venue =
+          document.createElement("div");
+
+        venue.innerHTML =
+          `<span class="info-label">Venue:</span> ` +
+          escapeHtml(venueText);
+
+        info.appendChild(venue);
+
+      }
+
+
+      card.appendChild(info);
+
+
+      /* ==========================
+         SCORE
+      ========================== */
+
+      const scoreText =
+        firstValue(
+          match.score,
+          match.scorecard,
+          match.scores,
+          match.result
+        );
+
+
+      if (scoreText) {
+
+        const scoreBox =
+          document.createElement("div");
+
+        scoreBox.className =
+          "score-box";
+
+
+        const scoreLabel =
+          document.createElement("div");
+
+        scoreLabel.className =
+          "score-label";
+
+        scoreLabel.textContent =
+          "Score";
+
+
+        const score =
+          document.createElement("div");
+
+        score.className =
+          "score-text";
+
+        score.textContent =
+          scoreText;
+
+
+        scoreBox.appendChild(scoreLabel);
+        scoreBox.appendChild(score);
+
+        card.appendChild(scoreBox);
+
+      }
+
+
+      /* ==========================
+         TIME
+      ========================== */
+
+      const dateTime =
+        firstValue(
+          match.date,
+          match.dateTime,
+          match.startTime,
+          match.start,
+          match.startDate,
+          match.startDateTime
+        );
+
+
+      if (dateTime) {
+
+        const time =
+          document.createElement("div");
+
+        time.className =
+          "match-time";
+
+        time.textContent =
+          "🕐 " + formatDate(dateTime);
+
+        card.appendChild(time);
+
+      }
+
+
+      matchesBox.appendChild(card);
+
+    });
+
+  }
+
+
+  /* ==========================================
+     ESCAPE HTML
+  ========================================== */
+
+  function escapeHtml(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* ==========================================
+     FORMAT DATE
+  ========================================== */
+
+  function formatDate(value) {
+
+    if (!value) {
+      return "";
+    }
+
+
+    const date =
+      new Date(value);
+
+
+    if (isNaN(date.getTime())) {
+      return cleanValue(value);
+    }
+
+
+    return date.toLocaleString(
+      undefined,
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+  }
+
+
+  /* ==========================================
+     LOAD MATCHES
+  ========================================== */
+
+  async function loadMatches() {
+
+    apiStatus.textContent =
+      "Connecting to sports data...";
+
+
+    matchStatus.textContent =
+      "Loading matches...";
+
+
+    matchesBox.innerHTML = `
+      <div class="loading-box">
+        <div class="loader"></div>
+        Loading cricket matches...
+      </div>
+    `;
+
+
+    try {
+
+      const response =
+        await fetch(
+          MATCH_API,
+          {
+            cache: "no-store"
+          }
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "API returned HTTP " +
+          response.status
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      console.log(
+        "SPORTS EDGE PRO API:",
+        data
+      );
+
+
+      showMatches(data);
+
+
+    } catch (error) {
+
+      console.error(
+        "Match API error:",
+        error
+      );
+
+
+      apiStatus.textContent =
+        "Connection problem";
+
+
+      matchStatus.textContent =
+        "Unable to load matches.";
+
+
+      matchesBox.innerHTML = `
+        <div class="loading-box">
+          <strong>Unable to load match data.</strong>
+          <br><br>
+          Please click Refresh and try again.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  /* ==========================================
+     REFRESH
+  ========================================== */
+
+  refreshBtn.addEventListener(
+    "click",
+    loadMatches
+  );
+
+</script>
 
 </body>
 </html>
